@@ -1,0 +1,11 @@
+.card {
+  display: flex;
+}
+
+.rating {
+  flex-grow: 3;
+}
+
+.content {
+  flex-grow: 7;
+}
