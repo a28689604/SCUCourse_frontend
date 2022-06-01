@@ -1,4 +1,5 @@
 import CommentList from "../../shared/components/Comments/CommentList";
+import Heading from "../components/Heading";
 
 import classes from "./HomePage.module.css";
 
@@ -17,9 +18,7 @@ const HomePage = () => {
   return (
     <div className={classes.homeLayout}>
       <div className={classes.headingBox}>
-        <h1 className={classes.headingPrimary}>探索</h1>
-        <p className={classes.headingSecondary}>課程與教授評價</p>
-        <input className={classes.input} type="text" />
+        <Heading />
       </div>
 
       <div className={classes.commentBox}>
