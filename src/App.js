@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import HomePage from "./homePage/pages/HomePage";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import Teacher from "./teacher/pages/Teacher";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <HomePage />
+          </Route>
+          <Route path="/teacher/:teacherId" exact>
+            <Teacher />
           </Route>
           <Redirect to="/" />
         </Switch>
