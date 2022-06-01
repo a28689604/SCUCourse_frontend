@@ -1,11 +1,35 @@
 .card {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+  word-break: break-all;
 }
 
 .rating {
-  flex-grow: 3;
+  text-align: center;
+  background-color: yellow;
 }
 
 .content {
-  flex-grow: 7;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ratingTitle {
+  font-size: 2rem;
+}
+
+.ratingContent {
+  font-size: 2.4rem;
+}
+
+.courseName {
+  background-color: red;
+
+  font-size: 2.4rem;
+}
+
+.comment {
+  font-size: 1.6rem;
+  background-color: aliceblue;
 }

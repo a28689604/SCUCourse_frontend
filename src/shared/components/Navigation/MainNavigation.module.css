@@ -1,0 +1,45 @@
+.MainNavigationBtn {
+  width: 4.8rem;
+  height: 4.8rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 3.2rem;
+  cursor: pointer;
+}
+
+.MainNavigationBtn span {
+  display: block;
+  width: 4.8rem;
+  height: 2.5px;
+  background: white;
+}
+
+.MainNavigationTitle {
+  color: white;
+}
+
+.MainNavigationTitle a {
+  text-decoration: none;
+  color: white;
+}
+
+.main-navigation__header-nav {
+  display: none;
+}
+
+.main-navigation__drawer-nav {
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .MainNavigationBtn {
+    display: none;
+  }
+
+  .main-navigation__header-nav {
+    display: block;
+  }
+}
