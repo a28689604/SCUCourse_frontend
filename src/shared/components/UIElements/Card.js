@@ -5,6 +5,7 @@ import classes from "./Card.module.css";
 const Card = (props) => {
   return (
     <section
+      onClick={props.onClick}
       className={`${classes.card} ${props.className ? props.className : ""}`}
     >
       {props.children}

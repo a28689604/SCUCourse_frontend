@@ -97,3 +97,8 @@ body {
   opacity: 0;
   transition: all 200ms;
 }
+
+ul,
+li {
+  list-style: none;
+}

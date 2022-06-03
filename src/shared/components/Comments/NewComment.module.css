@@ -1,3 +1,16 @@
 .new-comment {
   max-width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 0.8rem;
+}
+
+.paragraph {
+  font-weight: 700;
+  font-size: 2.4rem;
+}
+
+.new-comment svg {
+  /* display: block; */
+  width: 3rem;
 }

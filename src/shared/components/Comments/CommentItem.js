@@ -12,11 +12,7 @@ const CommentItem = (props) => {
     <li>
       <Card
         className={`${classes.card} ${
-          props.type === "teacher"
-            ? classes["teacher-layout"]
-            : props.type === "homePage"
-            ? classes["home-page-layout"]
-            : ""
+          props.type === "teacher" ? classes["teacher-layout"] : ""
         }`}
       >
         <div className={classes.rating}>
@@ -29,13 +25,27 @@ const CommentItem = (props) => {
             </p>
           </div>
           <div className={classes.difficulty}>
-            <div className={classes.ratingTitle}>難度</div>
-            <p className={classes.ratingContent}>{props.difficulty}</p>
+            <label className={classes.ratingTitle}>難度</label>
+            {props.new ? (
+              <input />
+            ) : (
+              <p className={classes.ratingContent}>{props.difficulty}</p>
+            )}
           </div>
         </div>
         <div className={classes.content}>
-          <div className={classes.courseName}>{props.courseName}</div>
-          <p className={classes.comment}>{props.content}</p>
+          {props.new ? (
+            <select>
+              <option>test</option>
+            </select>
+          ) : (
+            <div className={classes.courseName}>{props.courseName}</div>
+          )}
+          {props.new ? (
+            <textarea />
+          ) : (
+            <p className={classes.comment}>{props.content}</p>
+          )}
         </div>
       </Card>
     </li>
