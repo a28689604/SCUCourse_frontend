@@ -3,3 +3,12 @@
   margin: 0;
   padding: 0;
 }
+
+.teacher-page-list {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.teacher-page-layout {
+  margin-top: 1.6rem;
+}

@@ -40,3 +40,8 @@
 .course-statistic {
   background-color: rgb(255, 120, 120);
 }
+
+.comment-layout {
+  margin: 0 auto;
+  max-width: 100rem;
+}

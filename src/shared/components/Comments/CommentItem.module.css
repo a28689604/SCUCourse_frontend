@@ -1,12 +1,15 @@
 .card {
   display: grid;
-  grid-template-columns: 2fr 8fr;
+  grid-template-columns: 1fr 4fr;
   word-break: break-all;
 }
 
 .rating {
   text-align: center;
   background-color: yellow;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
 }
 
 .content {
@@ -17,10 +20,19 @@
 
 .ratingTitle {
   font-size: 2rem;
+  font-weight: 700;
 }
 
 .ratingContent {
-  font-size: 2.4rem;
+  font-size: 3rem;
+}
+
+/* 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+ */
+
+.recommend-icon {
+  width: 3rem;
+  margin: 0 auto;
 }
 
 .courseName {
@@ -32,4 +44,11 @@
 .comment {
   font-size: 1.6rem;
   background-color: aliceblue;
+}
+
+.teacher-layout {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  gap: 1.6rem;
 }

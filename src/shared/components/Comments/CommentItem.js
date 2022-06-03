@@ -1,17 +1,37 @@
 import React from "react";
 import Card from "../UIElements/Card";
+import ThumbDown from "../UIElements/ThumbDown";
+import ThumbUp from "../UIElements/ThumbUp";
 
 import classes from "./CommentItem.module.css";
 
 const CommentItem = (props) => {
+  const recommend = props.recommend === true ? <ThumbUp /> : <ThumbDown />;
+
   return (
     <li>
-      <Card className={classes.card}>
+      <Card
+        className={`${classes.card} ${
+          props.type === "teacher"
+            ? classes["teacher-layout"]
+            : props.type === "homePage"
+            ? classes["home-page-layout"]
+            : ""
+        }`}
+      >
         <div className={classes.rating}>
-          <div className={classes.ratingTitle}>推薦</div>
-          <div className={classes.ratingContent}>{props.recommend}</div>
-          <div className={classes.ratingTitle}>難度</div>
-          <div className={classes.ratingContent}>{props.difficulty}</div>
+          <div className={classes.recommend}>
+            <div className={classes.ratingTitle}>推薦</div>
+            <p
+              className={`${classes.ratingContent} ${classes["recommend-icon"]}`}
+            >
+              {recommend}
+            </p>
+          </div>
+          <div className={classes.difficulty}>
+            <div className={classes.ratingTitle}>難度</div>
+            <p className={classes.ratingContent}>{props.difficulty}</p>
+          </div>
         </div>
         <div className={classes.content}>
           <div className={classes.courseName}>{props.courseName}</div>

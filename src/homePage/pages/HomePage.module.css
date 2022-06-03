@@ -3,7 +3,8 @@
   margin: 0 auto;
   background-color: rgb(118, 170, 237);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   align-items: center;
   padding: 9.6rem 0;
+  /* padding-top: 30vh; */
 }
