@@ -35,7 +35,7 @@ const DUMMY_COMMENTS = [
 
 const Teacher = (props) => {
   return (
-    <div>
+    <>
       <div className={classes["teacher-Layout"]}>
         <div className={classes["teacher-statistic"]}>
           <h1 className={classes["teacher-name"]}>潘維大</h1>
@@ -58,7 +58,7 @@ const Teacher = (props) => {
           <CommentList data={DUMMY_COMMENTS} type="teacher" />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

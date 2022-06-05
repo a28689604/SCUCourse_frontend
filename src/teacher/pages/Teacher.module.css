@@ -45,3 +45,12 @@
   margin: 0 auto;
   max-width: 100rem;
 }
+
+.comment-list {
+  padding-top: 1.6rem;
+}
+
+.comment-list ul {
+  display: grid;
+  gap: 1.6rem;
+}

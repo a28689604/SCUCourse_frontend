@@ -1,0 +1,30 @@
+.rating {
+  text-align: center;
+  background-color: yellow;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.rating-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.rating-content {
+  font-size: 3rem;
+}
+
+.rating :nth-child(2) {
+  margin-bottom: 0.8rem;
+}
+
+.rating-select {
+  display: block;
+  font-size: 3rem;
+  width: 3.6rem;
+}
+
+.recommend-icon {
+  width: 3rem;
+}

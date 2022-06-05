@@ -1,13 +1,13 @@
 import React from "react";
 import Card from "../UIElements/Card";
-import ThumbDown from "../UIElements/ThumbDown";
-import ThumbUp from "../UIElements/ThumbUp";
 
 import classes from "./CommentItem.module.css";
+import Input from "../FormElements/Input";
+import { VALIDATOR_REQUIRE } from "../../util/validators";
+import CommentRating from "./CommentRating";
+import CommentContent from "./CommentContent";
 
 const CommentItem = (props) => {
-  const recommend = props.recommend === true ? <ThumbUp /> : <ThumbDown />;
-
   return (
     <li>
       <Card
@@ -15,38 +15,19 @@ const CommentItem = (props) => {
           props.type === "teacher" ? classes["teacher-layout"] : ""
         }`}
       >
-        <div className={classes.rating}>
-          <div className={classes.recommend}>
-            <div className={classes.ratingTitle}>推薦</div>
-            <p
-              className={`${classes.ratingContent} ${classes["recommend-icon"]}`}
-            >
-              {recommend}
-            </p>
-          </div>
-          <div className={classes.difficulty}>
-            <label className={classes.ratingTitle}>難度</label>
-            {props.new ? (
-              <input />
-            ) : (
-              <p className={classes.ratingContent}>{props.difficulty}</p>
-            )}
-          </div>
-        </div>
-        <div className={classes.content}>
-          {props.new ? (
-            <select>
-              <option>test</option>
-            </select>
-          ) : (
-            <div className={classes.courseName}>{props.courseName}</div>
-          )}
-          {props.new ? (
-            <textarea />
-          ) : (
-            <p className={classes.comment}>{props.content}</p>
-          )}
-        </div>
+        <CommentRating
+          new={props.new}
+          recommend={props.recommend}
+          difficulty={props.difficulty}
+        />
+        <CommentContent
+          new={props.new}
+          id={props.id}
+          courseName={props.courseName}
+          errorText={props.errorText}
+          onInput={props.onInput}
+          content={props.content}
+        />
       </Card>
     </li>
   );

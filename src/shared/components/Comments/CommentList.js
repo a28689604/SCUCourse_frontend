@@ -5,16 +5,8 @@ import classes from "./CommentList.module.css";
 
 const CommentList = (props) => {
   return (
-    <section
-      className={`${classes.comments} ${
-        props.type === "teacher" ? classes["teacher-page-layout"] : ""
-      }`}
-    >
-      <ul
-        className={` ${
-          props.type === "teacher" ? classes["teacher-page-list"] : ""
-        }`}
-      >
+    <section>
+      <ul>
         {props.data.map((comment) => (
           <CommentItem
             key={comment.id}

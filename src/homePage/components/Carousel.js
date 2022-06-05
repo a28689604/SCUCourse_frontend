@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import "./styles.css";
+import "./CarouselStyles.css";
 
 import { Autoplay, Pagination } from "swiper";
 import CommentItem from "../../shared/components/Comments/CommentItem";
@@ -16,7 +16,7 @@ const Carousel = (props) => {
       slidesPerView={1.3}
       centeredSlides={true}
       autoplay={{
-        delay: 2500,
+        delay: 5000,
         disableOnInteraction: false,
       }}
       loop={true}
@@ -29,7 +29,6 @@ const Carousel = (props) => {
       {props.data.map((comment) => (
         <SwiperSlide key={comment.id}>
           <CommentItem
-            // key={comment.id}
             courseName={comment.courseName}
             recommend={comment.recommend}
             difficulty={comment.difficulty}
