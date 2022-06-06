@@ -2,8 +2,7 @@ import React from "react";
 import Card from "../UIElements/Card";
 
 import classes from "./CommentItem.module.css";
-import Input from "../FormElements/Input";
-import { VALIDATOR_REQUIRE } from "../../util/validators";
+
 import CommentRating from "./CommentRating";
 import CommentContent from "./CommentContent";
 
@@ -21,12 +20,15 @@ const CommentItem = (props) => {
           difficulty={props.difficulty}
         />
         <CommentContent
-          new={props.new}
-          id={props.id}
-          courseName={props.courseName}
-          errorText={props.errorText}
-          onInput={props.onInput}
           content={props.content}
+          courseName={props.courseName}
+          element={props.element}
+          errorText={props.errorText}
+          id={props.id}
+          new={props.new}
+          onInput={props.onInput}
+          onlyElement={props.onlyElement}
+          validators={props.validators}
         />
       </Card>
     </li>

@@ -35,6 +35,7 @@ const CommentRating = (props) => {
         <select
           className={`${classes["rating-content"]} ${classes["rating-select"]}`}
         >
+          <option selected="selected">-</option>
           <option>1</option>
           <option>2</option>
           <option>3</option>

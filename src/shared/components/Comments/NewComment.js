@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../util/validators";
 import Add from "../Icons/Add";
 import Card from "../UIElements/Card";
 import CommentItem from "./CommentItem";
@@ -29,11 +30,14 @@ const NewComment = (props) => {
       {addComment && (
         <form onClick={disableAddCommentHandler}>
           <CommentItem
+            element={"textarea"}
+            errorText="請輸入內容"
             id="comment"
             new={true}
-            type="teacher"
-            errorText="請輸入內容"
+            onlyElement={true}
             onInput={titleInputHandler}
+            type="teacher"
+            validators={[VALIDATOR_MINLENGTH(5)]}
           />
         </form>
       )}
