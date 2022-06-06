@@ -14,22 +14,19 @@ const CommentItem = (props) => {
           props.type === "teacher" ? classes["teacher-layout"] : ""
         }`}
       >
-        <CommentRating
-          new={props.new}
-          recommend={props.recommend}
-          difficulty={props.difficulty}
-        />
-        <CommentContent
-          content={props.content}
-          courseName={props.courseName}
-          element={props.element}
-          errorText={props.errorText}
-          id={props.id}
-          new={props.new}
-          onInput={props.onInput}
-          onlyElement={props.onlyElement}
-          validators={props.validators}
-        />
+        {props.newComment && <>{props.children}</>}
+        {!props.newComment && (
+          <>
+            <CommentRating
+              recommend={props.recommend}
+              difficulty={props.difficulty}
+            />
+            <CommentContent
+              content={props.content}
+              courseName={props.courseName}
+            />
+          </>
+        )}
       </Card>
     </li>
   );

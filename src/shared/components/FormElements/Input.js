@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import Select from "react-select";
 
 import { validate } from "../../util/validators";
 import classes from "./Input.module.css";
@@ -11,13 +12,18 @@ const inputReducer = (state, action) => {
         value: action.val,
         isValid: validate(action.val, action.validators),
       };
+    case "SELECT":
+      return {
+        ...state,
+        value: action.val,
+        isValid: true,
+      };
     case "TOUCH": {
       return {
         ...state,
         isTouched: true,
       };
     }
-
     default:
       return state;
   }
@@ -45,7 +51,14 @@ const Input = (props) => {
     });
   };
 
-  const touchHandler = (event) => {
+  const selectHandler = (event) => {
+    dispatch({
+      type: "SELECT",
+      val: event.value,
+    });
+  };
+
+  const touchHandler = () => {
     dispatch({
       type: "TOUCH",
     });
@@ -60,14 +73,24 @@ const Input = (props) => {
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
+        className={`${props.className}`}
       />
-    ) : (
+    ) : props.element === "textarea" ? (
       <textarea
         id={props.id}
         rows={props.rows || 3}
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
+        className={`${props.className}`}
+      />
+    ) : (
+      <Select
+        id={props.id}
+        options={props.options}
+        onChange={selectHandler}
+        onBlur={touchHandler}
+        // value={inputState.value}
         className={`${props.className}`}
       />
     );
