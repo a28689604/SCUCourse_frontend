@@ -31,9 +31,9 @@ const inputReducer = (state, action) => {
 
 const Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: "",
+    value: props.initialValue || props.defaultValue || "",
     isTouched: false,
-    isValid: false,
+    isValid: props.initialValid || false,
   });
 
   const { id, onInput } = props;
@@ -54,7 +54,7 @@ const Input = (props) => {
   const selectHandler = (event) => {
     dispatch({
       type: "SELECT",
-      val: event.value,
+      val: event,
     });
   };
 
@@ -90,8 +90,8 @@ const Input = (props) => {
         options={props.options}
         onChange={selectHandler}
         onBlur={touchHandler}
-        // value={inputState.value}
         className={`${props.className}`}
+        defaultValue={props.defaultValue}
       />
     );
 

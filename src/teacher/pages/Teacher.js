@@ -1,6 +1,7 @@
 import React from "react";
 import CommentList from "../../shared/components/Comments/CommentList";
-import NewComment from "../../shared/components/Comments/NewComment";
+import NewComment from "../../shared/components/Comments/new/NewComment";
+import UpdateComment from "../../shared/components/Comments/update/UpdateComment";
 
 import classes from "./Teacher.module.css";
 
@@ -33,6 +34,22 @@ const DUMMY_COMMENTS = [
   },
 ];
 
+const DIFFICULTY_OPTIONS = [
+  { value: 1, label: 1 },
+  { value: 2, label: 2 },
+  { value: 3, label: 3 },
+  { value: 4, label: 4 },
+  { value: 5, label: 5 },
+];
+
+const COURSE_OPTIONS = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" },
+];
+
+const userHasComment = true;
+
 const Teacher = (props) => {
   return (
     <>
@@ -51,8 +68,20 @@ const Teacher = (props) => {
         <div className={classes["course-statistic"]}> </div>
       </div>
       <div className={classes["comment-layout"]}>
-        <div className={classes["new-comment"]}>
-          <NewComment />
+        <div className={classes["personal-comment"]}>
+          {userHasComment && (
+            <UpdateComment
+              difficultyData={DIFFICULTY_OPTIONS}
+              courseNameData={COURSE_OPTIONS}
+            />
+          )}
+          {!userHasComment && (
+            <NewComment
+              new
+              difficultyData={DIFFICULTY_OPTIONS}
+              courseNameData={COURSE_OPTIONS}
+            />
+          )}
         </div>
         <div className={classes["comment-list"]}>
           <CommentList data={DUMMY_COMMENTS} type="teacher" />
