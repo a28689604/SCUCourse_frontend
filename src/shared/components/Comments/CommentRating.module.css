@@ -1,9 +1,14 @@
 .rating {
+  grid-row: 1 / 3;
   text-align: center;
   background-color: yellow;
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
+}
+
+.personalRating {
+  grid-row: 1 / 2;
 }
 
 .rating-title {

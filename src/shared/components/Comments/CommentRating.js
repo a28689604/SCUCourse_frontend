@@ -5,7 +5,11 @@ import classes from "./CommentRating.module.css";
 
 const CommentRating = (props) => {
   return (
-    <div className={classes.rating}>
+    <section
+      className={`${classes.rating} ${
+        props.personalRating ? classes.personalRating : ""
+      }`}
+    >
       <label className={classes["rating-title"]} htmlFor="difficulty">
         推薦
       </label>
@@ -30,7 +34,7 @@ const CommentRating = (props) => {
       {!props.newComment && (
         <p className={classes["rating-content"]}>{props.difficulty}</p>
       )}
-    </div>
+    </section>
   );
 };
 

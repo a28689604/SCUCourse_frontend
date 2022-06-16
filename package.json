@@ -12,6 +12,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.3.2",
     "react-transition-group": "^4.4.2",
+    "recharts": "^2.1.10",
     "swiper": "^8.2.2",
     "web-vitals": "^2.1.4"
   },

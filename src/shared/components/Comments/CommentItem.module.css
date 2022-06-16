@@ -1,12 +1,24 @@
 .card {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
   word-break: break-all;
+  gap: 1.6rem;
 }
 
 .teacher-layout {
   max-width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 8fr 1fr;
+  height: 15rem;
   gap: 1.6rem;
+}
+
+.personal-comment-layout {
+  max-width: 100%;
+  grid-template-columns: auto 4fr auto;
+  gap: 1.6rem;
+  row-gap: 0;
+}
+.homePageCreateAt {
+  justify-self: end;
+  font-size: 1.6rem;
 }

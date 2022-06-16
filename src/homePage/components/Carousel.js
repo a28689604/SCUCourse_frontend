@@ -17,7 +17,7 @@ const Carousel = (props) => {
       centeredSlides={true}
       autoplay={{
         delay: 5000,
-        disableOnInteraction: false,
+        disableOnInteraction: true,
       }}
       loop={true}
       pagination={{
@@ -29,11 +29,15 @@ const Carousel = (props) => {
       {props.data.map((comment) => (
         <SwiperSlide key={comment.id}>
           <CommentItem
-            courseName={comment.courseName}
+            homePage={props.homePage}
+            courseName={comment.course.courseName}
             recommend={comment.recommend}
             difficulty={comment.difficulty}
-            content={comment.content}
+            content={comment.review}
+            createAt={comment.createAt}
             type={props.type}
+            onClick={props.onClick}
+            teacherName={comment.teacher.teacherName}
           />
         </SwiperSlide>
       ))}

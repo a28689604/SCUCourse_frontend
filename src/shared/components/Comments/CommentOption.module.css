@@ -1,0 +1,39 @@
+.optionLayout {
+  background-color: rgb(149, 149, 250);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.votes {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.upVote {
+  display: flex;
+  align-items: center;
+  width: 3.6rem;
+  font-size: 1.2rem;
+}
+
+.downVote {
+  display: flex;
+  align-items: center;
+  width: 3.6rem;
+  font-size: 1.2rem;
+}
+
+.upVote svg:hover {
+  fill: #ff4500;
+}
+
+.downVote svg:hover {
+  fill: #7193ff;
+}
+
+.createAt {
+  justify-self: end;
+  font-size: 2rem;
+}

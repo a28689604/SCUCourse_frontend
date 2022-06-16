@@ -10,10 +10,13 @@ const CommentList = (props) => {
         {props.data.map((comment) => (
           <CommentItem
             key={comment.id}
-            courseName={comment.courseName}
+            courseName={`${comment.course.syear}學年 第${comment.course.smester}學期 ${comment.course.courseName}`}
             recommend={comment.recommend}
             difficulty={comment.difficulty}
-            content={comment.content}
+            content={comment.review}
+            createAt={comment.createAt}
+            upVotes={comment.upVotes}
+            downVotes={comment.downVotes}
             type={props.type}
           />
         ))}

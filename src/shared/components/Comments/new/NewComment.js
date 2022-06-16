@@ -65,8 +65,9 @@ const NewComment = (props) => {
           onClick={disableAddCommentHandler}
           onSubmit={commentSubmitHandler}
         >
-          <CommentItem type="teacher" newComment={true}>
+          <CommentItem type="personal" newComment={true}>
             <CommentRating
+              personalRating
               newComment={true}
               thumb={thumb}
               thumbOnClick={changeThumbHandler}
@@ -88,7 +89,6 @@ const NewComment = (props) => {
                 errorText="請選擇一項課程"
                 options={props.courseNameData}
                 onInput={inputHandler}
-                defaultValue={props.courseNameData[2]}
               />
               <Input
                 onlyElement

@@ -44,7 +44,7 @@ const Auth = () => {
 
     if (isLoginMode) {
       try {
-        await sendRequset(
+        const res = await sendRequset(
           "http://127.0.0.1:5000/api/v1/users/login",
           "POST",
           JSON.stringify({
@@ -53,7 +53,8 @@ const Auth = () => {
           }),
           { "Content-Type": "application/json" }
         );
-        auth.login();
+        console.log(res.data.user);
+        auth.login(res.data.user._id);
       } catch (err) {}
     } else {
       try {

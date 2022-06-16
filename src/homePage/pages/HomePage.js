@@ -1,6 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CommentList from "../../shared/components/Comments/CommentList";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import Carousel from "../components/Carousel";
 import Heading from "../components/Heading";
 
@@ -34,9 +36,23 @@ const DUMMY_COMMENTS = [
 ];
 
 const HomePage = () => {
-  const searchInputRef = useRef();
+  const [latestReviews, setLatestReviews] = useState([]);
+  const { isLoading, error, sendRequset, clearError } = useHttpClient();
 
+  const searchInputRef = useRef();
   const history = useHistory();
+
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const responseData = await sendRequset(
+          `http://127.0.0.1:5000/api/v1/reviews/latest-reviews`
+        );
+        setLatestReviews(responseData.data.data);
+      } catch (err) {}
+    };
+    fetchTeacher();
+  }, [sendRequset]);
 
   const searchHandler = (event) => {
     event.preventDefault();
@@ -48,18 +64,23 @@ const HomePage = () => {
   };
 
   return (
-    <div className={classes.homeLayout}>
-      <div className={classes.headingBox}>
-        <Heading
-          searchHandler={searchHandler}
-          searchInputRef={searchInputRef}
-        />
-      </div>
+    <>
+      <ErrorModal error={error} onClear={clearError} />
+      {!isLoading && latestReviews && (
+        <div className={classes.homeLayout}>
+          <div className={classes.headingBox}>
+            <Heading
+              searchHandler={searchHandler}
+              searchInputRef={searchInputRef}
+            />
+          </div>
 
-      <div className={classes.commentBox}>
-        <Carousel data={DUMMY_COMMENTS} />
-      </div>
-    </div>
+          <div className={classes.commentBox}>
+            <Carousel data={latestReviews} homePage />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

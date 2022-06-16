@@ -42,21 +42,26 @@ const UpdateComment = (props) => {
 
   //IMPORTANT GET SOME FETCH VALUE
 
-  const data = DUMMY_PERSONAL_COMMENT;
+  const data = props.userComment;
+
+  console.log(data);
 
   useEffect(() => {
     setFormData(
       {
         difficulty: {
-          value: data.difficulty,
+          value: { value: data.difficulty, label: data.difficulty },
           isValid: true,
         },
         courseName: {
-          value: data.courseName,
+          value: {
+            value: data.course.id,
+            label: `${data.course.syear}學年 第${data.course.smester}學期 ${data.course.courseName}`,
+          },
           isValid: true,
         },
         comment: {
-          value: data.content,
+          value: data.review,
           isValid: true,
         },
       },
@@ -119,7 +124,7 @@ const UpdateComment = (props) => {
         <p>確定刪除評論?</p>
       </Modal>
       <form onClick={disableAddCommentHandler} onSubmit={commentUpdateHandler}>
-        <CommentItem type="teacher" newComment={true}>
+        <CommentItem type="personal" newComment={true}>
           <CommentRating
             newComment={true}
             thumb={thumb}
