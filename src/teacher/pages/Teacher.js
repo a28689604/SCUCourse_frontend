@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CommentList from "../../shared/components/Comments/CommentList";
 import NewComment from "../../shared/components/Comments/new/NewComment";
 import UpdateComment from "../../shared/components/Comments/update/UpdateComment";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useHistory, useParams } from "react-router-dom";
 
 import classes from "./Teacher.module.css";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
 const DUMMY_TEACHER_DATA = [];
 
@@ -51,17 +54,59 @@ const COURSE_OPTIONS = [
 const userHasComment = true;
 
 const Teacher = (props) => {
+  const [loadedTeacher, setLoadedTeacher] = useState({});
+  const [loadedCourse, setLoadedCourse] = useState([]);
+  const { isLoading, error, sendRequset, clearError } = useHttpClient();
+
+  const teacherName = useParams().teacherId;
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const responseData = await sendRequset(
+          `http://127.0.0.1:5000/api/v1/teachers/${teacherName}`
+        );
+        setLoadedTeacher(responseData.data.data);
+        setLoadedCourse(responseData.data.data.courses);
+      } catch (err) {}
+    };
+    fetchTeacher();
+  }, [sendRequset, teacherName]);
+
+  // console.log(loadedCourse.map((course) => console.log(course)));
+  const reviews = loadedCourse
+    .filter((course) => course.reviews.length > 0)
+    .flatMap((course) => course.reviews);
+
+  console.log(reviews);
+
+  const errorHandler = () => {
+    clearError();
+    history.push("/");
+  };
+
   return (
     <>
+      <ErrorModal error={error} onClear={errorHandler} />
       <div className={classes["teacher-Layout"]}>
         <div className={classes["teacher-statistic"]}>
-          <h1 className={classes["teacher-name"]}>潘維大</h1>
+          <h1 className={classes["teacher-name"]}>
+            {loadedTeacher.teacherName}
+          </h1>
           <div className={classes.recommend}>
-            <h2>46%</h2>
+            {loadedTeacher.recommendPercentage !== -1 && (
+              <h2>{(loadedTeacher.recommendPercentage * 100).toFixed(2)}%</h2>
+            )}
+            {loadedTeacher.recommendPercentage === -1 && <h2>暫無資料</h2>}
             <h4>推薦率</h4>
           </div>
           <div className={classes.difficulty}>
-            <h3>3/5</h3>
+            {loadedTeacher.difficultyAverage !== -1 && (
+              <h3>{loadedTeacher.difficultyAverage}/5</h3>
+            )}
+            {loadedTeacher.difficultyAverage === -1 && <h3>暫無資料</h3>}
             <h4>難度</h4>
           </div>
         </div>
@@ -84,7 +129,11 @@ const Teacher = (props) => {
           )}
         </div>
         <div className={classes["comment-list"]}>
-          <CommentList data={DUMMY_COMMENTS} type="teacher" />
+          {/* {!isloading && loadedComments && (
+            <CommentList data={DUMMY_COMMENTS} type="teacher" />
+          )} */}
+          (
+          <CommentList data={DUMMY_COMMENTS} type="teacher" />)
         </div>
       </div>
     </>

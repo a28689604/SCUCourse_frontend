@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import CommentList from "../../shared/components/Comments/CommentList";
 import Carousel from "../components/Carousel";
 import Heading from "../components/Heading";
@@ -32,10 +34,26 @@ const DUMMY_COMMENTS = [
 ];
 
 const HomePage = () => {
+  const searchInputRef = useRef();
+
+  const history = useHistory();
+
+  const searchHandler = (event) => {
+    event.preventDefault();
+    const enteredTeacher = searchInputRef.current.value;
+
+    history.push({
+      pathname: `/teacher/${enteredTeacher}`,
+    });
+  };
+
   return (
     <div className={classes.homeLayout}>
       <div className={classes.headingBox}>
-        <Heading />
+        <Heading
+          searchHandler={searchHandler}
+          searchInputRef={searchInputRef}
+        />
       </div>
 
       <div className={classes.commentBox}>

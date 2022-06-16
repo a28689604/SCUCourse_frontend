@@ -65,8 +65,6 @@ const UpdateComment = (props) => {
     setIsLoading(false);
   }, [setFormData, data]);
 
-  console.log(formState.inputs);
-
   const disableAddCommentHandler = () => {
     //setAddComment(false);
   };
