@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classes from "./CommentContent.module.css";
 
 const CommentContent = (props) => {
@@ -7,7 +8,7 @@ const CommentContent = (props) => {
       {!props.newComment && (
         <>
           <div className={classes.courseName}>{props.courseName}</div>
-          <p className={classes.comment}>{props.content}</p>
+          {<p className={classes.comment}>{props.content}</p>}
         </>
       )}
     </div>

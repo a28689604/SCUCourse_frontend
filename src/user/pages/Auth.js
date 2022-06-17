@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
 import Card from "../../shared/components/UIElements/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import Loading from "../../shared/components/UIElements/Loading";
 
 import {
   VALIDATOR_EMAIL,
@@ -19,6 +20,7 @@ const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
+  const history = useHistory();
 
   const [formState, inputHandler, setFormData] = useForm({
     email: {
@@ -51,10 +53,15 @@ const Auth = () => {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
-          { "Content-Type": "application/json" }
+          {
+            "Content-Type": "application/json",
+            credentials: "include",
+          }
         );
-        console.log(res.data.user);
-        auth.login(res.data.user._id);
+        auth.login(res.data.user._id, res.token);
+        if (res.status === "success") {
+          history.goBack();
+        }
       } catch (err) {}
     } else {
       try {
@@ -66,8 +73,6 @@ const Auth = () => {
           }),
           { "Content-Type": "application/json" }
         );
-
-        auth.login();
       } catch (err) {}
     }
   };
@@ -76,7 +81,7 @@ const Auth = () => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       <div className={classes.authLayout}>
-        {isLoading && <LoadingSpinner asOverlay />}
+        {isLoading && <Loading overlay />}
         <Card>
           <h2>Login Required</h2>
           <hr />

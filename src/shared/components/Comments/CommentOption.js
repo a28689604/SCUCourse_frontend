@@ -8,11 +8,11 @@ const CommentOption = (props) => {
     <div className={classes.optionLayout}>
       <div className={classes.votes}>
         <div className={classes.upVote}>
-          <UpVote />
+          <UpVote userVotes={props.userVotes} />
           <h2>{props.upVotes}</h2>
         </div>
         <div className={classes.downVote}>
-          <DownVote />
+          <DownVote userVotes={props.userVotes} />
           <h2>{props.downVotes}</h2>
         </div>
       </div>

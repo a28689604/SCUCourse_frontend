@@ -30,13 +30,14 @@ const Carousel = (props) => {
         <SwiperSlide key={comment.id}>
           <CommentItem
             homePage={props.homePage}
+            substringReview={props.substringReview}
             courseName={comment.course.courseName}
             recommend={comment.recommend}
             difficulty={comment.difficulty}
             content={comment.review}
             createAt={comment.createAt}
             type={props.type}
-            onClick={props.onClick}
+            onCommentClick={props.onCommentClick}
             teacherName={comment.teacher.teacherName}
           />
         </SwiperSlide>

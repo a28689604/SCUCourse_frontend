@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 import Card from "../UIElements/Card";
 import CommentRating from "./CommentRating";
@@ -10,15 +9,19 @@ import classes from "./CommentItem.module.css";
 
 const CommentItem = (props) => {
   const createAt = new Date(props.createAt).toLocaleDateString("zh-TW");
-  const history = useHistory();
-
-  const commentClickHandler = () => {
-    if (props.homePage) {
-      history.push({
-        pathname: `/teacher/${props.teacherName}`,
-      });
-    }
+  const cardClickHandler = () => {
+    return props.onCommentClick ? props.onCommentClick(props.teacherName) : "";
   };
+
+  const commentCotent = !props.content
+    ? ""
+    : props.content.length > 50
+    ? props.content.substring(0, 50) + "..."
+    : props.content;
+
+  // if (props.id) {
+  //   console.log(props.userVotes);
+  // }
 
   return (
     <li>
@@ -28,9 +31,11 @@ const CommentItem = (props) => {
             ? classes["teacher-layout"]
             : props.type === "personal"
             ? classes["personal-comment-layout"]
+            : props.homePage
+            ? classes["home-page-layout"]
             : ""
         }`}
-        onClick={commentClickHandler}
+        onClick={cardClickHandler}
       >
         {props.newComment && <>{props.children}</>}
         {!props.newComment && (
@@ -39,15 +44,24 @@ const CommentItem = (props) => {
               recommend={props.recommend}
               difficulty={props.difficulty}
             />
-            <CommentContent
-              content={props.content}
-              courseName={props.courseName}
-            />
+            {props.substringReview && (
+              <CommentContent
+                content={commentCotent}
+                courseName={props.courseName}
+              />
+            )}
+            {!props.substringReview && (
+              <CommentContent
+                content={props.content}
+                courseName={props.courseName}
+              />
+            )}
             {!props.homePage && (
               <CommentOption
                 createAt={createAt}
                 upVotes={props.upVotes}
                 downVotes={props.downVotes}
+                userVotes={props.userVotes}
               />
             )}
             {props.homePage && (

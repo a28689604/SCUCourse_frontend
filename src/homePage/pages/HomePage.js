@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CommentList from "../../shared/components/Comments/CommentList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Loading from "../../shared/components/UIElements/Loading";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Carousel from "../components/Carousel";
 import Heading from "../components/Heading";
@@ -63,6 +64,16 @@ const HomePage = () => {
     });
   };
 
+  const commentClickHandler = (teacherName) => {
+    history.push({
+      pathname: `/teacher/${teacherName}`,
+    });
+  };
+
+  if (isLoading) {
+    return <Loading overlay />;
+  }
+
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
@@ -76,7 +87,12 @@ const HomePage = () => {
           </div>
 
           <div className={classes.commentBox}>
-            <Carousel data={latestReviews} homePage />
+            <Carousel
+              data={latestReviews}
+              onCommentClick={commentClickHandler}
+              homePage
+              substringReview
+            />
           </div>
         </div>
       )}

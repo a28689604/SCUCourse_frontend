@@ -1,5 +1,7 @@
 .optionLayout {
-  background-color: rgb(149, 149, 250);
+  padding-top: 0.4rem;
+  border-top: 0.2rem #dae0e6 solid;
+  /* background-color: rgb(149, 149, 250); */
   width: 100%;
   display: flex;
   align-items: flex-end;

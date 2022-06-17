@@ -90,7 +90,8 @@ const Input = (props) => {
         options={props.options}
         onChange={selectHandler}
         onBlur={touchHandler}
-        className={`${props.className}`}
+        placeholder={props.placeholder}
+        styles={props.styles}
         defaultValue={props.defaultValue}
       />
     );

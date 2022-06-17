@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import CommentItem from "../CommentItem";
 import CommentRating from "../CommentRating";
@@ -6,21 +6,21 @@ import CommentContent from "../CommentContent";
 import Input from "../../FormElements/Input";
 import { VALIDATOR_MINLENGTH } from "../../../util/validators";
 import { useForm } from "../../../hooks/form-hook";
-import Modal from "../../UIElements/Modal";
+import { useHttpClient } from "../../../hooks/http-hook";
+import { AuthContext } from "../../../context/auth-context";
 
-const DUMMY_PERSONAL_COMMENT = {
-  id: "p1",
-  courseName: { value: "vanilla", label: "Vanilla" },
-  recommend: true,
-  difficulty: { value: 3, label: 3 },
-  content:
-    "基本上很看出席，因為他課堂上也是會有些作業，出席的人才會知道，然後每節都有分組或個人作業，如果沒有疫情要跑去桃銘參觀，怕麻煩或對美術沒興趣的人不要來",
-};
+import Modal from "../../UIElements/Modal";
+import Loading from "../../UIElements/Loading";
+import ErrorModal from "../../UIElements/ErrorModal";
 
 const UpdateComment = (props) => {
   const [thumb, setThumb] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userDataIsLoading, setuserDataIsLoading] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequset, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -44,8 +44,6 @@ const UpdateComment = (props) => {
 
   const data = props.userComment;
 
-  console.log(data);
-
   useEffect(() => {
     setFormData(
       {
@@ -56,7 +54,7 @@ const UpdateComment = (props) => {
         courseName: {
           value: {
             value: data.course.id,
-            label: `${data.course.syear}學年 第${data.course.smester}學期 ${data.course.courseName}`,
+            label: `${data.course.syear}學年 第${data.course.smester}學期 ${data.course.department} ${data.course.courseName}`,
           },
           isValid: true,
         },
@@ -67,7 +65,8 @@ const UpdateComment = (props) => {
       },
       true
     );
-    setIsLoading(false);
+    setThumb(data.recommend);
+    setuserDataIsLoading(false);
   }, [setFormData, data]);
 
   const disableAddCommentHandler = () => {
@@ -78,14 +77,27 @@ const UpdateComment = (props) => {
     setThumb((prevState) => !prevState);
   };
 
-  const commentSubmitHandler = (event) => {
+  const commentUpdateHandler = async (event) => {
     event.preventDefault();
-    console.log("thumb", thumb, formState.inputs);
-  };
-
-  const commentUpdateHandler = (event) => {
-    event.preventDefault();
-    console.log("thumb", thumb, formState.inputs);
+    try {
+      const res = await sendRequset(
+        `http://127.0.0.1:5000/api/v1/reviews/${data._id}`,
+        "PATCH",
+        JSON.stringify({
+          review: formState.inputs.comment.value,
+          difficulty: formState.inputs.difficulty.value.value,
+          recommend: thumb,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      if (res.status === "success") {
+        setShowSuccessModal(true);
+      }
+      console.log(res);
+    } catch (err) {}
   };
 
   const showDeleteWarningHandler = () => {
@@ -100,16 +112,30 @@ const UpdateComment = (props) => {
     console.log("DELETE!");
   };
 
-  if (isLoading) {
-    return (
-      <div className="center">
-        <h2>Loading...</h2>
-      </div>
-    );
+  const confirmSuccessHandler = () => {
+    setShowSuccessModal(false);
+    // history.go(0);
+  };
+
+  if (userDataIsLoading) {
+    return <Loading />;
   }
 
   return (
     <>
+      <ErrorModal error={error} onClear={clearError} />
+      <Modal
+        show={showSuccessModal}
+        onCancel={confirmSuccessHandler}
+        header="成功"
+        footer={
+          <>
+            <button onClick={confirmSuccessHandler}>確定</button>
+          </>
+        }
+      >
+        <p>已成功更新評論</p>
+      </Modal>
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
@@ -123,54 +149,60 @@ const UpdateComment = (props) => {
       >
         <p>確定刪除評論?</p>
       </Modal>
-      <form onClick={disableAddCommentHandler} onSubmit={commentUpdateHandler}>
-        <CommentItem type="personal" newComment={true}>
-          <CommentRating
-            newComment={true}
-            thumb={thumb}
-            thumbOnClick={changeThumbHandler}
-          >
-            <Input
-              onlyElement
-              id="difficulty"
-              element="select"
-              errorText="請選擇一個難易度"
-              options={props.difficultyData}
-              onInput={inputHandler}
-              defaultValue={formState.inputs.difficulty.value}
-              initialValid={formState.inputs.difficulty.isValid}
-            />
-          </CommentRating>
-          <CommentContent newComment={true}>
-            <Input
-              onlyElement
-              id="courseName"
-              element="select"
-              errorText="請選擇一項課程"
-              options={props.courseNameData}
-              onInput={inputHandler}
-              defaultValue={formState.inputs.courseName.value}
-              initialValid={formState.inputs.courseName.isValid}
-            />
-            <Input
-              onlyElement
-              id="comment"
-              element="textarea"
-              errorText="請輸入評論"
-              onInput={inputHandler}
-              validators={[VALIDATOR_MINLENGTH(5)]}
-              initialValue={formState.inputs.comment.value}
-              initialValid={formState.inputs.comment.isValid}
-            />
-          </CommentContent>
-          <div>
-            <button onClick={showDeleteWarningHandler}>刪除</button>
-            <button type="submit" disabled={!formState.isValid}>
-              提交
-            </button>
-          </div>
-        </CommentItem>
-      </form>
+      {isLoading && <Loading />}
+      {!isLoading && !userDataIsLoading && (
+        <form
+          onClick={disableAddCommentHandler}
+          onSubmit={commentUpdateHandler}
+        >
+          <CommentItem type="personal" newComment={true}>
+            <CommentRating
+              newComment={true}
+              thumb={thumb}
+              thumbOnClick={changeThumbHandler}
+            >
+              <Input
+                onlyElement
+                id="difficulty"
+                element="select"
+                errorText="請選擇一個難易度"
+                options={props.difficultyData}
+                onInput={inputHandler}
+                defaultValue={formState.inputs.difficulty.value}
+                initialValid={formState.inputs.difficulty.isValid}
+              />
+            </CommentRating>
+            <CommentContent newComment={true}>
+              <Input
+                onlyElement
+                id="courseName"
+                element="select"
+                errorText="請選擇一項課程"
+                options={props.courseNameData}
+                onInput={inputHandler}
+                defaultValue={formState.inputs.courseName.value}
+                initialValid={formState.inputs.courseName.isValid}
+              />
+              <Input
+                onlyElement
+                id="comment"
+                element="textarea"
+                errorText="請輸入評論"
+                onInput={inputHandler}
+                validators={[VALIDATOR_MINLENGTH(5)]}
+                initialValue={formState.inputs.comment.value}
+                initialValid={formState.inputs.comment.isValid}
+              />
+            </CommentContent>
+            <div>
+              <button onClick={showDeleteWarningHandler}>刪除</button>
+              <button type="submit" disabled={!formState.isValid}>
+                提交
+              </button>
+            </div>
+          </CommentItem>
+        </form>
+      )}
     </>
   );
 };

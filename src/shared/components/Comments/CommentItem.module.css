@@ -4,11 +4,12 @@
   grid-template-rows: 1fr auto;
   word-break: break-all;
   gap: 1.6rem;
+  height: 100%;
 }
 
 .teacher-layout {
   max-width: 100%;
-  height: 15rem;
+  /* height: 15rem; */
   gap: 1.6rem;
 }
 
@@ -18,6 +19,11 @@
   gap: 1.6rem;
   row-gap: 0;
 }
+
+.home-page-layout {
+  height: 23rem;
+}
+
 .homePageCreateAt {
   justify-self: end;
   font-size: 1.6rem;

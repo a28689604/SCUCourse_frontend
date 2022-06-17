@@ -15,12 +15,12 @@
 }
 
 .teacher-name {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 5.2rem;
 }
 
 .recommend h2 {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 4.4rem;
 }
 
@@ -30,7 +30,7 @@
 
 .difficulty h3 {
   display: inline;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 3.6rem;
 }
 .difficulty h5 {
@@ -74,4 +74,11 @@
 .comment-list ul {
   display: grid;
   gap: 1.6rem;
+}
+
+.comment-list h1 {
+  display: inline-block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
 }

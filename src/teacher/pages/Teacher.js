@@ -12,6 +12,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { AuthContext } from "../../shared/context/auth-context";
 
 import classes from "./Teacher.module.css";
+import Loading from "../../shared/components/UIElements/Loading";
 
 const DIFFICULTY_OPTIONS = [
   { value: 1, label: 1 },
@@ -21,6 +22,7 @@ const DIFFICULTY_OPTIONS = [
   { value: 5, label: 5 },
 ];
 
+// use reducer in order to set multiple state at once
 const teacherDataReducer = (state, action) => {
   switch (action.type) {
     case "SET":
@@ -48,7 +50,7 @@ const teacherDataReducer = (state, action) => {
           })
           .map((course) => {
             return {
-              label: `${course.syear}學年 第${course.smester}學期 ${course.courseName}`,
+              label: `${course.syear}學年 第${course.smester}學期 ${course.department} ${course.courseName}`,
               value: course._id,
             };
           }),
@@ -65,7 +67,6 @@ const Teacher = (props) => {
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
   const [courseScoreData, setCourseScoreData] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
-  // const [courseScoreAvg, setCourseScoreAvg] = useState([]);
 
   const teacherName = useParams().teacherId;
   const history = useHistory();
@@ -83,11 +84,32 @@ const Teacher = (props) => {
   }, [sendRequset, teacherName]);
 
   let userComment;
+  let userVotes;
 
   if (teacherDataState) {
     userComment = teacherDataState.loadedReviews.filter(
       (review) => review.user === auth.userId
     )[0];
+    userVotes = teacherDataState.loadedReviews
+      .flatMap((review) => review.votes)
+      .filter((vote) => vote.voter === auth.userId);
+
+    // IMPORTANT manipulate the review data, in order to add current user votes for each review. (brute solution, need fix
+    for (let i = 0; i < teacherDataState.loadedReviews.length; i++) {
+      for (let j = 0; j < userVotes.length; j++) {
+        if (teacherDataState.loadedReviews[i].id === userVotes[j].review) {
+          teacherDataState.loadedReviews[i].userVotes = userVotes[j].vote;
+        }
+      }
+    }
+    console.log(teacherDataState.loadedReviews);
+
+    // for (let i = 0; i < teacherDataState.loadedReviews.length; i++) {
+    //   console.log(teacherDataState.loadedReviews[i]);
+    //   console.log(
+    //     teacherDataState.loadedReviews[i].votes.map((vote) => vote.voter)
+    //   );
+    // }
   }
 
   const courseStatisticHandler = (event) => {
@@ -119,6 +141,10 @@ const Teacher = (props) => {
     clearError();
     history.goBack();
   };
+
+  if (isLoading) {
+    return <Loading overlay />;
+  }
 
   return (
     <>
@@ -167,6 +193,7 @@ const Teacher = (props) => {
                   <Select
                     options={teacherDataState.loadedCourseOptions}
                     onChange={courseStatisticHandler}
+                    placeholder={"在此選擇課程，以查看修課成績分數分布"}
                   />
                   <div className={classes.courseScoreAvg}>
                     {isSelect && <h3>平均分數:{courseScoreData[10].avg}</h3>}
@@ -205,6 +232,7 @@ const Teacher = (props) => {
               {!isLoading && teacherDataState.loadedReviews && (
                 <CommentList
                   data={teacherDataState.loadedReviews}
+                  userVotes={userVotes}
                   type="teacher"
                 />
               )}
