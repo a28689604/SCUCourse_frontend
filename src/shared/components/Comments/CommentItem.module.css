@@ -28,3 +28,14 @@
   justify-self: end;
   font-size: 1.6rem;
 }
+
+@media (max-width: 768px) {
+  .card {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    word-break: break-all;
+    gap: 1.6rem;
+    height: 100%;
+  }
+}

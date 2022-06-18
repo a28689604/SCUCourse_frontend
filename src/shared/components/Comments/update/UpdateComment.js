@@ -12,12 +12,19 @@ import { AuthContext } from "../../../context/auth-context";
 import Modal from "../../UIElements/Modal";
 import Loading from "../../UIElements/Loading";
 import ErrorModal from "../../UIElements/ErrorModal";
+import { useHistory } from "react-router-dom";
+import Button from "../../FormElements/Button";
+
+import classes from "./UpdateComment.module.css";
 
 const UpdateComment = (props) => {
   const [thumb, setThumb] = useState(true);
   const [userDataIsLoading, setuserDataIsLoading] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessDeleteModal, setShowSuccessDeleteModal] = useState(false);
+
+  const history = useHistory();
 
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
@@ -81,7 +88,7 @@ const UpdateComment = (props) => {
     event.preventDefault();
     try {
       const res = await sendRequset(
-        `http://127.0.0.1:5000/api/v1/reviews/${data._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`,
         "PATCH",
         JSON.stringify({
           review: formState.inputs.comment.value,
@@ -108,15 +115,32 @@ const UpdateComment = (props) => {
     setShowConfirmModal(false);
   };
 
-  const confirmDeleteHandler = () => {
+  const confirmDeleteHandler = async () => {
     console.log("DELETE!");
+    try {
+      const res = await sendRequset(
+        `${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`,
+        "DELETE",
+        null,
+        {
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      if (res === 204) {
+        setShowConfirmModal(false);
+        setShowSuccessDeleteModal(true);
+      }
+    } catch (err) {}
   };
 
   const confirmSuccessHandler = () => {
     setShowSuccessModal(false);
     // history.go(0);
   };
-
+  const confirmSuccessDeleteHandler = () => {
+    setShowSuccessDeleteModal(false);
+    history.go(0);
+  };
   if (userDataIsLoading) {
     return <Loading />;
   }
@@ -130,11 +154,23 @@ const UpdateComment = (props) => {
         header="成功"
         footer={
           <>
-            <button onClick={confirmSuccessHandler}>確定</button>
+            <Button onClick={confirmSuccessHandler}>確定</Button>
           </>
         }
       >
         <p>已成功更新評論</p>
+      </Modal>
+      <Modal
+        show={showSuccessDeleteModal}
+        onCancel={confirmSuccessDeleteHandler}
+        header="成功"
+        footer={
+          <>
+            <Button onClick={confirmSuccessDeleteHandler}>確定</Button>
+          </>
+        }
+      >
+        <p>已成功刪除評論</p>
       </Modal>
       <Modal
         show={showConfirmModal}
@@ -142,8 +178,10 @@ const UpdateComment = (props) => {
         header="刪除評論"
         footer={
           <>
-            <button onClick={cancelDeleteHandler}>取消</button>
-            <button onClick={confirmDeleteHandler}>刪除</button>
+            <Button onClick={cancelDeleteHandler}>取消</Button>
+            <Button onClick={confirmDeleteHandler} danger>
+              刪除
+            </Button>
           </>
         }
       >
@@ -187,18 +225,20 @@ const UpdateComment = (props) => {
                 onlyElement
                 id="comment"
                 element="textarea"
-                errorText="請輸入評論"
+                errorText="請輸入至少5個字"
                 onInput={inputHandler}
                 validators={[VALIDATOR_MINLENGTH(5)]}
                 initialValue={formState.inputs.comment.value}
                 initialValid={formState.inputs.comment.isValid}
               />
             </CommentContent>
-            <div>
-              <button onClick={showDeleteWarningHandler}>刪除</button>
-              <button type="submit" disabled={!formState.isValid}>
+            <div className={classes.button}>
+              <Button type="submit" disabled={!formState.isValid}>
                 提交
-              </button>
+              </Button>
+              <Button type="button" danger onClick={showDeleteWarningHandler}>
+                刪除
+              </Button>
             </div>
           </CommentItem>
         </form>

@@ -40,9 +40,6 @@
   background: #ffd1d1;
 }
 
-/* .difficulty-container {
-  width: 25rem;
-} */
-.difficulty__indicators {
-  width: 25rem;
+.errorText {
+  color: red;
 }

@@ -82,3 +82,48 @@
   width: 100%;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .teacher-Layout {
+    grid-template-columns: auto;
+    gap: 2.4rem;
+  }
+  .teacher-statistic {
+    grid-template-columns: 1fr auto auto;
+  }
+
+  .teacher-name {
+    font-weight: 700;
+    font-size: 5.2rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .teacher-statistic {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2.4rem;
+  }
+
+  .teacher-name {
+    grid-column: 1/3;
+    font-weight: 700;
+    font-size: 5.5rem;
+  }
+
+  .courseScoreAvg {
+    position: absolute;
+    display: grid;
+    gap: 1.6rem;
+    margin-left: 20%;
+    margin-top: 20%;
+  }
+
+  .courseScoreAvg h3 {
+    font-size: 1.6rem;
+  }
+
+  .recommend h2 {
+    font-size: 3.6rem;
+  }
+}

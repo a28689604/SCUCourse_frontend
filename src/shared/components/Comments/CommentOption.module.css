@@ -35,6 +35,19 @@
   fill: #7193ff;
 }
 
+.upVoteSvg-voted svg {
+  fill: #ff4500;
+}
+
+.downVoteSvg-voted svg {
+  fill: #7193ff;
+}
+
+.upVoteSvg-voted svg:hover,
+.downVoteSvg-voted svg:hover {
+  fill: black;
+}
+
 .createAt {
   justify-self: end;
   font-size: 2rem;

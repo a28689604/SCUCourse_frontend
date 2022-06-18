@@ -16,6 +16,7 @@ import Loading from "../../UIElements/Loading";
 import ErrorModal from "../../UIElements/ErrorModal";
 import Modal from "../../UIElements/Modal";
 import { useHistory } from "react-router-dom";
+import Button from "../../FormElements/Button";
 
 const difficultyStyles = {
   control: (provided, state) => ({
@@ -96,7 +97,7 @@ const NewComment = (props) => {
 
     try {
       const res = await sendRequset(
-        `http://127.0.0.1:5000/api/v1/courses/${formState.inputs.courseName.value.value}/reviews`,
+        `${process.env.REACT_APP_BACKEND_URL}/courses/${formState.inputs.courseName.value.value}/reviews`,
         "POST",
         JSON.stringify({
           review: formState.inputs.comment.value,
@@ -112,12 +113,11 @@ const NewComment = (props) => {
         setShowSuccessModal(true);
       }
     } catch (err) {}
-    // console.log("thumb", thumb, formState.inputs);
   };
 
   const confirmSuccessHandler = () => {
     setShowSuccessModal(false);
-    // history.go(0);
+    history.go(0);
   };
   const confirmLoginHandler = () => {
     setNotLogedinModal(false);
@@ -133,7 +133,7 @@ const NewComment = (props) => {
         header="成功"
         footer={
           <>
-            <button onClick={confirmSuccessHandler}>確定</button>
+            <Button onClick={confirmSuccessHandler}>確定</Button>
           </>
         }
       >
@@ -145,7 +145,7 @@ const NewComment = (props) => {
         header=""
         footer={
           <>
-            <button onClick={confirmLoginHandler}>確定</button>
+            <Button onClick={confirmLoginHandler}>確定</Button>
           </>
         }
       >
@@ -195,12 +195,14 @@ const NewComment = (props) => {
                 onlyElement
                 id="comment"
                 element="textarea"
-                errorText="請輸入評論"
+                errorText="請輸入至少5個字"
                 onInput={inputHandler}
                 validators={[VALIDATOR_MINLENGTH(5)]}
               />
             </CommentContent>
-            <button type="submit" disabled={!formState.isValid} />
+            <Button type="submit" disabled={!formState.isValid}>
+              發表
+            </Button>
           </CommentItem>
         </form>
       )}

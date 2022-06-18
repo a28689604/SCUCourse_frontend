@@ -102,7 +102,7 @@ const Input = (props) => {
         <>
           {element}
           {!inputState.isValid && inputState.isTouched && (
-            <p>{props.errorText}</p>
+            <p className={classes.errorText}>{props.errorText}</p>
           )}
         </>
       )}

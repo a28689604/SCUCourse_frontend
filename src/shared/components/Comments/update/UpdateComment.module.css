@@ -1,0 +1,5 @@
+.button {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 1.6rem;
+}

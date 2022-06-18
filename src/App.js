@@ -11,6 +11,7 @@ import Teacher from "./teacher/pages/Teacher";
 import Auth from "./user/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
+import SetPasssword from "./user/pages/SetPassword";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -41,6 +42,9 @@ const App = () => {
         <Route path="/auth">
           <Auth />
         </Route>
+        <Route path="/setPassword/:setPasswordToken" exact>
+          <SetPasssword />
+        </Route>
         <Redirect to="/auth" />
       </Switch>
     );
@@ -52,7 +56,7 @@ const App = () => {
     >
       <Router>
         <MainNavigation />
-        <main>{routes}</main>
+        <>{routes}</>
       </Router>
     </AuthContext.Provider>
   );

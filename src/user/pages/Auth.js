@@ -15,10 +15,15 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 import classes from "./Auth.module.css";
+import Button from "../../shared/components/FormElements/Button";
+import Modal from "../../shared/components/UIElements/Modal";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
   const history = useHistory();
 
@@ -47,7 +52,7 @@ const Auth = () => {
     if (isLoginMode) {
       try {
         const res = await sendRequset(
-          "http://127.0.0.1:5000/api/v1/users/login",
+          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -65,25 +70,83 @@ const Auth = () => {
       } catch (err) {}
     } else {
       try {
-        sendRequset(
-          "http://127.0.0.1:5000/api/v1/users/signup",
+        const res = await sendRequset(
+          `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
           }),
           { "Content-Type": "application/json" }
         );
+        if (res === 202) {
+          setShowConfirmModal(true);
+        }
+        if (res.status === "success") {
+          setShowSuccessModal(true);
+        }
       } catch (err) {}
     }
+  };
+
+  const cancelSendHandler = () => {
+    setShowConfirmModal(false);
+  };
+
+  const confirmSendHandler = async () => {
+    try {
+      setShowConfirmModal(false);
+      const res = await sendRequset(
+        `${process.env.REACT_APP_BACKEND_URL}/users/reSendEmail`,
+        "POST",
+        JSON.stringify({
+          email: formState.inputs.email.value,
+        }),
+        { "Content-Type": "application/json" }
+      );
+      if (res.status === "success") {
+        setShowSuccessModal(true);
+      }
+    } catch (err) {}
+  };
+
+  const confirmSuccessHandler = () => {
+    history.goBack();
   };
 
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
+      <Modal
+        show={showConfirmModal}
+        onCancel={cancelSendHandler}
+        header="信箱已註冊"
+        footer={
+          <>
+            <Button onClick={cancelSendHandler}>取消</Button>
+            <Button onClick={confirmSendHandler} danger>
+              確定
+            </Button>
+          </>
+        }
+      >
+        <p>此信箱已被註冊但未被啟用，是否重新發送確認信?</p>
+      </Modal>
+      <Modal
+        show={showSuccessModal}
+        onCancel={confirmSuccessHandler}
+        header="成功"
+        footer={
+          <>
+            <Button onClick={confirmSuccessHandler}>確定</Button>
+          </>
+        }
+      >
+        <p>成功發送確認信!</p>
+      </Modal>
       <div className={classes.authLayout}>
         {isLoading && <Loading overlay />}
         <Card>
-          <h2>Login Required</h2>
+          <h2>登入</h2>
           <hr />
           <form onSubmit={authSubmitHandler}>
             <Input
@@ -92,7 +155,7 @@ const Auth = () => {
               type="email"
               label="E-mail"
               validators={[VALIDATOR_EMAIL()]}
-              errorText="請輸入有效的email"
+              errorText="請輸入有效的email，僅允許使用東吳校內信箱"
               onInput={inputHandler}
             />
             {isLoginMode && (
@@ -100,20 +163,25 @@ const Auth = () => {
                 id="password"
                 element="input"
                 type="password"
-                label="Password"
-                validators={[VALIDATOR_MINLENGTH(5)]}
-                errorText="請輸入至少5個字元"
+                label="密碼"
+                validators={[VALIDATOR_MINLENGTH(8)]}
+                errorText="請輸入至少8個字元"
                 onInput={inputHandler}
               />
             )}
-
-            <button type="submit" disabled={!formState.isValid}>
-              {isLoginMode ? "LOGIN" : "SIGNUP"}
-            </button>
+            <div className={classes.buttons}>
+              <div className={classes.login}>
+                <Button type="submit" disabled={!formState.isValid}>
+                  {isLoginMode ? "登入" : "註冊"}
+                </Button>
+              </div>
+              <div className={classes.switch}>
+                <Button type="button" onClick={switchModeHandler}>
+                  {isLoginMode ? "沒有帳號? 現在註冊" : "已有帳號? 現在登入"}
+                </Button>
+              </div>
+            </div>
           </form>
-          <button onClick={switchModeHandler}>
-            切換至{isLoginMode ? "註冊" : "登入"}
-          </button>
         </Card>
       </div>
     </>

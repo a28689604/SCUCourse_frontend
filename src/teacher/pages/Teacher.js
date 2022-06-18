@@ -75,7 +75,7 @@ const Teacher = (props) => {
     const fetchTeacher = async () => {
       try {
         const responseData = await sendRequset(
-          `http://127.0.0.1:5000/api/v1/teachers/${teacherName}`
+          `${process.env.REACT_APP_BACKEND_URL}/teachers/${teacherName}`
         );
         dispatch({ type: "SET", value: responseData.data.data });
       } catch (err) {}
@@ -102,14 +102,6 @@ const Teacher = (props) => {
         }
       }
     }
-    console.log(teacherDataState.loadedReviews);
-
-    // for (let i = 0; i < teacherDataState.loadedReviews.length; i++) {
-    //   console.log(teacherDataState.loadedReviews[i]);
-    //   console.log(
-    //     teacherDataState.loadedReviews[i].votes.map((vote) => vote.voter)
-    //   );
-    // }
   }
 
   const courseStatisticHandler = (event) => {

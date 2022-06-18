@@ -62,6 +62,7 @@ const CommentItem = (props) => {
                 upVotes={props.upVotes}
                 downVotes={props.downVotes}
                 userVotes={props.userVotes}
+                id={props.id}
               />
             )}
             {props.homePage && (
