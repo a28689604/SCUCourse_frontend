@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext, useRef } from "react";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../context/auth-context";
 import MainHeader from "./MainHeader";
@@ -13,6 +13,20 @@ import Search from "../Icons/Search";
 const MainNavigation = (props) => {
   const auth = useContext(AuthContext);
 
+  const searchInputRef = useRef();
+  const history = useHistory();
+
+  const searchHandler = (event) => {
+    event.preventDefault();
+    const enteredTeacher = searchInputRef.current.value;
+    if (enteredTeacher) {
+      history.push({
+        pathname: `/teacher/${enteredTeacher}`,
+      });
+    }
+    searchInputRef.current.value = "";
+  };
+
   return (
     <>
       <MainHeader>
@@ -25,11 +39,11 @@ const MainNavigation = (props) => {
         <h1 className={classes.MainNavigationTitle}>
           <Link to="/">東吳課程評價</Link>
         </h1>
-        <form className={classes.search} onSubmit={props.searchHandler}>
+        <form className={classes.search} onSubmit={searchHandler}>
           <input
             type="text"
             className={classes["search-input"]}
-            ref={props.searchInputRef}
+            ref={searchInputRef}
             placeholder="輸入老師姓名..."
           />
           <button className={classes["search-button"]} type="submit">

@@ -1,17 +1,23 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom";
-import HomePage from "./homePage/pages/HomePage";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
-import Teacher from "./teacher/pages/Teacher";
-import Auth from "./user/pages/Auth";
+import Loading from "./shared/components/UIElements/Loading";
+// import HomePage from "./homePage/pages/HomePage";
+// import Teacher from "./teacher/pages/Teacher";
+// import Auth from "./user/pages/Auth";
+// import SetPasssword from "./user/pages/SetPassword";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
-import SetPasssword from "./user/pages/SetPassword";
+
+const HomePage = React.lazy(() => import("./homePage/pages/HomePage"));
+const Teacher = React.lazy(() => import("./teacher/pages/Teacher"));
+const Auth = React.lazy(() => import("./user/pages/Auth"));
+const SetPasssword = React.lazy(() => import("./user/pages/SetPassword"));
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -56,7 +62,17 @@ const App = () => {
     >
       <Router>
         <MainNavigation />
-        <>{routes}</>
+        <>
+          <Suspense
+            fallback={
+              <>
+                <Loading overlay />
+              </>
+            }
+          >
+            {routes}
+          </Suspense>
+        </>
       </Router>
     </AuthContext.Provider>
   );

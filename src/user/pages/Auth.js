@@ -141,7 +141,7 @@ const Auth = () => {
           </>
         }
       >
-        <p>成功發送確認信!</p>
+        <p>成功發送確認信! 請在30分鐘內進行驗證。</p>
       </Modal>
       <div className={classes.authLayout}>
         {isLoading && <Loading overlay />}
