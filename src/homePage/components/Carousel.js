@@ -43,7 +43,7 @@ const Carousel = (props) => {
       {props.data.map((comment) => (
         <SwiperSlide key={comment.id}>
           <CommentItem
-            homePage={props.homePage}
+            homePage
             substringReview={props.substringReview}
             courseName={comment.course.courseName}
             recommend={comment.recommend}
