@@ -13,7 +13,22 @@ import CommentItem from "../../shared/components/Comments/CommentItem";
 const Carousel = (props) => {
   return (
     <Swiper
-      slidesPerView={1.3}
+      breakpoints={{
+        // when window width is >= 640px
+        640: {
+          // width: 640,
+          slidesPerView: 1.3,
+          spaceBetween: 0,
+        },
+        // when window width is >= 768px
+        768: {
+          // width: 768,
+          slidesPerView: 1.3,
+          spaceBetween: 0,
+        },
+      }}
+      slidesPerView={1}
+      spaceBetween={50}
       centeredSlides={true}
       autoplay={{
         delay: 5000,
@@ -24,7 +39,6 @@ const Carousel = (props) => {
         clickable: true,
       }}
       modules={[Autoplay, Pagination]}
-      className="mySwiper"
     >
       {props.data.map((comment) => (
         <SwiperSlide key={comment.id}>
