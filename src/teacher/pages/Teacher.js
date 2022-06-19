@@ -188,10 +188,20 @@ const Teacher = (props) => {
                     placeholder={"在此選擇課程，以查看修課成績分數分布"}
                   />
                   <div className={classes.courseScoreAvg}>
-                    {isSelect && <h3>平均分數:{courseScoreData[10].avg}</h3>}
                     {isSelect && (
                       <h3>
-                        人氣度:{courseScoreData[11].popularity.toFixed(2)}
+                        平均分數:
+                        {courseScoreData[10]
+                          ? courseScoreData[10].avg
+                          : "暫無資料"}
+                      </h3>
+                    )}
+                    {isSelect && (
+                      <h3>
+                        人氣度:
+                        {courseScoreData[11].popularity
+                          ? courseScoreData[11].popularity.toFixed(2)
+                          : "暫無資料"}
                       </h3>
                     )}
                   </div>
