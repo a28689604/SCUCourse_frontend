@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import CommentList from "../../shared/components/Comments/CommentList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Loading from "../../shared/components/UIElements/Loading";
 import { useHttpClient } from "../../shared/hooks/http-hook";
