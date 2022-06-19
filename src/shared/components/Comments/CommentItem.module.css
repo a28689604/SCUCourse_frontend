@@ -20,7 +20,7 @@
 }
 
 .home-page-layout {
-  height: 30rem;
+  height: 20rem;
   max-width: 40rem;
 }
 
@@ -37,5 +37,10 @@
     word-break: break-all;
     gap: 1.6rem;
     height: 100%;
+  }
+
+  .home-page-layout {
+    height: 30rem;
+    max-width: 40rem;
   }
 }
