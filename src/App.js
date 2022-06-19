@@ -45,11 +45,11 @@ const App = () => {
         <Route path="/teacher/:teacherId" exact>
           <Teacher />
         </Route>
-        <Route path="/auth">
-          <Auth />
-        </Route>
         <Route path="/setPassword/:setPasswordToken" exact>
           <SetPasssword />
+        </Route>
+        <Route path="/auth">
+          <Auth />
         </Route>
         <Redirect to="/auth" />
       </Switch>
