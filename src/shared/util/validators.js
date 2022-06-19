@@ -42,7 +42,7 @@ export const validate = (value, validators) => {
       isValid =
         isValid &&
         /^\S+@\S+\.\S+$/.test(value) &&
-        value.includes("@scu.edu.tw");
+        (value.includes("@scu.edu.tw") || value.includes("@gm.scu.edu.tw"));
     }
   }
   return isValid;
