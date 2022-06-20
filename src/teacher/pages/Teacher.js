@@ -196,14 +196,14 @@ const Teacher = (props) => {
                           : "暫無資料"}
                       </h3>
                     )}
-                    {isSelect && (
+                    {/* {isSelect && (
                       <h3>
                         人氣度:
                         {courseScoreData[11].popularity
                           ? courseScoreData[11].popularity.toFixed(2)
                           : "暫無資料"}
                       </h3>
-                    )}
+                    )} */}
                   </div>
                   <CourseStatistic data={courseScoreData} />
                 </>
