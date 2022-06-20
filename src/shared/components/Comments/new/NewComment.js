@@ -103,6 +103,7 @@ const NewComment = (props) => {
           review: formState.inputs.comment.value,
           difficulty: formState.inputs.difficulty.value.value,
           recommend: thumb,
+          createAt: Date.now(),
         }),
         {
           "Content-Type": "application/json",
