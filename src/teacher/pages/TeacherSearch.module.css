@@ -1,0 +1,12 @@
+.searchLayout {
+  max-width: 80%;
+  margin: 0 auto;
+  padding-top: 7rem;
+}
+
+.searchLayout p {
+  display: inline-block;
+}
+.searchLayout svg {
+  width: 2rem;
+}

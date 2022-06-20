@@ -111,16 +111,16 @@ const Teacher = (props) => {
       })
       .map((course) => {
         return [
-          { name: "0~49", value: course.zero },
-          { name: "50~59", value: course.fifty },
-          { name: "60~64", value: course.sixty },
-          { name: "65~69", value: course.sixtyFive },
-          { name: "70~74", value: course.seventy },
-          { name: "75~79", value: course.seventyFive },
-          { name: "80~84", value: course.eighty },
-          { name: "85~89", value: course.eightyFive },
-          { name: "90~94", value: course.ninety },
-          { name: "95~100", value: course.ninetyFive },
+          { name: "0~49", 人數: course.zero },
+          { name: "50~59", 人數: course.fifty },
+          { name: "60~64", 人數: course.sixty },
+          { name: "65~69", 人數: course.sixtyFive },
+          { name: "70~74", 人數: course.seventy },
+          { name: "75~79", 人數: course.seventyFive },
+          { name: "80~84", 人數: course.eighty },
+          { name: "85~89", 人數: course.eightyFive },
+          { name: "90~94", 人數: course.ninety },
+          { name: "95~100", 人數: course.ninetyFive },
           { avg: course.scoreAverage },
           { popularity: course.coursePopularity },
         ];

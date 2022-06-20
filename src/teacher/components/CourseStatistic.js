@@ -16,7 +16,8 @@ const CourseStatistic = (props) => {
       <BarChart data={props.data}>
         <XAxis dataKey="name" />
         <YAxis />
-        <Bar dataKey="value" fill="#8884d8" />
+        <Tooltip cursor={{ fill: "transparent" }} />
+        <Bar dataKey="人數" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );

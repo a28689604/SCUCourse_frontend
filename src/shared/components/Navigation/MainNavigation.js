@@ -21,7 +21,7 @@ const MainNavigation = (props) => {
     const enteredTeacher = searchInputRef.current.value;
     if (enteredTeacher) {
       history.push({
-        pathname: `/teacher/${enteredTeacher}`,
+        pathname: `/teacher/find/${enteredTeacher}`,
       });
     }
     searchInputRef.current.value = "";

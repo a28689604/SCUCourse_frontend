@@ -13,6 +13,7 @@ import Loading from "./shared/components/UIElements/Loading";
 // import SetPasssword from "./user/pages/SetPassword";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
+import TeacherSearch from "./teacher/pages/TeacherSearch";
 
 const HomePage = React.lazy(() => import("./homePage/pages/HomePage"));
 const Teacher = React.lazy(() => import("./teacher/pages/Teacher"));
@@ -30,6 +31,9 @@ const App = () => {
         <Route path="/" exact>
           <HomePage />
         </Route>
+        <Route path="/teacher/find/:teacherId" exact>
+          <TeacherSearch />
+        </Route>
         <Route path="/teacher/:teacherId" exact>
           <Teacher />
         </Route>
@@ -41,6 +45,9 @@ const App = () => {
       <Switch>
         <Route path="/" exact>
           <HomePage />
+        </Route>
+        <Route path="/teacher/find/:teacherId" exact>
+          <TeacherSearch />
         </Route>
         <Route path="/teacher/:teacherId" exact>
           <Teacher />
