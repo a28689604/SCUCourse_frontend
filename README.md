@@ -1,6 +1,6 @@
 # 東吳課程評價網
 
-## 網站網址: <https://scucourse.net/>
+## 網址: <https://scucourse.net/>
 
 ![主頁](https://i.imgur.com/jZR7A5l.png "HomePage")
 
