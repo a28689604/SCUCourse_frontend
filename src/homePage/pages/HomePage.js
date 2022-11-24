@@ -18,7 +18,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const responseData = await sendRequset(`https://scucourse.herokuapp.com/reviews/latest-reviews`);
+        const responseData = await sendRequset(`https://scucourse.herokuapp.com/v1/reviews/latest-reviews`);
         setLatestReviews(responseData.data.data);
       } catch (err) {}
     };

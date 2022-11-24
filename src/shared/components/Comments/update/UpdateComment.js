@@ -88,7 +88,7 @@ const UpdateComment = (props) => {
     event.preventDefault();
     try {
       const res = await sendRequset(
-        `https://scucourse.herokuapp.com/reviews/${data._id}`,
+        `https://scucourse.herokuapp.com/v1/reviews/${data._id}`,
         "PATCH",
         JSON.stringify({
           review: formState.inputs.comment.value,
@@ -118,7 +118,7 @@ const UpdateComment = (props) => {
   const confirmDeleteHandler = async () => {
     console.log("DELETE!");
     try {
-      const res = await sendRequset(`https://scucourse.herokuapp.com/reviews/${data._id}`, "DELETE", null, {
+      const res = await sendRequset(`https://scucourse.herokuapp.com/v1/reviews/${data._id}`, "DELETE", null, {
         Authorization: "Bearer " + auth.token,
       });
       if (res === 204) {
