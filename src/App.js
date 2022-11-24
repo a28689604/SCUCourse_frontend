@@ -69,17 +69,15 @@ const App = () => {
     >
       <Router>
         <MainNavigation />
-        <>
-          <Suspense
-            fallback={
-              <>
-                <Loading overlay />
-              </>
-            }
-          >
-            {routes}
-          </Suspense>
-        </>
+        <Suspense
+          fallback={
+            <>
+              <Loading overlay />
+            </>
+          }
+        >
+          {routes}
+        </Suspense>
       </Router>
     </AuthContext.Provider>
   );
