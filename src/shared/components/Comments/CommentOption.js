@@ -88,7 +88,7 @@ const CommentOption = (props) => {
     const fetchUpVote = async () => {
       if (upVoted !== undefined && isChanged === true) {
         try {
-          await sendRequset(`https://scucourse.herokuapp.com/v1/reviews/${id}/upvote/${upVoted}`, "PATCH", null, {
+          await sendRequset(`https://scucourse.herokuapp.com/api/v1/reviews/${id}/upvote/${upVoted}`, "PATCH", null, {
             Authorization: "Bearer " + token,
           });
         } catch (err) {}
@@ -101,7 +101,7 @@ const CommentOption = (props) => {
     const fetchUpVote = async () => {
       if (downVoted !== undefined && isChanged === true) {
         try {
-          await sendRequset(`https://scucourse.herokuapp.com/v1/reviews/${id}/downvote/${downVoted}`, "PATCH", null, {
+          await sendRequset(`https://scucourse.herokuapp.com/api/v1/reviews/${id}/downvote/${downVoted}`, "PATCH", null, {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
           });

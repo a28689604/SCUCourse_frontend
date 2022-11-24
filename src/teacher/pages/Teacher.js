@@ -74,7 +74,7 @@ const Teacher = (props) => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const responseData = await sendRequset(`https://scucourse.herokuapp.com/v1/teachers/${teacherName}`);
+        const responseData = await sendRequset(`https://scucourse.herokuapp.com/api/v1/teachers/${teacherName}`);
         dispatch({ type: "SET", value: responseData.data.data });
       } catch (err) {}
     };
