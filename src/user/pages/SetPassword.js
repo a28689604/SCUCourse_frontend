@@ -6,10 +6,7 @@ import Card from "../../shared/components/UIElements/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Loading from "../../shared/components/UIElements/Loading";
 
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-} from "../../shared/util/validators";
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -40,7 +37,7 @@ const SetPasssword = () => {
     event.preventDefault();
     try {
       const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/users/setPassword/${setPasswordToken}`,
+        `https://scucourse.herokuapp.com/users/setPassword/${setPasswordToken}`,
         "PATCH",
         JSON.stringify({
           password: formState.inputs.password.value,

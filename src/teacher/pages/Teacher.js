@@ -74,9 +74,7 @@ const Teacher = (props) => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const responseData = await sendRequset(
-          `${process.env.REACT_APP_BACKEND_URL}/teachers/${teacherName}`
-        );
+        const responseData = await sendRequset(`https://scucourse.herokuapp.com/teachers/${teacherName}`);
         dispatch({ type: "SET", value: responseData.data.data });
       } catch (err) {}
     };
@@ -87,12 +85,8 @@ const Teacher = (props) => {
   let userVotes;
 
   if (teacherDataState) {
-    userComment = teacherDataState.loadedReviews.filter(
-      (review) => review.user === auth.userId
-    )[0];
-    userVotes = teacherDataState.loadedReviews
-      .flatMap((review) => review.votes)
-      .filter((vote) => vote.voter === auth.userId);
+    userComment = teacherDataState.loadedReviews.filter((review) => review.user === auth.userId)[0];
+    userVotes = teacherDataState.loadedReviews.flatMap((review) => review.votes).filter((vote) => vote.voter === auth.userId);
 
     // IMPORTANT manipulate the review data, in order to add current user votes for each review. (brute solution, need fix
     for (let i = 0; i < teacherDataState.loadedReviews.length; i++) {
@@ -145,37 +139,20 @@ const Teacher = (props) => {
         <>
           <div className={classes["teacher-Layout"]}>
             <div className={classes["teacher-statistic"]}>
-              <h1 className={classes["teacher-name"]}>
-                {teacherDataState.loadedTeacher.teacherName}
-              </h1>
+              <h1 className={classes["teacher-name"]}>{teacherDataState.loadedTeacher.teacherName}</h1>
               <div className={classes.recommend}>
-                {teacherDataState.loadedTeacher.recommendPercentage !== -1 && (
-                  <h2>
-                    {(
-                      teacherDataState.loadedTeacher.recommendPercentage * 100
-                    ).toFixed(2)}
-                    %
-                  </h2>
-                )}
-                {teacherDataState.loadedTeacher.recommendPercentage === -1 && (
-                  <h2>暫無資料</h2>
-                )}
+                {teacherDataState.loadedTeacher.recommendPercentage !== -1 && <h2>{(teacherDataState.loadedTeacher.recommendPercentage * 100).toFixed(2)}%</h2>}
+                {teacherDataState.loadedTeacher.recommendPercentage === -1 && <h2>暫無資料</h2>}
                 <h4>推薦率</h4>
               </div>
               <div className={classes.difficulty}>
                 {teacherDataState.loadedTeacher.difficultyAverage !== -1 && (
                   <>
-                    <h3>
-                      {teacherDataState.loadedTeacher.difficultyAverage.toFixed(
-                        1
-                      )}
-                    </h3>
+                    <h3>{teacherDataState.loadedTeacher.difficultyAverage.toFixed(1)}</h3>
                     <h5>/5</h5>
                   </>
                 )}
-                {teacherDataState.loadedTeacher.difficultyAverage === -1 && (
-                  <h3>暫無資料</h3>
-                )}
+                {teacherDataState.loadedTeacher.difficultyAverage === -1 && <h3>暫無資料</h3>}
                 <h4>難度</h4>
               </div>
             </div>
@@ -191,9 +168,7 @@ const Teacher = (props) => {
                     {isSelect && (
                       <h3>
                         平均分數:
-                        {courseScoreData[10]
-                          ? courseScoreData[10].avg
-                          : "暫無資料"}
+                        {courseScoreData[10] ? courseScoreData[10].avg : "暫無資料"}
                       </h3>
                     )}
                     {/* {isSelect && (
@@ -213,31 +188,13 @@ const Teacher = (props) => {
           <div className={classes["comment-layout"]}>
             <div className={classes["personal-comment"]}>
               {!isLoading && userComment && (
-                <UpdateComment
-                  userComment={userComment}
-                  difficultyData={DIFFICULTY_OPTIONS}
-                  courseNameData={teacherDataState.loadedCourseOptions}
-                />
+                <UpdateComment userComment={userComment} difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />
               )}
-              {!userComment && (
-                <NewComment
-                  new
-                  difficultyData={DIFFICULTY_OPTIONS}
-                  courseNameData={teacherDataState.loadedCourseOptions}
-                />
-              )}
+              {!userComment && <NewComment new difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />}
             </div>
             <div className={classes["comment-list"]}>
-              {teacherDataState.loadedReviews.length === 0 && (
-                <h1>這位教授還沒有評論，快來留下你的評論吧!</h1>
-              )}
-              {!isLoading && teacherDataState.loadedReviews && (
-                <CommentList
-                  data={teacherDataState.loadedReviews}
-                  userVotes={userVotes}
-                  type="teacher"
-                />
-              )}
+              {teacherDataState.loadedReviews.length === 0 && <h1>這位教授還沒有評論，快來留下你的評論吧!</h1>}
+              {!isLoading && teacherDataState.loadedReviews && <CommentList data={teacherDataState.loadedReviews} userVotes={userVotes} type="teacher" />}
             </div>
           </div>
         </>

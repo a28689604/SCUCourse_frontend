@@ -6,10 +6,7 @@ import Card from "../../shared/components/UIElements/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Loading from "../../shared/components/UIElements/Loading";
 
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-} from "../../shared/util/validators";
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -52,7 +49,7 @@ const Auth = () => {
     if (isLoginMode) {
       try {
         const res = await sendRequset(
-          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
+          `https://scucourse.herokuapp.com/users/login`,
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -71,7 +68,7 @@ const Auth = () => {
     } else {
       try {
         const res = await sendRequset(
-          `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
+          `https://scucourse.herokuapp.com/users/signup`,
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -96,7 +93,7 @@ const Auth = () => {
     try {
       setShowConfirmModal(false);
       const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/users/reSendEmail`,
+        `https://scucourse.herokuapp.com/users/reSendEmail`,
         "POST",
         JSON.stringify({
           email: formState.inputs.email.value,

@@ -18,9 +18,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const responseData = await sendRequset(
-          `${process.env.REACT_APP_BACKEND_URL}/reviews/latest-reviews`
-        );
+        const responseData = await sendRequset(`https://scucourse.herokuapp.com/reviews/latest-reviews`);
         setLatestReviews(responseData.data.data);
       } catch (err) {}
     };
@@ -53,18 +51,10 @@ const HomePage = () => {
       {!isLoading && latestReviews && (
         <div className={classes.homeLayout}>
           <div className={classes.headingBox}>
-            <Heading
-              searchHandler={searchHandler}
-              searchInputRef={searchInputRef}
-            />
+            <Heading searchHandler={searchHandler} searchInputRef={searchInputRef} />
           </div>
           <div className={classes.commentBox}>
-            <Carousel
-              data={latestReviews}
-              onCommentClick={commentClickHandler}
-              homePage
-              substringReview
-            />
+            <Carousel data={latestReviews} onCommentClick={commentClickHandler} homePage substringReview />
           </div>
         </div>
       )}

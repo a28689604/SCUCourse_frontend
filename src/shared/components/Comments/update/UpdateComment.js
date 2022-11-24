@@ -88,7 +88,7 @@ const UpdateComment = (props) => {
     event.preventDefault();
     try {
       const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`,
+        `https://scucourse.herokuapp.com/reviews/${data._id}`,
         "PATCH",
         JSON.stringify({
           review: formState.inputs.comment.value,
@@ -118,14 +118,9 @@ const UpdateComment = (props) => {
   const confirmDeleteHandler = async () => {
     console.log("DELETE!");
     try {
-      const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`,
-        "DELETE",
-        null,
-        {
-          Authorization: "Bearer " + auth.token,
-        }
-      );
+      const res = await sendRequset(`https://scucourse.herokuapp.com/reviews/${data._id}`, "DELETE", null, {
+        Authorization: "Bearer " + auth.token,
+      });
       if (res === 204) {
         setShowConfirmModal(false);
         setShowSuccessDeleteModal(true);
@@ -189,16 +184,9 @@ const UpdateComment = (props) => {
       </Modal>
       {isLoading && <Loading />}
       {!isLoading && !userDataIsLoading && (
-        <form
-          onClick={disableAddCommentHandler}
-          onSubmit={commentUpdateHandler}
-        >
+        <form onClick={disableAddCommentHandler} onSubmit={commentUpdateHandler}>
           <CommentItem type="personal" newComment={true}>
-            <CommentRating
-              newComment={true}
-              thumb={thumb}
-              thumbOnClick={changeThumbHandler}
-            >
+            <CommentRating newComment={true} thumb={thumb} thumbOnClick={changeThumbHandler}>
               <Input
                 onlyElement
                 id="difficulty"

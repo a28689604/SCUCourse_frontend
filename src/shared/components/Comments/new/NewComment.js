@@ -97,7 +97,7 @@ const NewComment = (props) => {
 
     try {
       const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/courses/${formState.inputs.courseName.value.value}/reviews`,
+        `https://scucourse.herokuapp.com/courses/${formState.inputs.courseName.value.value}/reviews`,
         "POST",
         JSON.stringify({
           review: formState.inputs.comment.value,
@@ -160,17 +160,9 @@ const NewComment = (props) => {
       )}
       {addComment && isLoading && <Loading />}
       {addComment && !isLoading && (
-        <form
-          onClick={disableAddCommentHandler}
-          onSubmit={commentSubmitHandler}
-        >
+        <form onClick={disableAddCommentHandler} onSubmit={commentSubmitHandler}>
           <CommentItem type="personal" newComment={true}>
-            <CommentRating
-              personalRating
-              newComment={true}
-              thumb={thumb}
-              thumbOnClick={changeThumbHandler}
-            >
+            <CommentRating personalRating newComment={true} thumb={thumb} thumbOnClick={changeThumbHandler}>
               <Input
                 onlyElement
                 id="difficulty"
@@ -192,14 +184,7 @@ const NewComment = (props) => {
                 options={props.courseNameData}
                 onInput={inputHandler}
               />
-              <Input
-                onlyElement
-                id="comment"
-                element="textarea"
-                errorText="請輸入至少5個字"
-                onInput={inputHandler}
-                validators={[VALIDATOR_MINLENGTH(5)]}
-              />
+              <Input onlyElement id="comment" element="textarea" errorText="請輸入至少5個字" onInput={inputHandler} validators={[VALIDATOR_MINLENGTH(5)]} />
             </CommentContent>
             <Button type="submit" disabled={!formState.isValid}>
               發表
