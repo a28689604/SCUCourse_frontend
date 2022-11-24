@@ -6,8 +6,6 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
-env:
-  CI: false
 
 jobs:
   build_and_deploy:
