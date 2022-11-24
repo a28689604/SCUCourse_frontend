@@ -69,11 +69,16 @@
 
 .comment-list {
   padding-top: 1.6rem;
+  max-width: 100rem;
 }
 
 .comment-list ul {
   display: grid;
   gap: 1.6rem;
+  width: 100%;
+}
+.comment-list li {
+  width: 100%;
 }
 
 .comment-list h1 {
