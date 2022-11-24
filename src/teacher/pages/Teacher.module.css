@@ -70,6 +70,7 @@
 .comment-list {
   padding-top: 1.6rem;
   max-width: 100rem;
+  width: 100%;
 }
 
 .comment-list ul {
