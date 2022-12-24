@@ -37,7 +37,7 @@ const SetPasssword = () => {
     event.preventDefault();
     try {
       const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/users/setPassword/${setPasswordToken}`,
+        `https://scucourse.herokuapp.com/api/v1/users/setPassword/${setPasswordToken}`,
         "PATCH",
         JSON.stringify({
           password: formState.inputs.password.value,
