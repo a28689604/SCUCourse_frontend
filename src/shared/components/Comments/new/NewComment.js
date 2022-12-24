@@ -97,7 +97,7 @@ const NewComment = (props) => {
 
     try {
       const res = await sendRequset(
-        `https://scucourse.herokuapp.com/api/v1/courses/${formState.inputs.courseName.value.value}/reviews`,
+        `/courses/${formState.inputs.courseName.value.value}/reviews`,
         "POST",
         JSON.stringify({
           review: formState.inputs.comment.value,

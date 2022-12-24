@@ -15,7 +15,7 @@ const TeacherSearch = () => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const responseData = await sendRequset(`https://scucourse.herokuapp.com/api/v1/teachers/find/${teacherName}`);
+        const responseData = await sendRequset(`${[process.env.REACT_APP_BACKEND_URL]}/teachers/find/${teacherName}`);
         setLoadedTeachers(responseData.data.data);
       } catch (err) {}
     };
