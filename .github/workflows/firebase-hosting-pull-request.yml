@@ -14,7 +14,7 @@ jobs:
         with:
           envkey_REACT_APP_BACKEND_URL: ${{secrets.REACT_APP_BACKEND_URL}}
           directory: "./"
-          file_name: ".env"
+          file_name: ".env.production"
       - run: npm ci && npm run build
         env:
           REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
