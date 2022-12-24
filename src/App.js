@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import Loading from "./shared/components/UIElements/Loading";
@@ -40,6 +40,13 @@ const App = () => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+
+  useEffect(() => {
+    logEvent(analytics, "screen_view", {
+      firebase_screen: window.location.pathname + window.location.search,
+    });
+  }, [analytics]);
+
   let routes;
 
   if (token) {

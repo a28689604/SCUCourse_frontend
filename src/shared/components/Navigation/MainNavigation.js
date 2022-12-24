@@ -16,7 +16,7 @@ const MainNavigation = (props) => {
   // GA stuff
 
   const analytics = getAnalytics();
-  logEvent(analytics, "Search Action");
+  logEvent(analytics, "search");
 
   const auth = useContext(AuthContext);
 
