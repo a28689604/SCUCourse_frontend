@@ -10,7 +10,13 @@ import Login from "../Icons/Login";
 import Logout from "../Icons/Logout";
 import Search from "../Icons/Search";
 
+import useAnalyticsEventTracker from "../../../ga/useAnalyticsEventTracker";
+
 const MainNavigation = (props) => {
+  // GA stuff
+
+  const gaEventTracker = useAnalyticsEventTracker("Main Navigation");
+
   const auth = useContext(AuthContext);
 
   const searchInputRef = useRef();
@@ -18,6 +24,7 @@ const MainNavigation = (props) => {
 
   const searchHandler = (event) => {
     event.preventDefault();
+    gaEventTracker("Search");
     const enteredTeacher = searchInputRef.current.value;
     if (enteredTeacher) {
       history.push({
@@ -40,12 +47,7 @@ const MainNavigation = (props) => {
           <Link to="/">東吳課程評價</Link>
         </h1>
         <form className={classes.search} onSubmit={searchHandler}>
-          <input
-            type="text"
-            className={classes["search-input"]}
-            ref={searchInputRef}
-            placeholder="輸入老師姓名..."
-          />
+          <input type="text" className={classes["search-input"]} ref={searchInputRef} placeholder="輸入老師姓名..." />
           <button className={classes["search-button"]} type="submit">
             <Search />
           </button>
