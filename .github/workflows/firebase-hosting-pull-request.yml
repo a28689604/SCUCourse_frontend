@@ -3,8 +3,6 @@
 
 name: Deploy to Firebase Hosting on PR
 "on": pull_request
-env:
-  REACT_APP_BACKEND_URL: ${{secrets.REACT_APP_BACKEND_URL}}
 jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
@@ -12,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
+      - uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_REACT_APP_BACKEND_URL: ${{secrets.REACT_APP_BACKEND_URL}}
+          directory: "./"
+          file_name: ".env.production"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
