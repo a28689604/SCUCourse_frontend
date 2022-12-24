@@ -49,7 +49,7 @@ const Auth = () => {
     if (isLoginMode) {
       try {
         const res = await sendRequset(
-          `https://scucourse.herokuapp.com/api/v1/users/login`,
+          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -68,7 +68,7 @@ const Auth = () => {
     } else {
       try {
         const res = await sendRequset(
-          `https://scucourse.herokuapp.com/api/v1/users/signup`,
+          `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -93,7 +93,7 @@ const Auth = () => {
     try {
       setShowConfirmModal(false);
       const res = await sendRequset(
-        `https://scucourse.herokuapp.com/api/v1/users/reSendEmail`,
+        `${process.env.REACT_APP_BACKEND_URL}/users/reSendEmail`,
         "POST",
         JSON.stringify({
           email: formState.inputs.email.value,

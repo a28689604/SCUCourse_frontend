@@ -88,7 +88,7 @@ const UpdateComment = (props) => {
     event.preventDefault();
     try {
       const res = await sendRequset(
-        `https://scucourse.herokuapp.com/api/v1/reviews/${data._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`,
         "PATCH",
         JSON.stringify({
           review: formState.inputs.comment.value,
