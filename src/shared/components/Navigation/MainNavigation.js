@@ -10,12 +10,13 @@ import Login from "../Icons/Login";
 import Logout from "../Icons/Logout";
 import Search from "../Icons/Search";
 
-import useAnalyticsEventTracker from "../../../ga/useAnalyticsEventTracker";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 const MainNavigation = (props) => {
   // GA stuff
 
-  const gaEventTracker = useAnalyticsEventTracker("Main Navigation");
+  const analytics = getAnalytics();
+  logEvent(analytics, "Search Action");
 
   const auth = useContext(AuthContext);
 
@@ -24,7 +25,6 @@ const MainNavigation = (props) => {
 
   const searchHandler = (event) => {
     event.preventDefault();
-    gaEventTracker("Search");
     const enteredTeacher = searchInputRef.current.value;
     if (enteredTeacher) {
       history.push({
