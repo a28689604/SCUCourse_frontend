@@ -17,6 +17,8 @@ const TeacherSearch = () => {
       try {
         const responseData = await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/teachers/find/${teacherName}`);
         setLoadedTeachers(responseData.data.data);
+        // 設定網頁標題
+        document.title = `搜尋:${teacherName}`;
       } catch (err) {}
     };
     fetchTeacher();

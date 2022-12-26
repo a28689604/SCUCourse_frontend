@@ -23,6 +23,8 @@ const HomePage = () => {
       } catch (err) {}
     };
     fetchTeacher();
+    //設定網頁title
+    document.title = "首頁";
   }, [sendRequset]);
 
   const searchHandler = (event) => {
