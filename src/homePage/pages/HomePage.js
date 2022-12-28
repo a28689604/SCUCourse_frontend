@@ -15,12 +15,13 @@ const HomePage = () => {
   const searchInputRef = useRef();
   const history = useHistory();
 
+  document.title = "首頁";
+
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
         const responseData = await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/reviews/latest-reviews`);
         setLatestReviews(responseData.data.data);
-        document.title = "首頁";
       } catch (err) {}
     };
     fetchTeacher();

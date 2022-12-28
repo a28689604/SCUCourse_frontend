@@ -47,6 +47,10 @@ const App = () => {
     });
   }, [analytics]);
 
+  useEffect(() => {
+    console.log(window.location.pathname + window.location.search);
+  });
+
   let routes;
 
   if (token) {

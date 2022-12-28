@@ -33,9 +33,7 @@ const SetPasssword = () => {
 
   const setPasswordToken = useParams().setPasswordToken;
 
-  useEffect(() => {
-    document.title = "設定密碼";
-  }, []);
+  document.title = "設定密碼";
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();

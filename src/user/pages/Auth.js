@@ -37,7 +37,7 @@ const Auth = () => {
 
   useEffect(() => {
     document.title = isLoginMode ? "登入" : "註冊";
-  }, []);
+  }, [isLoginMode]);
 
   const switchModeHandler = () => {
     if (isLoginMode) {
