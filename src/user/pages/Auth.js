@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -34,6 +34,10 @@ const Auth = () => {
       isValid: false,
     },
   });
+
+  useEffect(() => {
+    document.title = isLoginMode ? "登入" : "註冊";
+  }, []);
 
   const switchModeHandler = () => {
     if (isLoginMode) {
@@ -146,26 +150,8 @@ const Auth = () => {
           <h2>登入</h2>
           <hr />
           <form onSubmit={authSubmitHandler}>
-            <Input
-              id="email"
-              element="input"
-              type="email"
-              label="E-mail"
-              validators={[VALIDATOR_EMAIL()]}
-              errorText="請輸入有效的email，僅允許使用東吳校內信箱"
-              onInput={inputHandler}
-            />
-            {isLoginMode && (
-              <Input
-                id="password"
-                element="input"
-                type="password"
-                label="密碼"
-                validators={[VALIDATOR_MINLENGTH(8)]}
-                errorText="請輸入至少8個字元"
-                onInput={inputHandler}
-              />
-            )}
+            <Input id="email" element="input" type="email" label="E-mail" validators={[VALIDATOR_EMAIL()]} errorText="請輸入有效的email，僅允許使用東吳校內信箱" onInput={inputHandler} />
+            {isLoginMode && <Input id="password" element="input" type="password" label="密碼" validators={[VALIDATOR_MINLENGTH(8)]} errorText="請輸入至少8個字元" onInput={inputHandler} />}
             <div className={classes.buttons}>
               <div className={classes.login}>
                 <Button type="submit" disabled={!formState.isValid}>

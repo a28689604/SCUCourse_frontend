@@ -20,6 +20,7 @@ const HomePage = () => {
       try {
         const responseData = await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/reviews/latest-reviews`);
         setLatestReviews(responseData.data.data);
+        document.title = "首頁";
       } catch (err) {}
     };
     fetchTeacher();

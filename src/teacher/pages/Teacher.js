@@ -79,6 +79,9 @@ const Teacher = (props) => {
       } catch (err) {}
     };
     fetchTeacher();
+
+    // 設定網頁標題
+    document.title = teacherName;
   }, [sendRequset, teacherName]);
 
   let userComment;
@@ -159,11 +162,7 @@ const Teacher = (props) => {
             <div className={classes["course-statistic"]}>
               {!isLoading && teacherDataState && (
                 <>
-                  <Select
-                    options={teacherDataState.loadedCourseOptions}
-                    onChange={courseStatisticHandler}
-                    placeholder={"在此選擇課程，以查看修課成績分數分布"}
-                  />
+                  <Select options={teacherDataState.loadedCourseOptions} onChange={courseStatisticHandler} placeholder={"在此選擇課程，以查看修課成績分數分布"} />
                   <div className={classes.courseScoreAvg}>
                     {isSelect && (
                       <h3>
@@ -187,9 +186,7 @@ const Teacher = (props) => {
           </div>
           <div className={classes["comment-layout"]}>
             <div className={classes["personal-comment"]}>
-              {!isLoading && userComment && (
-                <UpdateComment userComment={userComment} difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />
-              )}
+              {!isLoading && userComment && <UpdateComment userComment={userComment} difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />}
               {!userComment && <NewComment new difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />}
             </div>
             <div className={classes["comment-list"]}>
