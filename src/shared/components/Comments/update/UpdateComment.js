@@ -118,7 +118,7 @@ const UpdateComment = (props) => {
   const confirmDeleteHandler = async () => {
     console.log("DELETE!");
     try {
-      const res = await sendRequset(`/reviews/${data._id}`, "DELETE", null, {
+      const res = await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`, "DELETE", null, {
         Authorization: "Bearer " + auth.token,
       });
       if (res === 204) {
