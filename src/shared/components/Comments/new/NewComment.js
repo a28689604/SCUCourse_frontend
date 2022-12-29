@@ -97,7 +97,7 @@ const NewComment = (props) => {
 
     try {
       const res = await sendRequset(
-        `/courses/${formState.inputs.courseName.value.value}/reviews`,
+        `${process.env.REACT_APP_BACKEND_URL}/courses/${formState.inputs.courseName.value.value}/reviews`,
         "POST",
         JSON.stringify({
           review: formState.inputs.comment.value,
