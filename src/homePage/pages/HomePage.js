@@ -17,6 +17,8 @@ const HomePage = () => {
   const searchInputRef = useRef();
   const history = useHistory();
 
+  document.title = "首頁";
+
   useEffect(() => {
     const fetchTeacher = async () => {
       try {

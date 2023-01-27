@@ -81,6 +81,9 @@ const Teacher = (props) => {
       } catch (err) {}
     };
     fetchTeacher();
+
+    // 設定網頁標題
+    document.title = teacherName;
   }, [sendRequset, teacherName]);
 
   let userComment;

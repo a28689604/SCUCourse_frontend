@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -13,7 +13,6 @@ import { AuthContext } from "../../shared/context/auth-context";
 
 import classes from "./Auth.module.css";
 import Button from "../../shared/components/FormElements/Button";
-import { useEffect } from "react";
 
 const SetPasssword = () => {
   const auth = useContext(AuthContext);
@@ -70,8 +69,24 @@ const SetPasssword = () => {
           <h2>設定密碼</h2>
           <hr />
           <form onSubmit={authSubmitHandler}>
-            <Input id="password" element="input" type="password" label="密碼" validators={[VALIDATOR_MINLENGTH(8)]} errorText="請輸入至少8個字元" onInput={inputHandler} />
-            <Input id="passwordConfirm" element="input" type="password" label="確認密碼" validators={[VALIDATOR_MINLENGTH(8)]} errorText="請輸入至少8個字元" onInput={inputHandler} />
+            <Input
+              id="password"
+              element="input"
+              type="password"
+              label="密碼"
+              validators={[VALIDATOR_MINLENGTH(8)]}
+              errorText="請輸入至少8個字元"
+              onInput={inputHandler}
+            />
+            <Input
+              id="passwordConfirm"
+              element="input"
+              type="password"
+              label="確認密碼"
+              validators={[VALIDATOR_MINLENGTH(8)]}
+              errorText="請輸入至少8個字元"
+              onInput={inputHandler}
+            />
             <Button type="submit" disabled={!formState.isValid}>
               註冊
             </Button>

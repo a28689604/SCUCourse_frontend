@@ -22,6 +22,7 @@ const TeacherSearch = () => {
       } catch (err) {}
     };
     fetchTeacher();
+    document.title = `搜尋:${teacherName}`;
   }, [sendRequset, teacherName]);
 
   return (

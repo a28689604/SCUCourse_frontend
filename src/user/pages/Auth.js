@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -40,6 +40,10 @@ const Auth = () => {
       isValid: false,
     },
   });
+
+  useEffect(() => {
+    document.title = isLoginMode ? "登入" : "註冊";
+  }, [isLoginMode]);
 
   const switchModeHandler = () => {
     if (isLoginMode) {
