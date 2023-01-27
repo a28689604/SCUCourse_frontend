@@ -6,8 +6,6 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import Carousel from "../components/Carousel";
 import Heading from "../components/Heading";
 
-import classes from "./HomePage.module.css";
-
 import Stack from "@mui/material/Stack";
 
 const HomePage = () => {
