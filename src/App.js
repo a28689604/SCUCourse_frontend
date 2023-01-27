@@ -12,6 +12,14 @@ import TeacherSearch from "./teacher/pages/TeacherSearch";
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import { createTheme, ThemeProvider } from "@mui/material";
+import Container from "@mui/material/Container";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Microsoft JhengHei", "sans-serif"].join(","),
+  },
+});
 
 const HomePage = React.lazy(() => import("./homePage/pages/HomePage"));
 const Teacher = React.lazy(() => import("./teacher/pages/Teacher"));
@@ -88,20 +96,16 @@ const App = () => {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
-      <Router>
-        <MainNavigation />
-        <Suspense
-          fallback={
-            <>
-              <Loading overlay />
-            </>
-          }
-        >
-          {routes}
-        </Suspense>
-      </Router>
-    </AuthContext.Provider>
+    <ThemeProvider theme={theme}>
+      <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
+        <Router>
+          <MainNavigation />
+          <Container maxWidth="xl">
+            <Suspense fallback={<Loading overlay />}>{routes}</Suspense>
+          </Container>
+        </Router>
+      </AuthContext.Provider>
+    </ThemeProvider>
   );
 };
 export default App;
