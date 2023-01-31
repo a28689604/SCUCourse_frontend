@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
-import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import Navigation from "./shared/components/Navigation/Navigation";
 import Loading from "./shared/components/UIElements/Loading";
 // import HomePage from "./homePage/pages/HomePage";
 // import Teacher from "./teacher/pages/Teacher";
@@ -99,7 +99,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
         <Router>
-          <MainNavigation />
+          <Navigation />
           <Container maxWidth="xl">
             <Suspense fallback={<Loading overlay />}>{routes}</Suspense>
           </Container>

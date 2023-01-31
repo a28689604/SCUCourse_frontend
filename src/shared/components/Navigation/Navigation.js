@@ -2,9 +2,6 @@ import React, { useContext, useRef } from "react";
 import { Link as RouterLink, NavLink as RouterNavLink, useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../context/auth-context";
-import MainHeader from "./MainHeader";
-
-import classes from "./MainNavigation.module.css";
 import Login from "../Icons/Login";
 import Logout from "../Icons/Logout";
 // import Search from "../Icons/Search";
@@ -31,11 +28,8 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginRight: "auto",
   paddingRight: "2.5px",
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
+  marginLeft: theme.spacing(1),
+  width: "auto",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -44,12 +38,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(1)})`,
     transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "100px",
-      "&:focus": {
-        width: "150px",
-      },
+
+    width: "100px",
+    "&:focus": {
+      width: "150px",
     },
   },
 }));

@@ -32,11 +32,9 @@ const Search = styled("div")(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
   },
   paddingRight: "2.5px",
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
+
+  marginLeft: theme.spacing(1),
+  width: "auto",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -55,7 +53,7 @@ const Heading = (props) => {
           <strong>東吳教授評價</strong>
         </Typography>
         <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
-          「東吳教授評價」是一個東吳大學的教授評價網站，提供了一個平台讓學生能夠發表有關於教授的評價，以及查閱教授過去授課的成績分布，讓學生能夠更明確的了解教授的教學水準。這個網站能夠提供學生一個更公正的評價系統，讓學生能夠更好的選擇課程。
+          「東吳教授評價」是一個東吳大學的教授評價網站，提供了一個平台讓學生能夠發表有關於教授的評價，以及查閱教授過去授課的成績分布，讓學生能夠更明確的了解教授的教學難度。此網站誕生的目的是為了提供學生一個更公正的評價系統，讓學生能夠更好的選擇課程。
         </Typography>
         <Search>
           <Box component="form" onSubmit={props.searchHandler} sx={{ display: "flex", alignItems: "center" }}>
