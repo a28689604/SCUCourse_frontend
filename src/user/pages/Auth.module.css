@@ -1,9 +1,10 @@
 .authLayout {
-  max-width: 100rem;
+  max-width: 40rem;
   margin: 0 auto;
   /* background-color: rgb(118, 170, 237); */
   /* padding: 9.6rem 0; */
-  padding-top: 30vh;
+  padding-top: 5rem;
+  width: 95%;
 }
 
 .buttons {
@@ -13,12 +14,15 @@
 
 .buttons button {
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .switch {
   align-self: flex-end;
 }
-
+.title {
+  margin-bottom: 1rem;
+}
 @media (max-width: 768px) {
   .authLayout {
     padding-top: 22vh;

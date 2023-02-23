@@ -8,22 +8,15 @@ import InputBase from "@mui/material/InputBase";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 
-const theme = createTheme({
-  components: {
-    MuiTypography: {
-      variants: [
-        {
-          props: {
-            variant: "h1",
-          },
-          style: {
-            fontWeight: "bold",
-          },
-        },
-      ],
-    },
+const theme = createTheme();
+
+theme.typography.h1 = {
+  fontWeight: "bold",
+  fontSize: "6rem",
+  "@media (max-width:425px)": {
+    fontSize: "4rem",
   },
-});
+};
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -47,13 +40,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 const Heading = (props) => {
   return (
-    <Stack spacing={3} direction="column" justifyContent="center" alignItems="center" sx={{ maxWidth: "750px", marginTop: "20px" }}>
+    <Stack spacing={2} direction="column" justifyContent="center" alignItems="center" sx={{ maxWidth: "600px", marginTop: "30px" }}>
       <ThemeProvider theme={theme}>
         <Typography variant="h1" component="h1">
-          <strong>東吳教授評價</strong>
+          東吳教授評價
         </Typography>
         <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
-          「東吳教授評價」是一個東吳大學的教授評價網站，提供了一個平台讓學生能夠發表有關於教授的評價，以及查閱教授過去授課的成績分布，讓學生能夠更明確的了解教授的教學難度。此網站誕生的目的是為了提供學生一個更公正的評價系統，讓學生能夠更好的選擇課程。
+          「東吳教授評價」是一個旨在提供東吳大學學生更公正、透明的教授評價平台的網站。 <br />
+          作為一個學生，你可能會對即將修課的教授有許多疑問，例如教學風格、課業難度、評分方式等等。透過「東吳教授評價」，你可以輕鬆地查詢到教授的歷年成績分布，了解其授課難度與評分標準。同時，你也可以發表對教授的評價，分享自己的課程經驗，並且幫助其他學生作出更好的選擇。
         </Typography>
         <Search>
           <Box component="form" onSubmit={props.searchHandler} sx={{ display: "flex", alignItems: "center" }}>

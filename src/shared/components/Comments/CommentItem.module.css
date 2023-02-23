@@ -5,23 +5,21 @@
   word-break: break-all;
   gap: 1.6rem;
   height: 100%;
+  max-width: 100%;
 }
 
 .teacher-layout {
-  max-width: 100%;
-  gap: 1.6rem;
 }
 
 .personal-comment-layout {
-  max-width: 100%;
   grid-template-columns: auto 4fr auto;
-  gap: 1.6rem;
   row-gap: 0;
 }
 
 .home-page-layout {
   height: 20rem;
   max-width: 40rem;
+  width: 90%;
 }
 
 .homePageCreateAt {

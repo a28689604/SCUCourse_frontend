@@ -72,7 +72,7 @@ const MainNavigation = (props) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Link component={RouterNavLink} variant="h5" sx={{ textDecoration: "none", color: "#fff", marginRight: 2 }} to="/">
+            <Link component={RouterNavLink} variant="h5" sx={{ textDecoration: "none", color: "#fff", marginRight: 2, fontWeight: "bold" }} to="/">
               東吳課程評價
             </Link>
             <Search>

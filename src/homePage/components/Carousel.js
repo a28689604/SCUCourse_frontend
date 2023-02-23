@@ -23,7 +23,7 @@ const Carousel = (props) => {
         // when window width is >= 768px
         768: {
           // width: 768,
-          slidesPerView: 1.3,
+          slidesPerView: 1.4,
           spaceBetween: 0,
         },
       }}

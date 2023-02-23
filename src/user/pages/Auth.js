@@ -152,7 +152,7 @@ const Auth = () => {
       <div className={classes.authLayout}>
         {isLoading && <Loading overlay />}
         <Card>
-          <h2>登入</h2>
+          <h2 className={classes.title}>登入</h2>
           <hr />
           <form onSubmit={authSubmitHandler}>
             <Input
