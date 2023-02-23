@@ -3,15 +3,8 @@
   padding-bottom: 40px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
   .swiper {
-    width: 60rem;
-    padding-bottom: 40px;
-  }
-}
-@media screen and (max-width: 640px) {
-  .swiper {
-    width: 60rem;
-    padding-bottom: 40px;
+    width: 100%;
   }
 }
