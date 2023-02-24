@@ -27,4 +27,13 @@
   .authLayout {
     padding-top: 22vh;
   }
+  .authLayout {
+    padding-top: 2.5rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .authLayout {
+    padding-top: 1rem;
+  }
 }

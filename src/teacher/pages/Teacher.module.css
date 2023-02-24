@@ -5,7 +5,6 @@
   padding: 3rem 1rem 3rem 1rem;
   display: grid;
   grid-template-columns: 1fr 4fr;
-  width: 95%;
 }
 
 .teacher-statistic {
@@ -66,12 +65,10 @@
   margin: 0 auto;
   margin-top: 2rem;
   max-width: 100rem;
-  width: 95%;
   margin-bottom: 2.6rem;
 }
 
 .comment-list {
-  padding-top: 1.6rem;
   max-width: 100rem;
   width: 100%;
 }
@@ -96,6 +93,7 @@
   .teacher-Layout {
     grid-template-columns: auto;
     gap: 2.4rem;
+    padding-bottom: 1rem;
   }
   .teacher-statistic {
     grid-template-columns: 1fr auto auto;
@@ -107,7 +105,7 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 575px) {
   .teacher-statistic {
     display: grid;
     grid-template-columns: auto auto;
@@ -124,8 +122,9 @@
     position: absolute;
     display: grid;
     gap: 1.6rem;
-    margin-left: 20%;
-    margin-top: 20%;
+    top: 20%;
+    left: 20%;
+    transform: translate(-50%, -50%);
   }
 
   .courseScoreAvg h3 {

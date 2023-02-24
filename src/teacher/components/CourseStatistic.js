@@ -1,8 +1,8 @@
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 const CourseStatistic = (props) => {
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="99%" aspect={1.5}>
       <BarChart data={props.data}>
         <XAxis dataKey="name" />
         <YAxis width={20} />

@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const theme = createTheme();
 
@@ -39,8 +40,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const Heading = (props) => {
+  const matches = useMediaQuery("(max-width:425px)");
+
   return (
-    <Stack spacing={2} direction="column" justifyContent="center" alignItems="center" sx={{ maxWidth: "600px", marginTop: "30px" }}>
+    <Stack
+      spacing={2}
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      sx={matches ? { maxWidth: "600px", marginTop: "15px" } : { maxWidth: "600px", marginTop: "30px" }}
+    >
       <ThemeProvider theme={theme}>
         <Typography variant="h1" component="h1">
           東吳教授評價

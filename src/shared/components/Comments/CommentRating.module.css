@@ -36,13 +36,14 @@
     text-align: center;
     padding-top: 0.2rem;
     display: grid;
-    grid-template-columns: auto 1fr auto 1fr;
+    grid-template-columns: auto 2fr auto 1fr;
     grid-template-rows: auto;
 
     gap: 1.2rem;
     justify-items: start;
     align-items: center;
     border-bottom: 0.2rem #dae0e6 solid;
+    padding-bottom: 1rem;
   }
 
   .rating-content {

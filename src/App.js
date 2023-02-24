@@ -100,7 +100,7 @@ const App = () => {
       <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
         <Router>
           <Navigation />
-          <Container maxWidth="xl">
+          <Container disableGutters sx={{ width: "95%" }}>
             <Suspense fallback={<Loading overlay />}>{routes}</Suspense>
           </Container>
         </Router>

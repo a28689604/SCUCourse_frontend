@@ -2,8 +2,6 @@ import React, { useContext, useRef } from "react";
 import { Link as RouterLink, NavLink as RouterNavLink, useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../context/auth-context";
-import Login from "../Icons/Login";
-import Logout from "../Icons/Logout";
 // import Search from "../Icons/Search";
 
 import { getAnalytics, logEvent } from "firebase/analytics";
@@ -18,6 +16,10 @@ import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import HomeIcon from "@mui/icons-material/Home";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -43,6 +45,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     "&:focus": {
       width: "150px",
     },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(0.5, 0.5, 0.5, 1),
+
+      "&:focus": {
+        width: "100px",
+      },
+    },
   },
 }));
 
@@ -67,14 +76,23 @@ const MainNavigation = (props) => {
     searchInputRef.current.value = "";
   };
 
+  const matches = useMediaQuery("(max-width:425px)");
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Link component={RouterNavLink} variant="h5" sx={{ textDecoration: "none", color: "#fff", marginRight: 2, fontWeight: "bold" }} to="/">
-              東吳課程評價
-            </Link>
+            {matches ? (
+              <Link component={RouterNavLink} to="/">
+                <HomeIcon sx={{ fontSize: 25, color: "#fff" }} />
+              </Link>
+            ) : (
+              <Link component={RouterNavLink} variant="h5" sx={{ textDecoration: "none", color: "#fff", marginRight: 2, fontWeight: "bold" }} to="/">
+                東吳課程評價
+              </Link>
+            )}
+
             <Search>
               <Box component="form" onSubmit={searchHandler} sx={{ display: "flex", alignItems: "center" }}>
                 <StyledInputBase placeholder="搜尋教授..." inputProps={{ "aria-label": "search", style: { fontSize: 16 } }} inputRef={searchInputRef} />
@@ -84,17 +102,25 @@ const MainNavigation = (props) => {
               </Box>
             </Search>
             {!auth.isLoggedIn && (
-              <Button color="inherit">
-                <Link component={RouterNavLink} variant="h5" sx={{ textDecoration: "none", color: "#fff" }} to="/auth">
-                  登入
-                </Link>
+              <Button color="inherit" sx={{ minHeight: 0, minWidth: 0, padding: 0 }}>
+                {matches ? (
+                  <LoginIcon sx={{ fontSize: 25, color: "#fff" }} onClick={auth.logout} />
+                ) : (
+                  <Link component={RouterNavLink} variant="h5" sx={{ textDecoration: "none", color: "#fff" }} to="/auth">
+                    登入
+                  </Link>
+                )}
               </Button>
             )}
             {auth.isLoggedIn && (
-              <Button color="inherit">
-                <Typography variant="h5" sx={{ color: "#fff" }} onClick={auth.logout}>
-                  登出
-                </Typography>
+              <Button color="inherit" sx={{ minHeight: 0, minWidth: 0, padding: 0 }}>
+                {matches ? (
+                  <LogoutIcon sx={{ fontSize: 25, color: "#fff" }} onClick={auth.logout} />
+                ) : (
+                  <Typography variant="h5" sx={{ color: "#fff" }} onClick={auth.logout}>
+                    登出
+                  </Typography>
+                )}
               </Button>
             )}
           </Toolbar>
