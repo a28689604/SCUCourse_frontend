@@ -53,7 +53,7 @@ const HomePage = () => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {!isLoading && latestReviews && (
-        <Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
+        <Stack spacing={2} direction="column" justifyContent="center" alignItems="center" sx={{}}>
           <Heading searchHandler={searchHandler} searchInputRef={searchInputRef} />
           <Carousel data={latestReviews} onCommentClick={commentClickHandler} homePage substringReview />
         </Stack>

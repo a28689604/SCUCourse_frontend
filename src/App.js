@@ -14,6 +14,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { createTheme, ThemeProvider } from "@mui/material";
 import Container from "@mui/material/Container";
+import Footer from "./shared/components/Footer/Footer";
 
 const theme = createTheme({
   typography: {
@@ -100,9 +101,10 @@ const App = () => {
       <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
         <Router>
           <Navigation />
-          <Container disableGutters sx={{ width: "95%" }}>
+          <Container disableGutters sx={{ width: "95%", minHeight: "calc(100vh - 64px - 46px)" }}>
             <Suspense fallback={<Loading overlay />}>{routes}</Suspense>
           </Container>
+          <Footer />
         </Router>
       </AuthContext.Provider>
     </ThemeProvider>
