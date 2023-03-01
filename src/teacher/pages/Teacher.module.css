@@ -55,6 +55,7 @@
   gap: 1.6rem;
   margin-left: 10%;
   margin-top: 10%;
+  z-index: 1;
 }
 
 .courseScoreAvg h3 {

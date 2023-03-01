@@ -101,7 +101,7 @@ const App = () => {
       <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
         <Router>
           <Navigation />
-          <Container disableGutters sx={{ width: "95%", minHeight: "calc(100vh - 64px - 46px)" }}>
+          <Container disableGutters sx={{ width: "95%", minHeight: "calc(100vh - 64px - 36.3px)" }}>
             <Suspense fallback={<Loading overlay />}>{routes}</Suspense>
           </Container>
           <Footer />
