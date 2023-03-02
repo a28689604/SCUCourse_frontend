@@ -4,7 +4,7 @@ import Link from "@mui/material/Link";
 import GitHubIcon from "@mui/icons-material/GitHub";
 const Footer = () => {
   return (
-    <Grid container sx={{ width: "100%", backgroundColor: "primary.dark", padding: "0.5rem 2.5%" }} alignItems="center" justifyContent="space-between">
+    <Grid container sx={{ width: "100%", backgroundColor: "primary.dark", padding: "0.5rem 2.4rem" }} alignItems="center" justifyContent="space-between">
       <Grid item>
         <Typography
           variant="h5"
