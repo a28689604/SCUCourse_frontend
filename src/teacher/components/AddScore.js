@@ -16,7 +16,7 @@ const AddScore = (props) => {
   const [notLogedinModal, setNotLogedinModal] = useState(false);
   const history = useHistory();
 
-  const { token } = useContext(AuthContext);
+  const { token, userId } = useContext(AuthContext);
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
 
   const [formState, inputHandler] = useForm(
@@ -64,10 +64,11 @@ const AddScore = (props) => {
     },
     false
   );
+
   useEffect(() => {
     if (!token) setNotLogedinModal(true);
   }, [token]);
-  // useEffect(()=>{},)
+
   const confirmLoginHandler = () => {
     setNotLogedinModal(false);
     history.push("/auth");
@@ -77,32 +78,39 @@ const AddScore = (props) => {
     event.preventDefault();
 
     try {
-      // const res = await sendRequset(
-      //   `${process.env.REACT_APP_BACKEND_URL}/courses/${formState.inputs.courseName.value.value}/reviews`,
-      //   "POST",
-      //   JSON.stringify({
-      //     review: formState.inputs.comment.value,
-      //     difficulty: formState.inputs.difficulty.value.value,
-      //     // recommend: thumb,
-      //   }),
-      //   {
-      //     "Content-Type": "application/json",
-      //     Authorization: "Bearer " + token,
-      //   }
-      // );
-      console.log(formState.inputs);
-      // if (res.status === "success") {
-      //   setShowSuccessModal(true);
-      // }
+      const res = await sendRequset(
+        `${process.env.REACT_APP_BACKEND_URL}/courses/${props.course.id}`,
+        "PATCH",
+        JSON.stringify({
+          zero: formState.inputs.zero.value,
+          fifty: formState.inputs.fifty.value,
+          sixty: formState.inputs.sixty.value,
+          sixtyFive: formState.inputs.sixtyFive.value,
+          seventy: formState.inputs.seventy.value,
+          seventyFive: formState.inputs.seventyFive.value,
+          eighty: formState.inputs.eighty.value,
+          eightyFive: formState.inputs.eightyFive.value,
+          ninety: formState.inputs.ninety.value,
+          ninetyFive: formState.inputs.ninetyFive.value,
+          scoreUploadBy: userId,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        }
+      );
+      if (res.status === "success") {
+        setShowSuccessModal(true);
+      }
     } catch (err) {}
   };
   const confirmSuccessHandler = () => {
     setShowSuccessModal(false);
     history.go(0);
   };
-  console.log(props.course);
   return (
     <>
+      <Backdrop onClick={props.onCancel} />
       <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showSuccessModal}
@@ -130,7 +138,6 @@ const AddScore = (props) => {
       >
         <h3 className={classes.text}>請先登入</h3>
       </Modal>
-      <Backdrop onClick={props.onCancel} />
       <form className={classes.form} onSubmit={scoreSubmitHandler}>
         <div className={classes.courseInfo}>
           <h3>{`${props.course["syear"]}學年 第${props.course["smester"]}學期`}</h3>

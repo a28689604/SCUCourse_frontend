@@ -145,7 +145,6 @@ const Teacher = (props) => {
   if (isLoading) {
     return <Loading overlay />;
   }
-
   return (
     <>
       <ErrorModal error={error} onClear={errorHandler} />
@@ -183,7 +182,7 @@ const Teacher = (props) => {
                   />
                   <div className={classes.staticWrapper}>
                     {!isSelect && <h3 className={classes.selectHint}>請使用上方欄位選擇課程</h3>}
-                    {isSelect && courseScoreData[10]["avg"] === null && (
+                    {isSelect && courseScoreData[0]["人數"] === null && (
                       <div className={classes.noScore}>
                         <h3>暫無分數</h3>
                         <Button variant="contained" size="large" onClick={addScoreBtnHandler} sx={{ fontSize: 16 }}>
@@ -192,7 +191,7 @@ const Teacher = (props) => {
                       </div>
                     )}
                     <div className={classes.courseScoreAvg}>
-                      {isSelect && courseScoreData[10]["avg"] !== null && (
+                      {isSelect && courseScoreData[0]["人數"] !== null && (
                         <h3>
                           平均分數:
                           {courseScoreData[10]["avg"] !== null ? courseScoreData[10].avg : "暫無資料"}
@@ -213,7 +212,7 @@ const Teacher = (props) => {
               {!userComment && <NewComment new difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />}
             </div>
             <div className={classes["comment-list"]}>
-              {teacherDataState.loadedReviews.length === 0 && <h1>這位教授還沒有評論，快來留下你的評論吧!</h1>}
+              {teacherDataState.loadedReviews.length === 0 && <h1 className={classes.noCommentData}>這位教授還沒有評論，快來留下你的評論吧!</h1>}
               {!isLoading && teacherDataState.loadedReviews && <CommentList data={teacherDataState.loadedReviews} userVotes={userVotes} type="teacher" />}
             </div>
           </div>
