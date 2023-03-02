@@ -132,7 +132,10 @@ const AddScore = (props) => {
       </Modal>
       <Backdrop onClick={props.onCancel} />
       <form className={classes.form} onSubmit={scoreSubmitHandler}>
-        <h2 className={classes.courseName}>{props.course["courseName"].trim()}</h2>
+        <div className={classes.courseInfo}>
+          <h3>{`${props.course["syear"]}學年 第${props.course["smester"]}學期`}</h3>
+          <h4>{props.course["courseName"].trim()}</h4>
+        </div>
 
         <Input
           id="zero"
