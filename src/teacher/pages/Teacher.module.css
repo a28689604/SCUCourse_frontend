@@ -48,13 +48,35 @@
   height: 100%;
   position: relative;
 }
+.staticWrapper {
+  position: relative;
+}
+
+.selectHint {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  white-space: nowrap;
+}
+.noScore {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  z-index: 1;
+}
 
 .courseScoreAvg {
   position: absolute;
-  display: grid;
-  gap: 1.6rem;
-  margin-left: 10%;
-  margin-top: 10%;
+  top: 5%;
+  left: 6%;
   z-index: 1;
 }
 
@@ -134,5 +156,11 @@
 
   .recommend h2 {
     font-size: 3.6rem;
+  }
+  .selectHint {
+    font-size: 2.4rem;
+  }
+  .noScore {
+    font-size: 2.4rem;
   }
 }

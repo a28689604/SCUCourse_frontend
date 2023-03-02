@@ -84,10 +84,6 @@ const NewComment = (props) => {
     setAddComment(true);
   };
 
-  const disableAddCommentHandler = () => {
-    //setAddComment(false);
-  };
-
   const changeThumbHandler = () => {
     setThumb((prevState) => !prevState);
   };
@@ -160,7 +156,7 @@ const NewComment = (props) => {
       )}
       {addComment && isLoading && <Loading />}
       {addComment && !isLoading && (
-        <form onClick={disableAddCommentHandler} onSubmit={commentSubmitHandler}>
+        <form onSubmit={commentSubmitHandler}>
           <CommentItem type="personal" newComment={true}>
             <CommentRating personalRating newComment={true} thumb={thumb} thumbOnClick={changeThumbHandler}>
               <Input

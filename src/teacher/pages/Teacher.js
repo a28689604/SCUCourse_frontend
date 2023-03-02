@@ -13,6 +13,8 @@ import { AuthContext } from "../../shared/context/auth-context";
 
 import classes from "./Teacher.module.css";
 import Loading from "../../shared/components/UIElements/Loading";
+import AddScore from "../components/AddScore";
+import Button from "@mui/material/Button";
 
 const DIFFICULTY_OPTIONS = [
   { value: 1, label: 1 },
@@ -67,6 +69,8 @@ const Teacher = (props) => {
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
   const [courseScoreData, setCourseScoreData] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
+  const [isAddBtnClick, setIsAddBtnClick] = useState(false);
+  const [selectCourse, setSelectCourse] = useState({});
 
   const teacherName = useParams().teacherId;
   const history = useHistory();
@@ -104,33 +108,38 @@ const Teacher = (props) => {
   }
 
   const courseStatisticHandler = (event) => {
-    const selectedData = teacherDataState.loadedCourse
-      .filter((course) => {
-        return course.id === event.value;
-      })
-      .map((course) => {
-        return [
-          { name: "0~49", 人數: course.zero },
-          { name: "50~59", 人數: course.fifty },
-          { name: "60~64", 人數: course.sixty },
-          { name: "65~69", 人數: course.sixtyFive },
-          { name: "70~74", 人數: course.seventy },
-          { name: "75~79", 人數: course.seventyFive },
-          { name: "80~84", 人數: course.eighty },
-          { name: "85~89", 人數: course.eightyFive },
-          { name: "90~94", 人數: course.ninety },
-          { name: "95~100", 人數: course.ninetyFive },
-          { avg: course.scoreAverage },
-          { popularity: course.coursePopularity },
-        ];
-      });
-    setCourseScoreData(selectedData[0]);
+    const selectedCourse = teacherDataState.loadedCourse.filter((course) => {
+      return course.id === event.value;
+    });
+    setSelectCourse(selectedCourse[0]);
+    const selectedCourseData = selectedCourse.map((course) => {
+      return [
+        { name: "0~49", 人數: course.zero },
+        { name: "50~59", 人數: course.fifty },
+        { name: "60~64", 人數: course.sixty },
+        { name: "65~69", 人數: course.sixtyFive },
+        { name: "70~74", 人數: course.seventy },
+        { name: "75~79", 人數: course.seventyFive },
+        { name: "80~84", 人數: course.eighty },
+        { name: "85~89", 人數: course.eightyFive },
+        { name: "90~94", 人數: course.ninety },
+        { name: "95~100", 人數: course.ninetyFive },
+        { avg: course.scoreAverage },
+        { popularity: course.coursePopularity },
+      ];
+    });
+    setCourseScoreData(selectedCourseData[0]);
+
     setIsSelect(true);
   };
 
   const errorHandler = () => {
     clearError();
     history.goBack();
+  };
+
+  const addScoreBtnHandler = () => {
+    setIsAddBtnClick((prevState) => !prevState);
   };
 
   if (isLoading) {
@@ -142,6 +151,7 @@ const Teacher = (props) => {
       <ErrorModal error={error} onClear={errorHandler} />
       {!isLoading && teacherDataState && (
         <>
+          {isAddBtnClick && <AddScore course={selectCourse} onCancel={addScoreBtnHandler} />}
           <div className={classes["teacher-Layout"]}>
             <div className={classes["teacher-statistic"]}>
               <h1 className={classes["teacher-name"]}>{teacherDataState.loadedTeacher.teacherName}</h1>
@@ -171,23 +181,26 @@ const Teacher = (props) => {
                     menuPortalTarget={document.body}
                     styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
                   />
-                  <div className={classes.courseScoreAvg}>
-                    {isSelect && (
-                      <h3>
-                        平均分數:
-                        {courseScoreData[10] ? courseScoreData[10].avg : "暫無資料"}
-                      </h3>
+                  <div className={classes.staticWrapper}>
+                    {!isSelect && <h3 className={classes.selectHint}>請使用上方欄位選擇課程</h3>}
+                    {isSelect && courseScoreData[10]["avg"] === null && (
+                      <div className={classes.noScore}>
+                        <h3>暫無分數</h3>
+                        <Button variant="contained" size="large" onClick={addScoreBtnHandler} sx={{ fontSize: 16 }}>
+                          點我新增分數
+                        </Button>
+                      </div>
                     )}
-                    {/* {isSelect && (
-                      <h3>
-                        人氣度:
-                        {courseScoreData[11].popularity
-                          ? courseScoreData[11].popularity.toFixed(2)
-                          : "暫無資料"}
-                      </h3>
-                    )} */}
+                    <div className={classes.courseScoreAvg}>
+                      {isSelect && courseScoreData[10]["avg"] !== null && (
+                        <h3>
+                          平均分數:
+                          {courseScoreData[10]["avg"] !== null ? courseScoreData[10].avg : "暫無資料"}
+                        </h3>
+                      )}
+                    </div>
+                    <CourseStatistic data={courseScoreData} />
                   </div>
-                  <CourseStatistic data={courseScoreData} />
                 </>
               )}
             </div>

@@ -14,8 +14,10 @@
 
 .comment {
   font-size: 2rem;
-  line-height: 1.3;
+  line-height: 1.4;
   white-space: pre-wrap;
+  letter-spacing: 0.05rem;
+  padding: 1rem 0;
 }
 
 @media (max-width: 768px) {
