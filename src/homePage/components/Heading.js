@@ -48,7 +48,7 @@ const Heading = (props) => {
       direction="column"
       justifyContent="center"
       alignItems="center"
-      sx={matches ? { maxWidth: "600px", marginTop: "15px" } : { maxWidth: "600px", marginTop: "30px" }}
+      sx={matches ? { maxWidth: "615px", marginTop: "15px" } : { maxWidth: "615px", marginTop: "30px" }}
     >
       <ThemeProvider theme={theme}>
         <Typography variant="h1" component="h1">
