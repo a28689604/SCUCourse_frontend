@@ -5,17 +5,11 @@ import classes from "./CommentRating.module.css";
 
 const CommentRating = (props) => {
   return (
-    <section
-      className={`${classes.rating} ${
-        props.personalRating ? classes.personalRating : ""
-      }`}
-    >
+    <section className={`${classes.rating} ${props.personalRating ? classes.personalRating : ""}`}>
       <label className={classes["rating-title"]} htmlFor="difficulty">
         推薦
       </label>
-      <p
-        className={`${classes["rating-content"]} ${classes["recommend-icon"]}`}
-      >
+      <p className={`${classes["rating-content"]} ${classes["recommend-icon"]}`}>
         {props.newComment && (
           <>
             {props.thumb && <ThumbUp onClick={props.thumbOnClick} />}
@@ -31,9 +25,7 @@ const CommentRating = (props) => {
       </p>
       <label className={classes["rating-title"]}>難度</label>
       {props.newComment && <>{props.children}</>}
-      {!props.newComment && (
-        <p className={classes["rating-content"]}>{props.difficulty}</p>
-      )}
+      {!props.newComment && <p className={classes["rating-content"]}>{props.difficulty}</p>}
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
-import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import Navigation from "./shared/components/Navigation/Navigation";
 import Loading from "./shared/components/UIElements/Loading";
 // import HomePage from "./homePage/pages/HomePage";
 // import Teacher from "./teacher/pages/Teacher";
@@ -12,6 +12,15 @@ import TeacherSearch from "./teacher/pages/TeacherSearch";
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import { createTheme, ThemeProvider } from "@mui/material";
+import Container from "@mui/material/Container";
+import Footer from "./shared/components/Footer/Footer";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Microsoft JhengHei", "sans-serif"].join(","),
+  },
+});
 
 const HomePage = React.lazy(() => import("./homePage/pages/HomePage"));
 const Teacher = React.lazy(() => import("./teacher/pages/Teacher"));
@@ -88,20 +97,17 @@ const App = () => {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
-      <Router>
-        <MainNavigation />
-        <Suspense
-          fallback={
-            <>
-              <Loading overlay />
-            </>
-          }
-        >
-          {routes}
-        </Suspense>
-      </Router>
-    </AuthContext.Provider>
+    <ThemeProvider theme={theme}>
+      <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
+        <Router>
+          <Navigation />
+          <Container disableGutters sx={{ width: "95%", minHeight: "calc(100vh - 64px - 36.3px)" }}>
+            <Suspense fallback={<Loading overlay />}>{routes}</Suspense>
+          </Container>
+          <Footer />
+        </Router>
+      </AuthContext.Provider>
+    </ThemeProvider>
   );
 };
 export default App;

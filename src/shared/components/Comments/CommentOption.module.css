@@ -4,7 +4,7 @@
   /* background-color: rgb(149, 149, 250); */
   width: 100%;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
 }
 

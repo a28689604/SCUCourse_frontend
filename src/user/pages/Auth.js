@@ -24,6 +24,11 @@ const Auth = () => {
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
   const history = useHistory();
 
+  useEffect(() => {
+    // 設定網頁標題
+    document.title = isLoginMode ? "登入" : "註冊";
+  }, [isLoginMode]);
+
   const [formState, inputHandler, setFormData] = useForm({
     email: {
       value: "",
@@ -147,11 +152,29 @@ const Auth = () => {
       <div className={classes.authLayout}>
         {isLoading && <Loading overlay />}
         <Card>
-          <h2>登入</h2>
+          <h2 className={classes.title}>登入</h2>
           <hr />
           <form onSubmit={authSubmitHandler}>
-            <Input id="email" element="input" type="email" label="E-mail" validators={[VALIDATOR_EMAIL()]} errorText="請輸入有效的email，僅允許使用東吳校內信箱" onInput={inputHandler} />
-            {isLoginMode && <Input id="password" element="input" type="password" label="密碼" validators={[VALIDATOR_MINLENGTH(8)]} errorText="請輸入至少8個字元" onInput={inputHandler} />}
+            <Input
+              id="email"
+              element="input"
+              type="email"
+              label="E-mail"
+              validators={[VALIDATOR_EMAIL()]}
+              errorText="請輸入有效的email，僅允許使用東吳校內信箱"
+              onInput={inputHandler}
+            />
+            {isLoginMode && (
+              <Input
+                id="password"
+                element="input"
+                type="password"
+                label="密碼"
+                validators={[VALIDATOR_MINLENGTH(8)]}
+                errorText="請輸入至少8個字元"
+                onInput={inputHandler}
+              />
+            )}
             <div className={classes.buttons}>
               <div className={classes.login}>
                 <Button type="submit" disabled={!formState.isValid}>

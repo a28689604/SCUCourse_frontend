@@ -1,28 +1,11 @@
 .swiper {
-  width: 25rem;
-  height: 40rem;
+  width: 60rem;
+  padding-bottom: 40px;
 }
 
-.swiper-container {
-  width: 48rem;
-}
-
-@media screen and (min-width: 640px) {
-  .swiper-container {
-    width: 640px;
-  }
+@media screen and (max-width: 600px) {
   .swiper {
-    width: 55rem;
-    height: 30rem;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .swiper-container {
-    width: 768px;
-  }
-  .swiper {
-    width: 55rem;
-    height: 30rem;
+    width: 100%;
+    padding-bottom: 20px;
   }
 }

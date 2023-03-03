@@ -1,4 +1,3 @@
-import { useState } from "react";
 import classes from "./CommentContent.module.css";
 
 const CommentContent = (props) => {

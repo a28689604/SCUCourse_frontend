@@ -63,7 +63,6 @@ const Input = (props) => {
       type: "TOUCH",
     });
   };
-
   const element =
     props.element === "input" ? (
       <input
@@ -73,17 +72,10 @@ const Input = (props) => {
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
-        className={`${props.className}`}
+        className={classes[props.styles]}
       />
     ) : props.element === "textarea" ? (
-      <textarea
-        id={props.id}
-        rows={props.rows || 5}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-        className={`${props.className}`}
-      />
+      <textarea id={props.id} rows={props.rows || 5} onChange={changeHandler} onBlur={touchHandler} value={inputState.value} className={`${props.className}`} />
     ) : (
       <Select
         id={props.id}
@@ -101,24 +93,18 @@ const Input = (props) => {
       {props.onlyElement && (
         <>
           {element}
-          {!inputState.isValid && inputState.isTouched && (
-            <p className={classes.errorText}>{props.errorText}</p>
-          )}
+          {!inputState.isValid && inputState.isTouched && <p className={classes.errorText}>{props.errorText}</p>}
         </>
       )}
       {!props.onlyElement && (
         <div
-          className={`${classes["form-control"]} ${
-            !inputState.isValid &&
-            inputState.isTouched &&
-            classes["form-control--invalid"]
+          className={`${classes["form-control"]}  ${!inputState.isValid && inputState.isTouched && classes["form-control--invalid"]} ${
+            classes[props.LabelStyle]
           }`}
         >
           <label htmlFor={props.id}>{props.label}</label>
           {element}
-          {!inputState.isValid && inputState.isTouched && (
-            <p>{props.errorText}</p>
-          )}
+          {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
         </div>
       )}
     </>

@@ -1,5 +1,5 @@
 .form-control {
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
 .form-control label,
@@ -42,4 +42,14 @@
 
 .errorText {
   color: red;
+}
+
+.addClassInput {
+  margin: 0;
+}
+.addClassInput label {
+  font-size: 2rem;
+}
+.addClassInput input {
+  font-size: 1.6rem;
 }

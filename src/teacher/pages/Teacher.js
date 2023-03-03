@@ -13,6 +13,8 @@ import { AuthContext } from "../../shared/context/auth-context";
 
 import classes from "./Teacher.module.css";
 import Loading from "../../shared/components/UIElements/Loading";
+import AddScore from "../components/AddScore";
+import Button from "@mui/material/Button";
 
 const DIFFICULTY_OPTIONS = [
   { value: 1, label: 1 },
@@ -67,6 +69,8 @@ const Teacher = (props) => {
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
   const [courseScoreData, setCourseScoreData] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
+  const [isAddBtnClick, setIsAddBtnClick] = useState(false);
+  const [selectCourse, setSelectCourse] = useState({});
 
   const teacherName = useParams().teacherId;
   const history = useHistory();
@@ -76,6 +80,8 @@ const Teacher = (props) => {
       try {
         const responseData = await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/teachers/${teacherName}`);
         dispatch({ type: "SET", value: responseData.data.data });
+        // 設定網頁標題
+        document.title = teacherName;
       } catch (err) {}
     };
     fetchTeacher();
@@ -102,27 +108,28 @@ const Teacher = (props) => {
   }
 
   const courseStatisticHandler = (event) => {
-    const selectedData = teacherDataState.loadedCourse
-      .filter((course) => {
-        return course.id === event.value;
-      })
-      .map((course) => {
-        return [
-          { name: "0~49", 人數: course.zero },
-          { name: "50~59", 人數: course.fifty },
-          { name: "60~64", 人數: course.sixty },
-          { name: "65~69", 人數: course.sixtyFive },
-          { name: "70~74", 人數: course.seventy },
-          { name: "75~79", 人數: course.seventyFive },
-          { name: "80~84", 人數: course.eighty },
-          { name: "85~89", 人數: course.eightyFive },
-          { name: "90~94", 人數: course.ninety },
-          { name: "95~100", 人數: course.ninetyFive },
-          { avg: course.scoreAverage },
-          { popularity: course.coursePopularity },
-        ];
-      });
-    setCourseScoreData(selectedData[0]);
+    const selectedCourse = teacherDataState.loadedCourse.filter((course) => {
+      return course.id === event.value;
+    });
+    setSelectCourse(selectedCourse[0]);
+    const selectedCourseData = selectedCourse.map((course) => {
+      return [
+        { name: "0~49", 人數: course.zero },
+        { name: "50~59", 人數: course.fifty },
+        { name: "60~64", 人數: course.sixty },
+        { name: "65~69", 人數: course.sixtyFive },
+        { name: "70~74", 人數: course.seventy },
+        { name: "75~79", 人數: course.seventyFive },
+        { name: "80~84", 人數: course.eighty },
+        { name: "85~89", 人數: course.eightyFive },
+        { name: "90~94", 人數: course.ninety },
+        { name: "95~100", 人數: course.ninetyFive },
+        { avg: course.scoreAverage },
+        { popularity: course.coursePopularity },
+      ];
+    });
+    setCourseScoreData(selectedCourseData[0]);
+
     setIsSelect(true);
   };
 
@@ -131,15 +138,19 @@ const Teacher = (props) => {
     history.goBack();
   };
 
+  const addScoreBtnHandler = () => {
+    setIsAddBtnClick((prevState) => !prevState);
+  };
+
   if (isLoading) {
     return <Loading overlay />;
   }
-
   return (
     <>
       <ErrorModal error={error} onClear={errorHandler} />
       {!isLoading && teacherDataState && (
         <>
+          {isAddBtnClick && <AddScore course={selectCourse} onCancel={addScoreBtnHandler} />}
           <div className={classes["teacher-Layout"]}>
             <div className={classes["teacher-statistic"]}>
               <h1 className={classes["teacher-name"]}>{teacherDataState.loadedTeacher.teacherName}</h1>
@@ -162,35 +173,46 @@ const Teacher = (props) => {
             <div className={classes["course-statistic"]}>
               {!isLoading && teacherDataState && (
                 <>
-                  <Select options={teacherDataState.loadedCourseOptions} onChange={courseStatisticHandler} placeholder={"在此選擇課程，以查看修課成績分數分布"} />
-                  <div className={classes.courseScoreAvg}>
-                    {isSelect && (
-                      <h3>
-                        平均分數:
-                        {courseScoreData[10] ? courseScoreData[10].avg : "暫無資料"}
-                      </h3>
+                  <Select
+                    options={teacherDataState.loadedCourseOptions}
+                    onChange={courseStatisticHandler}
+                    placeholder={"在此選擇課程，以查看修課成績分數分布"}
+                    menuPortalTarget={document.body}
+                    styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                  />
+                  <div className={classes.staticWrapper}>
+                    {!isSelect && <h3 className={classes.selectHint}>請使用上方欄位選擇課程</h3>}
+                    {isSelect && courseScoreData[0]["人數"] === null && (
+                      <div className={classes.noScore}>
+                        <h3>暫無分數</h3>
+                        <Button variant="contained" size="large" onClick={addScoreBtnHandler} sx={{ fontSize: 16 }}>
+                          點我新增分數
+                        </Button>
+                      </div>
                     )}
-                    {/* {isSelect && (
-                      <h3>
-                        人氣度:
-                        {courseScoreData[11].popularity
-                          ? courseScoreData[11].popularity.toFixed(2)
-                          : "暫無資料"}
-                      </h3>
-                    )} */}
+                    <div className={classes.courseScoreAvg}>
+                      {isSelect && courseScoreData[0]["人數"] !== null && (
+                        <h3>
+                          平均分數:
+                          {courseScoreData[10]["avg"] !== null ? courseScoreData[10].avg : "暫無資料"}
+                        </h3>
+                      )}
+                    </div>
+                    <CourseStatistic data={courseScoreData} />
                   </div>
-                  <CourseStatistic data={courseScoreData} />
                 </>
               )}
             </div>
           </div>
           <div className={classes["comment-layout"]}>
             <div className={classes["personal-comment"]}>
-              {!isLoading && userComment && <UpdateComment userComment={userComment} difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />}
+              {!isLoading && userComment && (
+                <UpdateComment userComment={userComment} difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />
+              )}
               {!userComment && <NewComment new difficultyData={DIFFICULTY_OPTIONS} courseNameData={teacherDataState.loadedCourseOptions} />}
             </div>
             <div className={classes["comment-list"]}>
-              {teacherDataState.loadedReviews.length === 0 && <h1>這位教授還沒有評論，快來留下你的評論吧!</h1>}
+              {teacherDataState.loadedReviews.length === 0 && <h1 className={classes.noCommentData}>這位教授還沒有評論，快來留下你的評論吧!</h1>}
               {!isLoading && teacherDataState.loadedReviews && <CommentList data={teacherDataState.loadedReviews} userVotes={userVotes} type="teacher" />}
             </div>
           </div>

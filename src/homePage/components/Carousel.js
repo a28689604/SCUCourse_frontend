@@ -14,21 +14,15 @@ const Carousel = (props) => {
   return (
     <Swiper
       breakpoints={{
-        // when window width is >= 640px
-        640: {
-          // width: 640,
-          slidesPerView: 1.3,
-          spaceBetween: 0,
-        },
         // when window width is >= 768px
         768: {
           // width: 768,
-          slidesPerView: 1.3,
+          slidesPerView: 1.4,
           spaceBetween: 0,
         },
       }}
       slidesPerView={1}
-      spaceBetween={50}
+      spaceBetween={0}
       centeredSlides={true}
       autoplay={{
         delay: 5000,

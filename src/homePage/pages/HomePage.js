@@ -6,7 +6,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import Carousel from "../components/Carousel";
 import Heading from "../components/Heading";
 
-import classes from "./HomePage.module.css";
+import Stack from "@mui/material/Stack";
 
 const HomePage = () => {
   const [latestReviews, setLatestReviews] = useState([]);
@@ -25,6 +25,8 @@ const HomePage = () => {
       } catch (err) {}
     };
     fetchTeacher();
+    //設定網頁title
+    document.title = "首頁";
   }, [sendRequset]);
 
   const searchHandler = (event) => {
@@ -51,14 +53,10 @@ const HomePage = () => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {!isLoading && latestReviews && (
-        <div className={classes.homeLayout}>
-          <div className={classes.headingBox}>
-            <Heading searchHandler={searchHandler} searchInputRef={searchInputRef} />
-          </div>
-          <div className={classes.commentBox}>
-            <Carousel data={latestReviews} onCommentClick={commentClickHandler} homePage substringReview />
-          </div>
-        </div>
+        <Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
+          <Heading searchHandler={searchHandler} searchInputRef={searchInputRef} />
+          <Carousel data={latestReviews} onCommentClick={commentClickHandler} homePage substringReview />
+        </Stack>
       )}
     </>
   );
