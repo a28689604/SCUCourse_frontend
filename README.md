@@ -4,6 +4,16 @@
 
 ![主頁](https://i.imgur.com/jZR7A5l.png "HomePage")
 
+## 迴響
+
+本專案受到之迴響，感謝各位同學的支持。
+
+<https://www.dcard.tw/f/scu/p/239221319>
+
+<https://www.dcard.tw/f/scu/p/240883792>
+
+<https://www.dcard.tw/f/scu/p/241381326>
+
 ## 教授統計資料:  
 ![教授統計資料](https://i.imgur.com/hG69qlj.png "TeacherPage")
 * **推薦率、難度**  
