@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -7,7 +7,7 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequset = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
+    async (url, method = 'GET', body = null, headers = {}) => {
       setIsLoading(true);
 
       const httpAbortCtrl = new AbortController();
@@ -49,11 +49,13 @@ export const useHttpClient = () => {
     setError(null);
   };
 
-  useEffect(() => {
-    return () => {
-      activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     // Only abort requests when component is actually unmounting
+  //     // Add a small delay or condition to prevent premature cleanup
+  //     activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
+  //   };
+  // }, []);
 
   return { isLoading, error, sendRequset, clearError };
 };

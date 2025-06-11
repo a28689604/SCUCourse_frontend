@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { AuthContext } from "../../context/auth-context";
-import { useHttpClient } from "../../hooks/http-hook";
-import Button from "../FormElements/Button";
-import DownVote from "../Icons/DownVote";
-import UpVote from "../Icons/UpVote";
-import ErrorModal from "../UIElements/ErrorModal";
-import Modal from "../UIElements/Modal";
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../context/auth-context';
+import { useHttpClient } from '../../hooks/http-hook';
+import Button from '../FormElements/Button';
+import DownVote from '../Icons/DownVote';
+import UpVote from '../Icons/UpVote';
+import ErrorModal from '../UIElements/ErrorModal';
+import Modal from '../UIElements/Modal';
 
-import classes from "./CommentOption.module.css";
+import classes from './CommentOption.module.css';
 
 const CommentOption = (props) => {
   const [upVoted, setUpVoted] = useState();
@@ -44,12 +44,18 @@ const CommentOption = (props) => {
     if (upVoted === true) {
       setUpVoted(false);
       setUps((prev) => prev - 1);
-    } else if ((upVoted === false && downVoted === true) || (upVoted === undefined && downVoted === true)) {
+    } else if (
+      (upVoted === false && downVoted === true) ||
+      (upVoted === undefined && downVoted === true)
+    ) {
       setUpVoted(true);
       setUps((prev) => prev + 1);
       setDownVoted(undefined);
       setDowns((prev) => prev - 1);
-    } else if ((upVoted === false && downVoted === undefined) || (upVoted === undefined && downVoted === false)) {
+    } else if (
+      (upVoted === false && downVoted === undefined) ||
+      (upVoted === undefined && downVoted === false)
+    ) {
       setUpVoted(true);
       setUps((prev) => prev + 1);
       setDownVoted(undefined);
@@ -68,12 +74,18 @@ const CommentOption = (props) => {
     if (downVoted === true) {
       setDownVoted(false);
       setDowns((prev) => prev - 1);
-    } else if ((downVoted === false && upVoted === true) || (downVoted === undefined && upVoted === true)) {
+    } else if (
+      (downVoted === false && upVoted === true) ||
+      (downVoted === undefined && upVoted === true)
+    ) {
       setDownVoted(true);
       setDowns((prev) => prev + 1);
       setUpVoted(undefined);
       setUps((prev) => prev - 1);
-    } else if ((downVoted === false && upVoted === undefined) || (downVoted === undefined && upVoted === false)) {
+    } else if (
+      (downVoted === false && upVoted === undefined) ||
+      (downVoted === undefined && upVoted === false)
+    ) {
       setDownVoted(true);
       setDowns((prev) => prev + 1);
       setUpVoted(undefined);
@@ -88,9 +100,16 @@ const CommentOption = (props) => {
     const fetchUpVote = async () => {
       if (upVoted !== undefined && isChanged === true) {
         try {
-          await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/reviews/${id}/upvote/${upVoted}`, "PATCH", null, {
-            Authorization: "Bearer " + token,
-          });
+          await sendRequset(
+            `${
+              import.meta.env.VITE_BACKEND_URL
+            }/reviews/${id}/upvote/${upVoted}`,
+            'PATCH',
+            null,
+            {
+              Authorization: 'Bearer ' + token,
+            }
+          );
         } catch (err) {}
       }
     };
@@ -101,10 +120,17 @@ const CommentOption = (props) => {
     const fetchUpVote = async () => {
       if (downVoted !== undefined && isChanged === true) {
         try {
-          await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/reviews/${id}/downvote/${downVoted}`, "PATCH", null, {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          });
+          await sendRequset(
+            `${
+              import.meta.env.VITE_BACKEND_URL
+            }/reviews/${id}/downvote/${downVoted}`,
+            'PATCH',
+            null,
+            {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token,
+            }
+          );
         } catch (err) {}
       }
     };
@@ -113,7 +139,7 @@ const CommentOption = (props) => {
 
   const confirmLoginHandler = () => {
     setNotLogedinModal(false);
-    history.push("/auth");
+    history.push('/auth');
   };
 
   return (
@@ -133,11 +159,19 @@ const CommentOption = (props) => {
       </Modal>
       <div className={classes.optionLayout}>
         <div className={classes.votes}>
-          <div className={`${classes.upVote} ${upVoted === true ? classes["upVoteSvg-voted"] : ""}`}>
+          <div
+            className={`${classes.upVote} ${
+              upVoted === true ? classes['upVoteSvg-voted'] : ''
+            }`}
+          >
             <UpVote onClick={upVotedHandler} />
             <h2>{ups}</h2>
           </div>
-          <div className={`${classes.downVote} ${downVoted === true ? classes["downVoteSvg-voted"] : ""}`}>
+          <div
+            className={`${classes.downVote} ${
+              downVoted === true ? classes['downVoteSvg-voted'] : ''
+            }`}
+          >
             <DownVote onClick={downVotedHandler} />
             <h2>{downs}</h2>
           </div>

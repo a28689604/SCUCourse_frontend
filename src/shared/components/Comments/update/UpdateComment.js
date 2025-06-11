@@ -1,21 +1,21 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 
-import CommentItem from "../CommentItem";
-import CommentRating from "../CommentRating";
-import CommentContent from "../CommentContent";
-import Input from "../../FormElements/Input";
-import { VALIDATOR_MINLENGTH } from "../../../util/validators";
-import { useForm } from "../../../hooks/form-hook";
-import { useHttpClient } from "../../../hooks/http-hook";
-import { AuthContext } from "../../../context/auth-context";
+import CommentItem from '../CommentItem';
+import CommentRating from '../CommentRating';
+import CommentContent from '../CommentContent';
+import Input from '../../FormElements/Input';
+import { VALIDATOR_MINLENGTH } from '../../../util/validators';
+import { useForm } from '../../../hooks/form-hook';
+import { useHttpClient } from '../../../hooks/http-hook';
+import { AuthContext } from '../../../context/auth-context';
 
-import Modal from "../../UIElements/Modal";
-import Loading from "../../UIElements/Loading";
-import ErrorModal from "../../UIElements/ErrorModal";
-import { useHistory } from "react-router-dom";
-import Button from "../../FormElements/Button";
+import Modal from '../../UIElements/Modal';
+import Loading from '../../UIElements/Loading';
+import ErrorModal from '../../UIElements/ErrorModal';
+import { useHistory } from 'react-router-dom';
+import Button from '../../FormElements/Button';
 
-import classes from "./UpdateComment.module.css";
+import classes from './UpdateComment.module.css';
 
 const UpdateComment = (props) => {
   const [thumb, setThumb] = useState(true);
@@ -32,15 +32,15 @@ const UpdateComment = (props) => {
   const [formState, inputHandler, setFormData] = useForm(
     {
       difficulty: {
-        value: "",
+        value: '',
         isValid: false,
       },
       courseName: {
-        value: "",
+        value: '',
         isValid: false,
       },
       comment: {
-        value: "",
+        value: '',
         isValid: false,
       },
     },
@@ -88,22 +88,21 @@ const UpdateComment = (props) => {
     event.preventDefault();
     try {
       const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`,
-        "PATCH",
+        `${import.meta.env.VITE_BACKEND_URL}/reviews/${data._id}`,
+        'PATCH',
         JSON.stringify({
           review: formState.inputs.comment.value,
           difficulty: formState.inputs.difficulty.value.value,
           recommend: thumb,
         }),
         {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + auth.token,
         }
       );
-      if (res.status === "success") {
+      if (res.status === 'success') {
         setShowSuccessModal(true);
       }
-      console.log(res);
     } catch (err) {}
   };
 
@@ -116,11 +115,16 @@ const UpdateComment = (props) => {
   };
 
   const confirmDeleteHandler = async () => {
-    console.log("DELETE!");
+    console.log('DELETE!');
     try {
-      const res = await sendRequset(`${process.env.REACT_APP_BACKEND_URL}/reviews/${data._id}`, "DELETE", null, {
-        Authorization: "Bearer " + auth.token,
-      });
+      const res = await sendRequset(
+        `${import.meta.env.VITE_BACKEND_URL}/reviews/${data._id}`,
+        'DELETE',
+        null,
+        {
+          Authorization: 'Bearer ' + auth.token,
+        }
+      );
       if (res === 204) {
         setShowConfirmModal(false);
         setShowSuccessDeleteModal(true);
@@ -184,9 +188,16 @@ const UpdateComment = (props) => {
       </Modal>
       {isLoading && <Loading />}
       {!isLoading && !userDataIsLoading && (
-        <form onClick={disableAddCommentHandler} onSubmit={commentUpdateHandler}>
+        <form
+          onClick={disableAddCommentHandler}
+          onSubmit={commentUpdateHandler}
+        >
           <CommentItem type="personal" newComment={true}>
-            <CommentRating newComment={true} thumb={thumb} thumbOnClick={changeThumbHandler}>
+            <CommentRating
+              newComment={true}
+              thumb={thumb}
+              thumbOnClick={changeThumbHandler}
+            >
               <Input
                 onlyElement
                 id="difficulty"

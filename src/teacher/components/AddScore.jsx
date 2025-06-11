@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import Button from "../../shared/components/FormElements/Button";
-import Modal from "../../shared/components/UIElements/Modal";
-import { AuthContext } from "../../shared/context/auth-context";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import classes from "./AddScore.module.css";
-import { useForm } from "../../shared/hooks/form-hook";
-import Backdrop from "../../shared/components/UIElements/Backdrop";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import Input from "../../shared/components/FormElements/Input";
-import { VALIDATOR_MINLENGTH } from "../../shared/util/validators";
+import { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import Button from '../../shared/components/FormElements/Button';
+import Modal from '../../shared/components/UIElements/Modal';
+import { AuthContext } from '../../shared/context/auth-context';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import classes from './AddScore.module.css';
+import { useForm } from '../../shared/hooks/form-hook';
+import Backdrop from '../../shared/components/UIElements/Backdrop';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import Input from '../../shared/components/FormElements/Input';
+import { VALIDATOR_MINLENGTH } from '../../shared/util/validators';
 
 const AddScore = (props) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -22,43 +22,43 @@ const AddScore = (props) => {
   const [formState, inputHandler] = useForm(
     {
       zero: {
-        value: "",
+        value: '',
         isValid: false,
       },
       fifty: {
-        value: "",
+        value: '',
         isValid: false,
       },
       sixty: {
-        value: "",
+        value: '',
         isValid: false,
       },
       sixtyFive: {
-        value: "",
+        value: '',
         isValid: false,
       },
       seventy: {
-        value: "",
+        value: '',
         isValid: false,
       },
       seventyFive: {
-        value: "",
+        value: '',
         isValid: false,
       },
       eighty: {
-        value: "",
+        value: '',
         isValid: false,
       },
       eightyFive: {
-        value: "",
+        value: '',
         isValid: false,
       },
       ninety: {
-        value: "",
+        value: '',
         isValid: false,
       },
       ninetyFive: {
-        value: "",
+        value: '',
         isValid: false,
       },
     },
@@ -71,7 +71,7 @@ const AddScore = (props) => {
 
   const confirmLoginHandler = () => {
     setNotLogedinModal(false);
-    history.push("/auth");
+    history.push('/auth');
   };
 
   const scoreSubmitHandler = async (event) => {
@@ -79,8 +79,8 @@ const AddScore = (props) => {
 
     try {
       const res = await sendRequset(
-        `${process.env.REACT_APP_BACKEND_URL}/courses/${props.course.id}`,
-        "PATCH",
+        `${import.meta.env.VITE_BACKEND_URL}/courses/${props.course.id}`,
+        'PATCH',
         JSON.stringify({
           zero: formState.inputs.zero.value,
           fifty: formState.inputs.fifty.value,
@@ -97,11 +97,11 @@ const AddScore = (props) => {
           scoreUploadBy: userId,
         }),
         {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
         }
       );
-      if (res.status === "success") {
+      if (res.status === 'success') {
         setShowSuccessModal(true);
       }
     } catch (err) {}
@@ -127,7 +127,7 @@ const AddScore = (props) => {
         成功上傳分數
       </Modal>
       <Modal
-        style={{ width: "15rem" }}
+        style={{ width: '15rem' }}
         show={notLogedinModal}
         onCancel={confirmLoginHandler}
         footer={
@@ -144,8 +144,8 @@ const AddScore = (props) => {
       {!notLogedinModal && !showSuccessModal && (
         <form className={classes.form} onSubmit={scoreSubmitHandler}>
           <div className={classes.courseInfo}>
-            <h3>{`${props.course["syear"]}學年 第${props.course["smester"]}學期`}</h3>
-            <h4>{props.course["courseName"].trim()}</h4>
+            <h3>{`${props.course['syear']}學年 第${props.course['smester']}學期`}</h3>
+            <h4>{props.course['courseName'].trim()}</h4>
           </div>
 
           <Input
