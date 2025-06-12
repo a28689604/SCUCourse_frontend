@@ -55,9 +55,6 @@ const Heading = (props) => {
       }
     >
       <ThemeProvider theme={theme}>
-        <Typography variant="h1" component="h1">
-          東吳課程評價
-        </Typography>
         <Typography
           variant="h5"
           component="p"

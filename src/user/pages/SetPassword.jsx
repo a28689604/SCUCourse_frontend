@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
@@ -6,10 +6,7 @@ import Card from '../../shared/components/UIElements/Card';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import Loading from '../../shared/components/UIElements/Loading';
 
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-} from '../../shared/util/validators';
+import { VALIDATOR_MINLENGTH } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -17,9 +14,8 @@ import { AuthContext } from '../../shared/context/auth-context';
 import classes from './Auth.module.css';
 import Button from '../../shared/components/FormElements/Button';
 
-const SetPasssword = () => {
+const SetPassword = () => {
   const auth = useContext(AuthContext);
-  const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
   const history = useHistory();
 
@@ -102,4 +98,4 @@ const SetPasssword = () => {
   );
 };
 
-export default SetPasssword;
+export default SetPassword;

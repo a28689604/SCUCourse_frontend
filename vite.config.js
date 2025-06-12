@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/postcss';
 
 export default defineConfig({
   plugins: [
     react({
       include: '**/*.{jsx,tsx,js,ts}',
     }),
+    tailwindcss(),
   ],
   publicDir: 'public',
   // If you need path aliases like CRA's `NODE_PATH=src`, add:
