@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../context/auth-context';
-import { useHttpClient } from '../../hooks/http-hook';
-import Button from '../FormElements/Button';
-import DownVote from '../Icons/DownVote';
-import UpVote from '../Icons/UpVote';
-import ErrorModal from '../UIElements/ErrorModal';
-import Modal from '../UIElements/Modal';
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import classes from './CommentOption.module.css';
+import { AuthContext } from "../../context/auth-context";
+import { useHttpClient } from "../../hooks/http-hook";
+import Button from "../FormElements/Button";
+import DownVote from "../Icons/DownVote";
+import UpVote from "../Icons/UpVote";
+import ErrorModal from "../UIElements/ErrorModal";
+import Modal from "../UIElements/Modal";
+import classes from "./CommentOption.module.css";
 
-const CommentOption = (props) => {
+const CommentOption = props => {
   const [upVoted, setUpVoted] = useState();
   const [downVoted, setDownVoted] = useState();
   const [ups, setUps] = useState();
@@ -43,25 +43,25 @@ const CommentOption = (props) => {
     }
     if (upVoted === true) {
       setUpVoted(false);
-      setUps((prev) => prev - 1);
+      setUps(prev => prev - 1);
     } else if (
       (upVoted === false && downVoted === true) ||
       (upVoted === undefined && downVoted === true)
     ) {
       setUpVoted(true);
-      setUps((prev) => prev + 1);
+      setUps(prev => prev + 1);
       setDownVoted(undefined);
-      setDowns((prev) => prev - 1);
+      setDowns(prev => prev - 1);
     } else if (
       (upVoted === false && downVoted === undefined) ||
       (upVoted === undefined && downVoted === false)
     ) {
       setUpVoted(true);
-      setUps((prev) => prev + 1);
+      setUps(prev => prev + 1);
       setDownVoted(undefined);
     } else if (upVoted === undefined && downVoted === undefined) {
       setUpVoted(true);
-      setUps((prev) => prev + 1);
+      setUps(prev => prev + 1);
     }
     setIsChanged(true);
   };
@@ -73,25 +73,25 @@ const CommentOption = (props) => {
 
     if (downVoted === true) {
       setDownVoted(false);
-      setDowns((prev) => prev - 1);
+      setDowns(prev => prev - 1);
     } else if (
       (downVoted === false && upVoted === true) ||
       (downVoted === undefined && upVoted === true)
     ) {
       setDownVoted(true);
-      setDowns((prev) => prev + 1);
+      setDowns(prev => prev + 1);
       setUpVoted(undefined);
-      setUps((prev) => prev - 1);
+      setUps(prev => prev - 1);
     } else if (
       (downVoted === false && upVoted === undefined) ||
       (downVoted === undefined && upVoted === false)
     ) {
       setDownVoted(true);
-      setDowns((prev) => prev + 1);
+      setDowns(prev => prev + 1);
       setUpVoted(undefined);
     } else if (downVoted === undefined && upVoted === undefined) {
       setDownVoted(true);
-      setDowns((prev) => prev + 1);
+      setDowns(prev => prev + 1);
     }
     setIsChanged(true);
   };
@@ -104,10 +104,10 @@ const CommentOption = (props) => {
             `${
               import.meta.env.VITE_BACKEND_URL
             }/reviews/${id}/upvote/${upVoted}`,
-            'PATCH',
+            "PATCH",
             null,
             {
-              Authorization: 'Bearer ' + token,
+              Authorization: "Bearer " + token,
             }
           );
         } catch (err) {}
@@ -124,11 +124,11 @@ const CommentOption = (props) => {
             `${
               import.meta.env.VITE_BACKEND_URL
             }/reviews/${id}/downvote/${downVoted}`,
-            'PATCH',
+            "PATCH",
             null,
             {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + token,
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
             }
           );
         } catch (err) {}
@@ -139,7 +139,7 @@ const CommentOption = (props) => {
 
   const confirmLoginHandler = () => {
     setNotLogedinModal(false);
-    history.push('/auth');
+    history.push("/auth");
   };
 
   return (
@@ -161,7 +161,7 @@ const CommentOption = (props) => {
         <div className={classes.votes}>
           <div
             className={`${classes.upVote} ${
-              upVoted === true ? classes['upVoteSvg-voted'] : ''
+              upVoted === true ? classes["upVoteSvg-voted"] : ""
             }`}
           >
             <UpVote onClick={upVotedHandler} />
@@ -169,7 +169,7 @@ const CommentOption = (props) => {
           </div>
           <div
             className={`${classes.downVote} ${
-              downVoted === true ? classes['downVoteSvg-voted'] : ''
+              downVoted === true ? classes["downVoteSvg-voted"] : ""
             }`}
           >
             <DownVote onClick={downVotedHandler} />

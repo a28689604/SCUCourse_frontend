@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export const useAuth = () => {
   const [token, setToken] = useState(false);

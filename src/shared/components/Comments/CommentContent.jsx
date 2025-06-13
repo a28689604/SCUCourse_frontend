@@ -1,6 +1,6 @@
 import classes from "./CommentContent.module.css";
 
-const CommentContent = (props) => {
+const CommentContent = props => {
   return (
     <div className={classes.content}>
       {props.newComment && <>{props.children}</>}

@@ -1,22 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import Input from '../../shared/components/FormElements/Input';
-import Card from '../../shared/components/UIElements/Card';
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import Loading from '../../shared/components/UIElements/Loading';
-
+import Button from "../../shared/components/FormElements/Button";
+import Input from "../../shared/components/FormElements/Input";
+import Card from "../../shared/components/UIElements/Card";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Loading from "../../shared/components/UIElements/Loading";
+import Modal from "../../shared/components/UIElements/Modal";
+import { AuthContext } from "../../shared/context/auth-context";
+import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
-} from '../../shared/util/validators';
-import { useForm } from '../../shared/hooks/form-hook';
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import { AuthContext } from '../../shared/context/auth-context';
-
-import classes from './Auth.module.css';
-import Button from '../../shared/components/FormElements/Button';
-import Modal from '../../shared/components/UIElements/Modal';
+} from "../../shared/util/validators";
+import classes from "./Auth.module.css";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
@@ -29,22 +27,22 @@ const Auth = () => {
 
   useEffect(() => {
     // 設定網頁標題
-    document.title = isLoginMode ? '登入' : '註冊';
+    document.title = isLoginMode ? "登入" : "註冊";
   }, [isLoginMode]);
 
   const [formState, inputHandler, setFormData] = useForm({
     email: {
-      value: '',
+      value: "",
       isValid: false,
     },
     password: {
-      value: '',
+      value: "",
       isValid: false,
     },
   });
 
   useEffect(() => {
-    document.title = isLoginMode ? '登入' : '註冊';
+    document.title = isLoginMode ? "登入" : "註冊";
   }, [isLoginMode]);
 
   const switchModeHandler = () => {
@@ -52,28 +50,28 @@ const Auth = () => {
       setFormData({ ...formState.inputs, password: undefined }, true);
     }
 
-    setIsLoginMode((prevState) => !prevState);
+    setIsLoginMode(prevState => !prevState);
   };
 
-  const authSubmitHandler = async (event) => {
+  const authSubmitHandler = async event => {
     event.preventDefault();
 
     if (isLoginMode) {
       try {
         const res = await sendRequset(
           `${import.meta.env.VITE_BACKEND_URL}/users/login`,
-          'POST',
+          "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
           {
-            'Content-Type': 'application/json',
-            credentials: 'include',
+            "Content-Type": "application/json",
+            credentials: "include",
           }
         );
         auth.login(res.data.user._id, res.token);
-        if (res.status === 'success') {
+        if (res.status === "success") {
           history.goBack();
         }
       } catch (err) {}
@@ -81,16 +79,16 @@ const Auth = () => {
       try {
         const res = await sendRequset(
           `${import.meta.env.VITE_BACKEND_URL}/users/signup`,
-          'POST',
+          "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
           }),
-          { 'Content-Type': 'application/json' }
+          { "Content-Type": "application/json" }
         );
         if (res === 202) {
           setShowConfirmModal(true);
         }
-        if (res.status === 'success') {
+        if (res.status === "success") {
           setShowSuccessModal(true);
         }
       } catch (err) {}
@@ -106,13 +104,13 @@ const Auth = () => {
       setShowConfirmModal(false);
       const res = await sendRequset(
         `${import.meta.env.VITE_BACKEND_URL}/users/reSendEmail`,
-        'POST',
+        "POST",
         JSON.stringify({
           email: formState.inputs.email.value,
         }),
-        { 'Content-Type': 'application/json' }
+        { "Content-Type": "application/json" }
       );
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setShowSuccessModal(true);
       }
     } catch (err) {}
@@ -181,12 +179,12 @@ const Auth = () => {
             <div className={classes.buttons}>
               <div className={classes.login}>
                 <Button type="submit" disabled={!formState.isValid}>
-                  {isLoginMode ? '登入' : '註冊'}
+                  {isLoginMode ? "登入" : "註冊"}
                 </Button>
               </div>
               <div className={classes.switch}>
                 <Button type="button" onClick={switchModeHandler}>
-                  {isLoginMode ? '沒有帳號? 現在註冊' : '已有帳號? 現在登入'}
+                  {isLoginMode ? "沒有帳號? 現在註冊" : "已有帳號? 現在登入"}
                 </Button>
               </div>
             </div>

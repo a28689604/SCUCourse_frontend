@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import Loading from '../../shared/components/UIElements/Loading';
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import Carousel from '../components/Carousel';
-import Heading from '../components/Heading';
+import Stack from "@mui/material/Stack";
+import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import Stack from '@mui/material/Stack';
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Loading from "../../shared/components/UIElements/Loading";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import Carousel from "../components/Carousel";
+import Heading from "../components/Heading";
 
 const HomePage = () => {
   const [latestReviews, setLatestReviews] = useState([]);
@@ -15,7 +15,7 @@ const HomePage = () => {
   const searchInputRef = useRef();
   const history = useHistory();
 
-  document.title = '首頁';
+  document.title = "首頁";
 
   useEffect(() => {
     const fetchTeacher = async () => {
@@ -25,15 +25,15 @@ const HomePage = () => {
         );
         setLatestReviews(responseData.data.data);
       } catch (err) {
-        console.error('API call failed:', err);
+        console.error("API call failed:", err);
       }
     };
     fetchTeacher();
     //設定網頁title
-    document.title = '首頁';
+    document.title = "首頁";
   }, [sendRequset]);
 
-  const searchHandler = (event) => {
+  const searchHandler = event => {
     event.preventDefault();
     const enteredTeacher = searchInputRef.current.value;
     if (enteredTeacher) {
@@ -43,7 +43,7 @@ const HomePage = () => {
     }
   };
 
-  const commentClickHandler = (teacherName) => {
+  const commentClickHandler = teacherName => {
     history.push({
       pathname: `/teacher/${teacherName}`,
     });

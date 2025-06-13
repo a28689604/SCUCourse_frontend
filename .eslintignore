@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.git/
+.firebase/
+public/
+*.min.js
+*.bundle.js
+coverage/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+vite.config.js
+tailwind.config.js
+postcss.config.js 

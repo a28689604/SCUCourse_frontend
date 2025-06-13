@@ -1,20 +1,18 @@
-import React, { useEffect, useContext, useReducer, useState } from 'react';
-import Select from 'react-select';
+import Button from "@mui/material/Button";
+import React, { useContext, useEffect, useReducer, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import Select from "react-select";
 
-import CommentList from '../../shared/components/Comments/CommentList';
-import NewComment from '../../shared/components/Comments/new/NewComment';
-import UpdateComment from '../../shared/components/Comments/update/UpdateComment';
-import CourseStatistic from '../components/CourseStatistic';
-
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import { useHistory, useParams } from 'react-router-dom';
-import { AuthContext } from '../../shared/context/auth-context';
-
-import classes from './Teacher.module.css';
-import Loading from '../../shared/components/UIElements/Loading';
-import AddScore from '../components/AddScore';
-import Button from '@mui/material/Button';
+import CommentList from "../../shared/components/Comments/CommentList";
+import NewComment from "../../shared/components/Comments/new/NewComment";
+import UpdateComment from "../../shared/components/Comments/update/UpdateComment";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Loading from "../../shared/components/UIElements/Loading";
+import { AuthContext } from "../../shared/context/auth-context";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import AddScore from "../components/AddScore";
+import CourseStatistic from "../components/CourseStatistic";
+import classes from "./Teacher.module.css";
 
 const DIFFICULTY_OPTIONS = [
   { value: 1, label: 1 },
@@ -27,14 +25,14 @@ const DIFFICULTY_OPTIONS = [
 // use reducer in order to set multiple state at once
 const teacherDataReducer = (state, action) => {
   switch (action.type) {
-    case 'SET':
+    case "SET":
       return {
         ...state,
         loadedTeacher: action.value,
         loadedCourse: action.value.courses,
         loadedReviews: action.value.courses
-          .filter((course) => course.reviews.length > 0)
-          .flatMap((course) => course.reviews)
+          .filter(course => course.reviews.length > 0)
+          .flatMap(course => course.reviews)
           .sort(function (a, b) {
             const keyA = a.upVotes,
               keyB = b.upVotes;
@@ -50,7 +48,7 @@ const teacherDataReducer = (state, action) => {
             if (keyA > keyB) return -1;
             return 0;
           })
-          .map((course) => {
+          .map(course => {
             return {
               label: `${course.syear}學年 第${course.smester}學期 ${course.department} ${course.courseName}`,
               value: course._id,
@@ -63,7 +61,7 @@ const teacherDataReducer = (state, action) => {
   }
 };
 
-const Teacher = (props) => {
+const Teacher = props => {
   const auth = useContext(AuthContext);
   const [teacherDataState, dispatch] = useReducer(teacherDataReducer);
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
@@ -81,7 +79,7 @@ const Teacher = (props) => {
         const responseData = await sendRequset(
           `${import.meta.env.VITE_BACKEND_URL}/teachers/${teacherName}`
         );
-        dispatch({ type: 'SET', value: responseData.data.data });
+        dispatch({ type: "SET", value: responseData.data.data });
         // 設定網頁標題
         document.title = teacherName;
       } catch (err) {}
@@ -97,11 +95,11 @@ const Teacher = (props) => {
 
   if (teacherDataState) {
     userComment = teacherDataState.loadedReviews.filter(
-      (review) => review.user === auth.userId
+      review => review.user === auth.userId
     )[0];
     userVotes = teacherDataState.loadedReviews
-      .flatMap((review) => review.votes)
-      .filter((vote) => vote.voter === auth.userId);
+      .flatMap(review => review.votes)
+      .filter(vote => vote.voter === auth.userId);
 
     // IMPORTANT manipulate the review data, in order to add current user votes for each review. (brute solution, need fix
     for (let i = 0; i < teacherDataState.loadedReviews.length; i++) {
@@ -113,23 +111,23 @@ const Teacher = (props) => {
     }
   }
 
-  const courseStatisticHandler = (event) => {
-    const selectedCourse = teacherDataState.loadedCourse.filter((course) => {
+  const courseStatisticHandler = event => {
+    const selectedCourse = teacherDataState.loadedCourse.filter(course => {
       return course.id === event.value;
     });
     setSelectCourse(selectedCourse[0]);
-    const selectedCourseData = selectedCourse.map((course) => {
+    const selectedCourseData = selectedCourse.map(course => {
       return [
-        { name: '0~49', 人數: course.zero },
-        { name: '50~59', 人數: course.fifty },
-        { name: '60~64', 人數: course.sixty },
-        { name: '65~69', 人數: course.sixtyFive },
-        { name: '70~74', 人數: course.seventy },
-        { name: '75~79', 人數: course.seventyFive },
-        { name: '80~84', 人數: course.eighty },
-        { name: '85~89', 人數: course.eightyFive },
-        { name: '90~94', 人數: course.ninety },
-        { name: '95~100', 人數: course.ninetyFive },
+        { name: "0~49", 人數: course.zero },
+        { name: "50~59", 人數: course.fifty },
+        { name: "60~64", 人數: course.sixty },
+        { name: "65~69", 人數: course.sixtyFive },
+        { name: "70~74", 人數: course.seventy },
+        { name: "75~79", 人數: course.seventyFive },
+        { name: "80~84", 人數: course.eighty },
+        { name: "85~89", 人數: course.eightyFive },
+        { name: "90~94", 人數: course.ninety },
+        { name: "95~100", 人數: course.ninetyFive },
         { avg: course.scoreAverage },
         { popularity: course.coursePopularity },
       ];
@@ -145,7 +143,7 @@ const Teacher = (props) => {
   };
 
   const addScoreBtnHandler = () => {
-    setIsAddBtnClick((prevState) => !prevState);
+    setIsAddBtnClick(prevState => !prevState);
   };
 
   if (isLoading) {
@@ -159,9 +157,9 @@ const Teacher = (props) => {
           {isAddBtnClick && (
             <AddScore course={selectCourse} onCancel={addScoreBtnHandler} />
           )}
-          <div className={classes['teacher-Layout']}>
-            <div className={classes['teacher-statistic']}>
-              <h1 className={classes['teacher-name']}>
+          <div className={classes["teacher-Layout"]}>
+            <div className={classes["teacher-statistic"]}>
+              <h1 className={classes["teacher-name"]}>
                 {teacherDataState.loadedTeacher.teacherName}
               </h1>
               <div className={classes.recommend}>
@@ -195,16 +193,16 @@ const Teacher = (props) => {
                 <h4>難度</h4>
               </div>
             </div>
-            <div className={classes['course-statistic']}>
+            <div className={classes["course-statistic"]}>
               {!isLoading && teacherDataState && (
                 <>
                   <Select
                     options={teacherDataState.loadedCourseOptions}
                     onChange={courseStatisticHandler}
-                    placeholder={'在此選擇課程，以查看修課成績分數分布'}
+                    placeholder={"在此選擇課程，以查看修課成績分數分布"}
                     menuPortalTarget={document.body}
                     styles={{
-                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                      menuPortal: base => ({ ...base, zIndex: 9999 }),
                     }}
                   />
                   <div className={classes.staticWrapper}>
@@ -213,7 +211,7 @@ const Teacher = (props) => {
                         請使用上方欄位選擇課程
                       </h3>
                     )}
-                    {isSelect && courseScoreData[0]['人數'] === null && (
+                    {isSelect && courseScoreData[0]["人數"] === null && (
                       <div className={classes.noScore}>
                         <h3>暫無分數</h3>
                         <Button
@@ -227,12 +225,12 @@ const Teacher = (props) => {
                       </div>
                     )}
                     <div className={classes.courseScoreAvg}>
-                      {isSelect && courseScoreData[0]['人數'] !== null && (
+                      {isSelect && courseScoreData[0]["人數"] !== null && (
                         <h3>
                           平均分數:
-                          {courseScoreData[10]['avg'] !== null
+                          {courseScoreData[10]["avg"] !== null
                             ? courseScoreData[10].avg
-                            : '暫無資料'}
+                            : "暫無資料"}
                         </h3>
                       )}
                     </div>
@@ -242,8 +240,8 @@ const Teacher = (props) => {
               )}
             </div>
           </div>
-          <div className={classes['comment-layout']}>
-            <div className={classes['personal-comment']}>
+          <div className={classes["comment-layout"]}>
+            <div className={classes["personal-comment"]}>
               {!isLoading && userComment && (
                 <UpdateComment
                   userComment={userComment}
@@ -259,7 +257,7 @@ const Teacher = (props) => {
                 />
               )}
             </div>
-            <div className={classes['comment-list']}>
+            <div className={classes["comment-list"]}>
               {teacherDataState.loadedReviews.length === 0 && (
                 <h1 className={classes.noCommentData}>
                   這位教授還沒有評論，快來留下你的評論吧!

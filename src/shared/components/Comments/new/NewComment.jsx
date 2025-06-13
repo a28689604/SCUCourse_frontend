@@ -1,53 +1,52 @@
-import { useContext, useEffect, useState } from 'react';
-import Add from '../../Icons/Add';
-import Card from '../../UIElements/Card';
+import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import CommentItem from '../CommentItem';
-import CommentRating from '../CommentRating';
-import CommentContent from '../CommentContent';
-import Input from '../../FormElements/Input';
-import { VALIDATOR_MINLENGTH } from '../../../util/validators';
-import { useForm } from '../../../hooks/form-hook';
-
-import classes from './NewComment.module.css';
-import { useHttpClient } from '../../../hooks/http-hook';
-import { AuthContext } from '../../../context/auth-context';
-import Loading from '../../UIElements/Loading';
-import ErrorModal from '../../UIElements/ErrorModal';
-import Modal from '../../UIElements/Modal';
-import { useHistory } from 'react-router-dom';
-import Button from '../../FormElements/Button';
+import { AuthContext } from "../../../context/auth-context";
+import { useForm } from "../../../hooks/form-hook";
+import { useHttpClient } from "../../../hooks/http-hook";
+import { VALIDATOR_MINLENGTH } from "../../../util/validators";
+import Button from "../../FormElements/Button";
+import Input from "../../FormElements/Input";
+import Add from "../../Icons/Add";
+import Card from "../../UIElements/Card";
+import ErrorModal from "../../UIElements/ErrorModal";
+import Loading from "../../UIElements/Loading";
+import Modal from "../../UIElements/Modal";
+import CommentContent from "../CommentContent";
+import CommentItem from "../CommentItem";
+import CommentRating from "../CommentRating";
+import classes from "./NewComment.module.css";
 
 const difficultyStyles = {
   control: (provided, state) => ({
     ...provided,
-    background: '#fff',
-    borderColor: '#9e9e9e',
-    minHeight: '3rem',
-    height: '3rem',
+    background: "#fff",
+    borderColor: "#9e9e9e",
+    minHeight: "3rem",
+    height: "3rem",
     boxShadow: state.isFocused ? null : null,
   }),
 
   valueContainer: (provided, state) => ({
     ...provided,
-    height: '30px',
-    padding: '0 6px',
+    height: "30px",
+    padding: "0 6px",
   }),
 
   input: (provided, state) => ({
     ...provided,
-    margin: '0px',
+    margin: "0px",
   }),
-  indicatorSeparator: (state) => ({
-    display: 'none',
+  indicatorSeparator: state => ({
+    display: "none",
   }),
   indicatorsContainer: (provided, state) => ({
     ...provided,
-    height: '30px',
+    height: "30px",
   }),
 };
 
-const NewComment = (props) => {
+const NewComment = props => {
   const [addComment, setAddComment] = useState(false);
   const [thumb, setThumb] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -60,15 +59,15 @@ const NewComment = (props) => {
   const [formState, inputHandler] = useForm(
     {
       difficulty: {
-        value: '',
+        value: "",
         isValid: false,
       },
       courseName: {
-        value: '',
+        value: "",
         isValid: false,
       },
       comment: {
-        value: '',
+        value: "",
         isValid: false,
       },
     },
@@ -85,10 +84,10 @@ const NewComment = (props) => {
   };
 
   const changeThumbHandler = () => {
-    setThumb((prevState) => !prevState);
+    setThumb(prevState => !prevState);
   };
 
-  const commentSubmitHandler = async (event) => {
+  const commentSubmitHandler = async event => {
     event.preventDefault();
 
     try {
@@ -96,7 +95,7 @@ const NewComment = (props) => {
         `${import.meta.env.VITE_BACKEND_URL}/courses/${
           formState.inputs.courseName.value.value
         }/reviews`,
-        'POST',
+        "POST",
         JSON.stringify({
           review: formState.inputs.comment.value,
           difficulty: formState.inputs.difficulty.value.value,
@@ -104,11 +103,11 @@ const NewComment = (props) => {
           createAt: Date.now(),
         }),
         {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
         }
       );
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setShowSuccessModal(true);
       }
     } catch (err) {}
@@ -120,7 +119,7 @@ const NewComment = (props) => {
   };
   const confirmLoginHandler = () => {
     setNotLogedinModal(false);
-    history.push('/auth');
+    history.push("/auth");
   };
 
   return (
@@ -151,7 +150,7 @@ const NewComment = (props) => {
         請先登入
       </Modal>
       {!addComment && (
-        <Card className={classes['new-comment']} onClick={addCommentHandler}>
+        <Card className={classes["new-comment"]} onClick={addCommentHandler}>
           <div className={classes.paragraph}>留下你的評論</div>
           <Add />
         </Card>
@@ -183,7 +182,7 @@ const NewComment = (props) => {
                 id="courseName"
                 element="select"
                 errorText="請選擇一項課程"
-                placeholder={'選擇一項課程...'}
+                placeholder={"選擇一項課程..."}
                 options={props.courseNameData}
                 onInput={inputHandler}
               />

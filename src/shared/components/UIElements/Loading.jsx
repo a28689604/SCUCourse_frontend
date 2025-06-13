@@ -2,7 +2,7 @@ import { LeapFrog } from "@uiball/loaders";
 
 import classes from "./Loading.module.css";
 
-const Loading = (props) => {
+const Loading = props => {
   return (
     <div
       className={`${classes.loading} ${

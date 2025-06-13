@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import Select from "react-select";
 
 import { validate } from "../../util/validators";
@@ -29,7 +29,7 @@ const inputReducer = (state, action) => {
   }
 };
 
-const Input = (props) => {
+const Input = props => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue || props.defaultValue || "",
     isTouched: false,
@@ -43,7 +43,7 @@ const Input = (props) => {
     onInput(id, value, isValid);
   }, [onInput, id, value, isValid]);
 
-  const changeHandler = (event) => {
+  const changeHandler = event => {
     dispatch({
       type: "CHANGE",
       val: event.target.value,
@@ -51,7 +51,7 @@ const Input = (props) => {
     });
   };
 
-  const selectHandler = (event) => {
+  const selectHandler = event => {
     dispatch({
       type: "SELECT",
       val: event,
@@ -75,7 +75,14 @@ const Input = (props) => {
         className={classes[props.styles]}
       />
     ) : props.element === "textarea" ? (
-      <textarea id={props.id} rows={props.rows || 5} onChange={changeHandler} onBlur={touchHandler} value={inputState.value} className={`${props.className}`} />
+      <textarea
+        id={props.id}
+        rows={props.rows || 5}
+        onChange={changeHandler}
+        onBlur={touchHandler}
+        value={inputState.value}
+        className={`${props.className}`}
+      />
     ) : (
       <Select
         id={props.id}
@@ -93,18 +100,22 @@ const Input = (props) => {
       {props.onlyElement && (
         <>
           {element}
-          {!inputState.isValid && inputState.isTouched && <p className={classes.errorText}>{props.errorText}</p>}
+          {!inputState.isValid && inputState.isTouched && (
+            <p className={classes.errorText}>{props.errorText}</p>
+          )}
         </>
       )}
       {!props.onlyElement && (
         <div
-          className={`${classes["form-control"]}  ${!inputState.isValid && inputState.isTouched && classes["form-control--invalid"]} ${
+          className={`${classes["form-control"]} ${!inputState.isValid && inputState.isTouched && classes["form-control--invalid"]} ${
             classes[props.LabelStyle]
           }`}
         >
           <label htmlFor={props.id}>{props.label}</label>
           {element}
-          {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
+          {!inputState.isValid && inputState.isTouched && (
+            <p>{props.errorText}</p>
+          )}
         </div>
       )}
     </>

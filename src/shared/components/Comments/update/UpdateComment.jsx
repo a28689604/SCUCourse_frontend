@@ -1,23 +1,21 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import CommentItem from '../CommentItem';
-import CommentRating from '../CommentRating';
-import CommentContent from '../CommentContent';
-import Input from '../../FormElements/Input';
-import { VALIDATOR_MINLENGTH } from '../../../util/validators';
-import { useForm } from '../../../hooks/form-hook';
-import { useHttpClient } from '../../../hooks/http-hook';
-import { AuthContext } from '../../../context/auth-context';
+import { AuthContext } from "../../../context/auth-context";
+import { useForm } from "../../../hooks/form-hook";
+import { useHttpClient } from "../../../hooks/http-hook";
+import { VALIDATOR_MINLENGTH } from "../../../util/validators";
+import Button from "../../FormElements/Button";
+import Input from "../../FormElements/Input";
+import ErrorModal from "../../UIElements/ErrorModal";
+import Loading from "../../UIElements/Loading";
+import Modal from "../../UIElements/Modal";
+import CommentContent from "../CommentContent";
+import CommentItem from "../CommentItem";
+import CommentRating from "../CommentRating";
+import classes from "./UpdateComment.module.css";
 
-import Modal from '../../UIElements/Modal';
-import Loading from '../../UIElements/Loading';
-import ErrorModal from '../../UIElements/ErrorModal';
-import { useHistory } from 'react-router-dom';
-import Button from '../../FormElements/Button';
-
-import classes from './UpdateComment.module.css';
-
-const UpdateComment = (props) => {
+const UpdateComment = props => {
   const [thumb, setThumb] = useState(true);
   const [userDataIsLoading, setuserDataIsLoading] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -32,15 +30,15 @@ const UpdateComment = (props) => {
   const [formState, inputHandler, setFormData] = useForm(
     {
       difficulty: {
-        value: '',
+        value: "",
         isValid: false,
       },
       courseName: {
-        value: '',
+        value: "",
         isValid: false,
       },
       comment: {
-        value: '',
+        value: "",
         isValid: false,
       },
     },
@@ -81,26 +79,26 @@ const UpdateComment = (props) => {
   };
 
   const changeThumbHandler = () => {
-    setThumb((prevState) => !prevState);
+    setThumb(prevState => !prevState);
   };
 
-  const commentUpdateHandler = async (event) => {
+  const commentUpdateHandler = async event => {
     event.preventDefault();
     try {
       const res = await sendRequset(
         `${import.meta.env.VITE_BACKEND_URL}/reviews/${data._id}`,
-        'PATCH',
+        "PATCH",
         JSON.stringify({
           review: formState.inputs.comment.value,
           difficulty: formState.inputs.difficulty.value.value,
           recommend: thumb,
         }),
         {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
         }
       );
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setShowSuccessModal(true);
       }
     } catch (err) {}
@@ -115,14 +113,14 @@ const UpdateComment = (props) => {
   };
 
   const confirmDeleteHandler = async () => {
-    console.log('DELETE!');
+    console.log("DELETE!");
     try {
       const res = await sendRequset(
         `${import.meta.env.VITE_BACKEND_URL}/reviews/${data._id}`,
-        'DELETE',
+        "DELETE",
         null,
         {
-          Authorization: 'Bearer ' + auth.token,
+          Authorization: "Bearer " + auth.token,
         }
       );
       if (res === 204) {

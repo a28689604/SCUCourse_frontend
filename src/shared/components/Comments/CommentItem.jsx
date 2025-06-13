@@ -1,35 +1,33 @@
-import React from 'react';
+import React from "react";
 
-import Card from '../UIElements/Card';
+import Card from "../UIElements/Card";
+import CommentContent from "./CommentContent";
+import classes from "./CommentItem.module.css";
+import CommentOption from "./CommentOption";
+import CommentRating from "./CommentRating";
 
-import CommentRating from './CommentRating';
-import CommentContent from './CommentContent';
-import CommentOption from './CommentOption';
-
-import classes from './CommentItem.module.css';
-
-const CommentItem = (props) => {
-  const createAt = new Date(props.createAt).toLocaleDateString('zh-TW');
+const CommentItem = props => {
+  const createAt = new Date(props.createAt).toLocaleDateString("zh-TW");
   const cardClickHandler = () => {
-    return props.onCommentClick ? props.onCommentClick(props.teacherName) : '';
+    return props.onCommentClick ? props.onCommentClick(props.teacherName) : "";
   };
 
   const commentCotent = !props.content
-    ? ''
+    ? ""
     : props.content.length > 50
-    ? props.content.substring(0, 50) + '...'
-    : props.content;
+      ? props.content.substring(0, 50) + "..."
+      : props.content;
 
   return (
     <Card
       className={`${classes.card} ${
-        props.type === 'teacher'
-          ? classes['teacher-layout']
-          : props.type === 'personal'
-          ? classes['personal-comment-layout']
-          : props.homePage
-          ? classes['home-page-layout']
-          : ''
+        props.type === "teacher"
+          ? classes["teacher-layout"]
+          : props.type === "personal"
+            ? classes["personal-comment-layout"]
+            : props.homePage
+              ? classes["home-page-layout"]
+              : ""
       }`}
       onClick={cardClickHandler}
     >

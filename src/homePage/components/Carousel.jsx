@@ -1,16 +1,15 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 import "./CarouselStyles.css";
 
+import React from "react";
 import { Autoplay, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import CommentItem from "../../shared/components/Comments/CommentItem";
 
-const Carousel = (props) => {
+const Carousel = props => {
   return (
     <Swiper
       breakpoints={{
@@ -34,7 +33,7 @@ const Carousel = (props) => {
       }}
       modules={[Autoplay, Pagination]}
     >
-      {props.data.map((comment) => (
+      {props.data.map(comment => (
         <SwiperSlide key={comment.id}>
           <CommentItem
             homePage

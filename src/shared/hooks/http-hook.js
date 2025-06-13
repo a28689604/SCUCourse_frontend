@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -7,7 +7,7 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequset = useCallback(
-    async (url, method = 'GET', body = null, headers = {}) => {
+    async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
 
       const httpAbortCtrl = new AbortController();
@@ -27,7 +27,7 @@ export const useHttpClient = () => {
             : await response.json();
 
         activeHttpRequests.current = activeHttpRequests.current.filter(
-          (reqCtrl) => reqCtrl !== httpAbortCtrl
+          reqCtrl => reqCtrl !== httpAbortCtrl
         );
 
         if (!response.ok) {

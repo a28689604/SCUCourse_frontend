@@ -1,12 +1,12 @@
 import { useHistory } from "react-router-dom";
+
 import Difficulty from "../../shared/components/Icons/Difficulty";
 import Fire from "../../shared/components/Icons/Fire";
 import ThumbUp from "../../shared/components/Icons/ThumbUp";
 import Card from "../../shared/components/UIElements/Card";
-
 import classes from "./TeacherSearchItem.module.css";
 
-const TeacherSearchItem = (props) => {
+const TeacherSearchItem = props => {
   const history = useHistory();
 
   const teacherClickHandler = () => {

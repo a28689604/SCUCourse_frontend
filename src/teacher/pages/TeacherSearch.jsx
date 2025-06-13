@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import Loading from '../../shared/components/UIElements/Loading';
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import TeacherSearchItem from '../components/TeacherSearchItem';
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
-import classes from './TeacherSearch.module.css';
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Loading from "../../shared/components/UIElements/Loading";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import TeacherSearchItem from "../components/TeacherSearchItem";
+import classes from "./TeacherSearch.module.css";
 
 const TeacherSearch = () => {
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
@@ -40,7 +40,7 @@ const TeacherSearch = () => {
       <div className={classes.searchLayout}>
         {!isLoading && loadedTeachers && (
           <ul>
-            {loadedTeachers.map((teacher) => (
+            {loadedTeachers.map(teacher => (
               <TeacherSearchItem loadedTeachers={teacher} key={teacher.id} />
             ))}
           </ul>
