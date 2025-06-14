@@ -1,37 +1,110 @@
 import ThumbDown from "../Icons/ThumbDown";
 import ThumbUp from "../Icons/ThumbUp";
-import classes from "./CommentRating.module.css";
 
-const CommentRating = props => {
+const CommentRating = ({
+  personalRating,
+  recommend,
+  difficulty,
+  newComment,
+  thumb,
+  thumbOnClick,
+  children,
+  homePage,
+}) => {
   return (
-    <section
-      className={`${classes.rating} ${props.personalRating ? classes.personalRating : ""}`}
+    <div
+      className={` ${
+        homePage
+          ? "flex w-full items-center justify-between"
+          : personalRating
+            ? "flex items-center space-x-4 border-b border-gray-200 pb-4"
+            : "flex min-w-[100px] flex-col items-center space-y-4"
+      } `}
     >
-      <label className={classes["rating-title"]} htmlFor="difficulty">
-        推薦
-      </label>
-      <p
-        className={`${classes["rating-content"]} ${classes["recommend-icon"]}`}
+      {/* Recommendation Section */}
+      <div
+        className={` ${
+          homePage
+            ? "flex items-center space-x-2"
+            : "flex flex-col items-center space-y-2"
+        } `}
       >
-        {props.newComment && (
-          <>
-            {props.thumb && <ThumbUp onClick={props.thumbOnClick} />}
-            {!props.thumb && <ThumbDown onClick={props.thumbOnClick} />}
-          </>
+        <span
+          className={` ${
+            homePage
+              ? "text-sm font-medium text-gray-700"
+              : "text-base font-semibold text-gray-900"
+          } `}
+        >
+          推薦
+        </span>
+        <div
+          className={` ${
+            homePage
+              ? "flex items-center"
+              : "flex items-center justify-center rounded-full bg-gray-50 p-2"
+          } `}
+        >
+          {newComment && (
+            <>
+              {thumb && (
+                <button
+                  onClick={thumbOnClick}
+                  className="transition-transform hover:scale-110"
+                >
+                  <ThumbUp />
+                </button>
+              )}
+              {!thumb && (
+                <button
+                  onClick={thumbOnClick}
+                  className="transition-transform hover:scale-110"
+                >
+                  <ThumbDown />
+                </button>
+              )}
+            </>
+          )}
+          {!newComment && (
+            <>
+              {recommend && <ThumbUp />}
+              {!recommend && <ThumbDown />}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Difficulty Section */}
+      <div
+        className={` ${
+          homePage
+            ? "flex items-center space-x-2"
+            : "flex flex-col items-center space-y-2"
+        } `}
+      >
+        <span
+          className={` ${
+            homePage
+              ? "text-sm font-medium text-gray-700"
+              : "text-base font-semibold text-gray-900"
+          } `}
+        >
+          難度
+        </span>
+        {newComment && <>{children}</>}
+        {!newComment && (
+          <div
+            className={` ${
+              homePage
+                ? "flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-800"
+                : "flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-xl font-bold text-blue-800"
+            } `}
+          >
+            {difficulty}
+          </div>
         )}
-        {!props.newComment && (
-          <>
-            {props.recommend && <ThumbUp />}
-            {!props.recommend && <ThumbDown />}
-          </>
-        )}
-      </p>
-      <label className={classes["rating-title"]}>難度</label>
-      {props.newComment && <>{props.children}</>}
-      {!props.newComment && (
-        <p className={classes["rating-content"]}>{props.difficulty}</p>
-      )}
-    </section>
+      </div>
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
-import { LeapFrog } from "@uiball/loaders";
-
 import classes from "./Loading.module.css";
 
+// Lightweight CSS-only loading spinner instead of heavy LeapFrog component
 const Loading = props => {
   return (
     <div
@@ -9,7 +8,7 @@ const Loading = props => {
         props.overlay ? classes.loadingOverlay : ""
       }`}
     >
-      <LeapFrog size={40} speed={2.5} color="black" />
+      <div className={classes.spinner} />
     </div>
   );
 };

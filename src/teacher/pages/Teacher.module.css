@@ -1,175 +1,382 @@
-.teacher-Layout {
-  max-width: 100rem;
+/* Modern Teacher Page Design */
+.teacher-container {
+  max-width: 1200px;
   margin: 0 auto;
-  background-color: #ffffff;
-  padding: 3rem 1rem 3rem 1rem;
-  display: grid;
-  grid-template-columns: 1fr 4fr;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
 }
 
-.teacher-statistic {
-  display: grid;
-  grid-template-columns: 1fr;
+/* Teacher Header Section */
+.teacher-header {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
   align-items: center;
-  gap: 2.4rem;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.teacher-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+}
+
+.teacher-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  flex-shrink: 0;
+}
+
+.teacher-initial {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.teacher-info {
+  flex: 1;
 }
 
 .teacher-name {
-  font-weight: 700;
-  font-size: 5.2rem;
-}
-
-.recommend h2 {
-  font-weight: 700;
-  font-size: 4.4rem;
-}
-
-.recommend h4 {
-  font-size: 2.4rem;
-}
-
-.difficulty h3 {
-  display: inline;
-  font-weight: 700;
-  font-size: 3.6rem;
-}
-.difficulty h5 {
-  display: inline;
-  font-size: 2.4rem;
-}
-.difficulty h4 {
-  font-size: 2.4rem;
-}
-
-.course-statistic {
-  display: grid;
-  gap: 1.6rem;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.staticWrapper {
-  position: relative;
-}
-
-.selectHint {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 3rem;
-  white-space: nowrap;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 1.5rem 0;
+  background: linear-gradient(135deg, #1e293b, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.noScore {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 4rem;
+
+.teacher-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.stat-subtext {
+  font-size: 1.25rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+/* Section Styling */
+.course-section,
+.comments-section {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-header h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+}
+
+.section-header p {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Course Selector */
+.course-selector {
+  margin-bottom: 2rem;
+}
+
+.select-container {
+  font-size: 1rem;
+}
+
+/* Chart Container */
+.chart-container {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 400px;
+  position: relative;
+}
+
+.chart-wrapper {
+  height: 100%;
+}
+
+.chart-info {
+  margin-bottom: 1.5rem;
+}
+
+.chart-info h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Empty States */
+.empty-state,
+.empty-comments {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #64748b;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.empty-state h3,
+.empty-comments h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-state p,
+.empty-comments p {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 1.5rem 0;
+}
+
+.add-score-btn {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+.add-score-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Comments Container */
+.comments-container {
+  display: grid;
   gap: 2rem;
-  z-index: 1;
 }
 
-.courseScoreAvg {
-  position: absolute;
-  top: 5%;
-  left: 6%;
-  z-index: 1;
-}
-
-.courseScoreAvg h3 {
-  font-size: 2.4rem;
-}
-
-.comment-layout {
-  margin: 0 auto;
-  margin-top: 2rem;
-  max-width: 100rem;
-  margin-bottom: 2.6rem;
+.personal-comment {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 2rem;
+  border: 2px dashed #e2e8f0;
 }
 
 .comment-list {
-  max-width: 100rem;
   width: 100%;
 }
 
 .comment-list ul {
   display: grid;
-  gap: 1.6rem;
+  gap: 1.5rem;
   width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
+
 .comment-list li {
   width: 100%;
 }
 
-.comment-list h1 {
-  display: inline-block;
-  margin: 0 auto;
-  width: 100%;
-  text-align: center;
-}
-.noCommentData {
-  display: block;
-  padding: 5rem 0;
-  font-size: 3rem;
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .teacher-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .teacher-header,
+  .course-section,
+  .comments-section {
+    padding: 2rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .teacher-Layout {
-    grid-template-columns: auto;
-    gap: 2.4rem;
-    padding-bottom: 1rem;
+  .teacher-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
   }
-  .teacher-statistic {
-    grid-template-columns: 1fr auto auto;
+
+  .teacher-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .teacher-initial {
+    font-size: 2rem;
   }
 
   .teacher-name {
-    font-weight: 700;
-    font-size: 5.2rem;
+    font-size: 2.5rem;
+  }
+
+  .teacher-stats {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
+  .course-section,
+  .comments-section {
+    padding: 1.5rem;
+  }
+
+  .chart-container {
+    padding: 1.5rem;
   }
 }
 
-@media (max-width: 575px) {
-  .teacher-statistic {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 2.4rem;
+@media (max-width: 480px) {
+  .teacher-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .teacher-header,
+  .course-section,
+  .comments-section {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
   }
 
   .teacher-name {
-    grid-column: 1/3;
-    font-weight: 700;
-    font-size: 5.5rem;
+    font-size: 2rem;
   }
 
-  .courseScoreAvg {
-    position: absolute;
-    display: grid;
-    gap: 1.6rem;
-    top: 20%;
-    left: 20%;
-    transform: translate(-50%, -50%);
+  .section-header h2 {
+    font-size: 1.75rem;
   }
 
-  .courseScoreAvg h3 {
-    font-size: 1.6rem;
+  .section-header p {
+    font-size: 1rem;
   }
 
-  .recommend h2 {
-    font-size: 3.6rem;
+  .stat-value {
+    font-size: 1.5rem;
   }
-  .selectHint {
-    font-size: 2.4rem;
+
+  .empty-icon {
+    font-size: 3rem;
   }
-  .noScore {
-    font-size: 2.4rem;
+
+  .empty-state h3,
+  .empty-comments h3 {
+    font-size: 1.25rem;
   }
-  .noCommentData {
-    padding: 3rem 0;
-    font-size: 2.4rem;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.teacher-header,
+.course-section,
+.comments-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.course-section {
+  animation-delay: 0.1s;
+}
+
+.comments-section {
+  animation-delay: 0.2s;
 }

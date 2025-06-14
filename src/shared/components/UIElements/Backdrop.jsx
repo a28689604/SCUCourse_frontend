@@ -1,13 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { Backdrop } from "@mui/material";
 
-import classes from "./Backdrop.module.css";
-
-const Backdrop = props => {
-  return ReactDOM.createPortal(
-    <div className={classes.backdrop} onClick={props.onClick}></div>,
-    document.getElementById("backdrop-hook")
+const CustomBackdrop = props => {
+  return (
+    <Backdrop
+      open={true}
+      onClick={props.onClick}
+      sx={{
+        zIndex: 1250,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      }}
+    />
   );
 };
 
-export default Backdrop;
+export default CustomBackdrop;

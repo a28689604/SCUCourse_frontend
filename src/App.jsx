@@ -2,7 +2,6 @@ import "./index.css";
 
 import { createTheme, ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import React, { Suspense, useEffect, useMemo } from "react";
@@ -20,12 +19,29 @@ import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import TeacherSearch from "./teacher/pages/TeacherSearch";
 
+// Firebase configuration - moved outside component to prevent re-initialization
+const firebaseConfig = {
+  apiKey: "AIzaSyAFPpMmAdRU_OMCxpBKmthb77BNU87r-Nc",
+  authDomain: "scucourse-d4e68.firebaseapp.com",
+  projectId: "scucourse-d4e68",
+  storageBucket: "scucourse-d4e68.appspot.com",
+  messagingSenderId: "369095327082",
+  appId: "1:369095327082:web:63a6503dbc2fb03a487913",
+  measurementId: "G-PQN1CQF4QG",
+};
+
+// Initialize Firebase once - outside component
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+// Memoize theme creation to prevent re-creation on every render
 const theme = createTheme({
   typography: {
     fontFamily: ["Microsoft JhengHei", "sans-serif"].join(","),
   },
 });
 
+// Lazy load components
 const HomePage = React.lazy(() => import("./homePage/pages/HomePage"));
 const Teacher = React.lazy(() => import("./teacher/pages/Teacher"));
 const Auth = React.lazy(() => import("./user/pages/Auth"));
@@ -34,72 +50,82 @@ const SetPassword = React.lazy(() => import("./user/pages/SetPassword"));
 const App = () => {
   const { token, login, logout, userId } = useAuth();
 
-  // Import the functions you need from the SDKs you need
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAFPpMmAdRU_OMCxpBKmthb77BNU87r-Nc",
-    authDomain: "scucourse-d4e68.firebaseapp.com",
-    projectId: "scucourse-d4e68",
-    storageBucket: "scucourse-d4e68.appspot.com",
-    messagingSenderId: "369095327082",
-    appId: "1:369095327082:web:63a6503dbc2fb03a487913",
-    measurementId: "G-PQN1CQF4QG",
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
+  // Track page views only when route changes
   useEffect(() => {
-    logEvent(analytics, "screen_view", {
-      firebase_screen: window.location.pathname + window.location.search,
-    });
-  }, [analytics]);
+    const handleRouteChange = () => {
+      logEvent(analytics, "screen_view", {
+        firebase_screen: window.location.pathname + window.location.search,
+      });
+    };
 
-  let routes;
+    // Track initial page load
+    handleRouteChange();
 
-  if (token) {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/teacher/find/:teacherId" exact>
-          <TeacherSearch />
-        </Route>
-        <Route path="/teacher/:teacherId" exact>
-          <Teacher />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
-    );
-  } else {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/teacher/find/:teacherId" exact>
-          <TeacherSearch />
-        </Route>
-        <Route path="/teacher/:teacherId" exact>
-          <Teacher />
-        </Route>
-        <Route path="/setPassword/:setPasswordToken" exact>
-          <SetPassword />
-        </Route>
-        <Route path="/auth">
-          <Auth />
-        </Route>
-        <Redirect to="/auth" />
-      </Switch>
-    );
-  }
+    // Listen for route changes
+    const originalPushState = window.history.pushState;
+    const originalReplaceState = window.history.replaceState;
 
+    window.history.pushState = function (...args) {
+      originalPushState.apply(window.history, args);
+      handleRouteChange();
+    };
+
+    window.history.replaceState = function (...args) {
+      originalReplaceState.apply(window.history, args);
+      handleRouteChange();
+    };
+
+    window.addEventListener("popstate", handleRouteChange);
+
+    return () => {
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
+      window.removeEventListener("popstate", handleRouteChange);
+    };
+  }, []);
+
+  // Memoize routes to prevent unnecessary re-renders
+  const routes = useMemo(() => {
+    if (token) {
+      return (
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/teacher/find/:teacherId" exact>
+            <TeacherSearch />
+          </Route>
+          <Route path="/teacher/:teacherId" exact>
+            <Teacher />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      );
+    } else {
+      return (
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/teacher/find/:teacherId" exact>
+            <TeacherSearch />
+          </Route>
+          <Route path="/teacher/:teacherId" exact>
+            <Teacher />
+          </Route>
+          <Route path="/setPassword/:setPasswordToken" exact>
+            <SetPassword />
+          </Route>
+          <Route path="/auth">
+            <Auth />
+          </Route>
+          <Redirect to="/auth" />
+        </Switch>
+      );
+    }
+  }, [token]);
+
+  // Memoize auth context value
   const authContextValue = useMemo(
     () => ({ isLoggedIn: !!token, token, userId, login, logout }),
     [token, userId, login, logout]
@@ -111,9 +137,9 @@ const App = () => {
         <Router>
           <Box className="flex min-h-screen flex-col">
             <Navigation />
-            <Container disableGutters className="w-[95%] flex-1">
+            <main className="flex-1">
               <Suspense fallback={<Loading overlay />}>{routes}</Suspense>
-            </Container>
+            </main>
             <Footer />
           </Box>
         </Router>
@@ -121,4 +147,5 @@ const App = () => {
     </ThemeProvider>
   );
 };
+
 export default App;

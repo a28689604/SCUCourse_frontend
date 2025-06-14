@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer } from "react";
+import PropTypes from "prop-types";
+import { useEffect, useReducer } from "react";
 import Select from "react-select";
 
 import { validate } from "../../util/validators";
@@ -63,27 +64,36 @@ const Input = props => {
       type: "TOUCH",
     });
   };
-  const element =
-    props.element === "input" ? (
-      <input
-        id={props.id}
-        type={props.type}
-        placeholder={props.placeholder}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-        className={classes[props.styles]}
-      />
-    ) : props.element === "textarea" ? (
-      <textarea
-        id={props.id}
-        rows={props.rows || 5}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-        className={`${props.className}`}
-      />
-    ) : (
+
+  const renderElement = () => {
+    if (props.element === "input") {
+      return (
+        <input
+          id={props.id}
+          type={props.type}
+          placeholder={props.placeholder}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={inputState.value}
+          className={classes[props.styles]}
+        />
+      );
+    }
+
+    if (props.element === "textarea") {
+      return (
+        <textarea
+          id={props.id}
+          rows={props.rows || 5}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={inputState.value}
+          className={`${props.className}`}
+        />
+      );
+    }
+
+    return (
       <Select
         id={props.id}
         options={props.options}
@@ -94,6 +104,9 @@ const Input = props => {
         defaultValue={props.defaultValue}
       />
     );
+  };
+
+  const element = renderElement();
 
   return (
     <>
@@ -120,6 +133,26 @@ const Input = props => {
       )}
     </>
   );
+};
+
+Input.propTypes = {
+  id: PropTypes.string.isRequired,
+  onInput: PropTypes.func.isRequired,
+  element: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  validators: PropTypes.array,
+  initialValue: PropTypes.string,
+  initialValid: PropTypes.bool,
+  onlyElement: PropTypes.bool,
+  errorText: PropTypes.string,
+  styles: PropTypes.object,
+  className: PropTypes.string,
+  rows: PropTypes.number,
+  options: PropTypes.array,
+  defaultValue: PropTypes.string,
+  LabelStyle: PropTypes.string,
+  label: PropTypes.string,
 };
 
 export default Input;

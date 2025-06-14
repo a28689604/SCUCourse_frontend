@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Select from "react-select";
 
@@ -61,7 +61,7 @@ const teacherDataReducer = (state, action) => {
   }
 };
 
-const Teacher = props => {
+const Teacher = () => {
   const auth = useContext(AuthContext);
   const [teacherDataState, dispatch] = useReducer(teacherDataReducer);
   const { isLoading, error, sendRequset, clearError } = useHttpClient();
@@ -82,7 +82,9 @@ const Teacher = props => {
         dispatch({ type: "SET", value: responseData.data.data });
         // 設定網頁標題
         document.title = teacherName;
-      } catch (err) {}
+      } catch (error) {
+        console.error("Failed to fetch teacher data:", error);
+      }
     };
     fetchTeacher();
 
@@ -157,119 +159,174 @@ const Teacher = props => {
           {isAddBtnClick && (
             <AddScore course={selectCourse} onCancel={addScoreBtnHandler} />
           )}
-          <div className={classes["teacher-Layout"]}>
-            <div className={classes["teacher-statistic"]}>
-              <h1 className={classes["teacher-name"]}>
-                {teacherDataState.loadedTeacher.teacherName}
-              </h1>
-              <div className={classes.recommend}>
-                {teacherDataState.loadedTeacher.recommendPercentage !== -1 && (
-                  <h2>
-                    {(
-                      teacherDataState.loadedTeacher.recommendPercentage * 100
-                    ).toFixed(2)}
-                    %
-                  </h2>
-                )}
-                {teacherDataState.loadedTeacher.recommendPercentage === -1 && (
-                  <h2>暫無資料</h2>
-                )}
-                <h4>推薦率</h4>
+          <div className={classes["teacher-container"]}>
+            <div className={classes["teacher-header"]}>
+              <div className={classes["teacher-avatar"]}>
+                <div className={classes["teacher-initial"]}>
+                  {teacherDataState.loadedTeacher.teacherName?.[0] || "T"}
+                </div>
               </div>
-              <div className={classes.difficulty}>
-                {teacherDataState.loadedTeacher.difficultyAverage !== -1 && (
-                  <>
-                    <h3>
-                      {teacherDataState.loadedTeacher.difficultyAverage.toFixed(
-                        1
-                      )}
-                    </h3>
-                    <h5>/5</h5>
-                  </>
-                )}
-                {teacherDataState.loadedTeacher.difficultyAverage === -1 && (
-                  <h3>暫無資料</h3>
-                )}
-                <h4>難度</h4>
+              <div className={classes["teacher-info"]}>
+                <h1 className={classes["teacher-name"]}>
+                  {teacherDataState.loadedTeacher.teacherName}
+                </h1>
+                <div className={classes["teacher-stats"]}>
+                  <div className={classes["stat-card"]}>
+                    <div className={classes["stat-icon"]}>👍</div>
+                    <div className={classes["stat-content"]}>
+                      <div className={classes["stat-value"]}>
+                        {teacherDataState.loadedTeacher.recommendPercentage !==
+                        -1
+                          ? `${(teacherDataState.loadedTeacher.recommendPercentage * 100).toFixed(1)}%`
+                          : "暫無資料"}
+                      </div>
+                      <div className={classes["stat-label"]}>推薦率</div>
+                    </div>
+                  </div>
+                  <div className={classes["stat-card"]}>
+                    <div className={classes["stat-icon"]}>📊</div>
+                    <div className={classes["stat-content"]}>
+                      <div className={classes["stat-value"]}>
+                        {teacherDataState.loadedTeacher.difficultyAverage !==
+                        -1 ? (
+                          <>
+                            {teacherDataState.loadedTeacher.difficultyAverage.toFixed(
+                              1
+                            )}
+                            <span className={classes["stat-subtext"]}>/5</span>
+                          </>
+                        ) : (
+                          "暫無資料"
+                        )}
+                      </div>
+                      <div className={classes["stat-label"]}>難度</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className={classes["course-statistic"]}>
-              {!isLoading && teacherDataState && (
-                <>
-                  <Select
-                    options={teacherDataState.loadedCourseOptions}
-                    onChange={courseStatisticHandler}
-                    placeholder={"在此選擇課程，以查看修課成績分數分布"}
-                    menuPortalTarget={document.body}
-                    styles={{
-                      menuPortal: base => ({ ...base, zIndex: 9999 }),
-                    }}
-                  />
-                  <div className={classes.staticWrapper}>
-                    {!isSelect && (
-                      <h3 className={classes.selectHint}>
-                        請使用上方欄位選擇課程
+
+            <div className={classes["course-section"]}>
+              <div className={classes["section-header"]}>
+                <h2>課程成績分布</h2>
+                <p>選擇課程以查看詳細的成績分布統計</p>
+              </div>
+              <div className={classes["course-selector"]}>
+                <Select
+                  options={teacherDataState.loadedCourseOptions}
+                  onChange={courseStatisticHandler}
+                  placeholder="請選擇課程..."
+                  menuPortalTarget={document.body}
+                  className={classes["select-container"]}
+                  classNamePrefix="select"
+                  styles={{
+                    menuPortal: base => ({ ...base, zIndex: 9999 }),
+                    control: (base, state) => ({
+                      ...base,
+                      minHeight: "48px",
+                      border: state.isFocused
+                        ? "2px solid #3b82f6"
+                        : "2px solid #e5e7eb",
+                      borderRadius: "12px",
+                      boxShadow: state.isFocused
+                        ? "0 0 0 3px rgba(59, 130, 246, 0.1)"
+                        : "none",
+                      "&:hover": {
+                        borderColor: "#3b82f6",
+                      },
+                    }),
+                    placeholder: base => ({
+                      ...base,
+                      color: "#6b7280",
+                      fontWeight: "500",
+                    }),
+                    option: (base, state) => ({
+                      ...base,
+                      backgroundColor: state.isSelected
+                        ? "#3b82f6"
+                        : state.isFocused
+                          ? "#f3f4f6"
+                          : "white",
+                      color: state.isSelected ? "white" : "#374151",
+                      padding: "12px 20px",
+                    }),
+                  }}
+                />
+              </div>
+              <div className={classes["chart-container"]}>
+                {!isSelect ? (
+                  <div className={classes["empty-state"]}>
+                    <div className={classes["empty-icon"]}>📈</div>
+                    <h3>請選擇課程</h3>
+                    <p>選擇上方的課程以查看成績分布圖表</p>
+                  </div>
+                ) : courseScoreData[0]["人數"] === null ? (
+                  <div className={classes["empty-state"]}>
+                    <div className={classes["empty-icon"]}>📊</div>
+                    <h3>暫無分數資料</h3>
+                    <p>此課程尚未有成績資料</p>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      onClick={addScoreBtnHandler}
+                      className={classes["add-score-btn"]}
+                    >
+                      新增分數資料
+                    </Button>
+                  </div>
+                ) : (
+                  <div className={classes["chart-wrapper"]}>
+                    <div className={classes["chart-info"]}>
+                      <h3>
+                        平均分數:{" "}
+                        {courseScoreData[10]["avg"] !== null
+                          ? courseScoreData[10].avg
+                          : "暫無資料"}
                       </h3>
-                    )}
-                    {isSelect && courseScoreData[0]["人數"] === null && (
-                      <div className={classes.noScore}>
-                        <h3>暫無分數</h3>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          onClick={addScoreBtnHandler}
-                          sx={{ fontSize: 16 }}
-                        >
-                          點我新增分數
-                        </Button>
-                      </div>
-                    )}
-                    <div className={classes.courseScoreAvg}>
-                      {isSelect && courseScoreData[0]["人數"] !== null && (
-                        <h3>
-                          平均分數:
-                          {courseScoreData[10]["avg"] !== null
-                            ? courseScoreData[10].avg
-                            : "暫無資料"}
-                        </h3>
-                      )}
                     </div>
                     <CourseStatistic data={courseScoreData} />
                   </div>
-                </>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-          <div className={classes["comment-layout"]}>
-            <div className={classes["personal-comment"]}>
-              {!isLoading && userComment && (
-                <UpdateComment
-                  userComment={userComment}
-                  difficultyData={DIFFICULTY_OPTIONS}
-                  courseNameData={teacherDataState.loadedCourseOptions}
-                />
-              )}
-              {!userComment && (
-                <NewComment
-                  new
-                  difficultyData={DIFFICULTY_OPTIONS}
-                  courseNameData={teacherDataState.loadedCourseOptions}
-                />
-              )}
-            </div>
-            <div className={classes["comment-list"]}>
-              {teacherDataState.loadedReviews.length === 0 && (
-                <h1 className={classes.noCommentData}>
-                  這位教授還沒有評論，快來留下你的評論吧!
-                </h1>
-              )}
-              {!isLoading && teacherDataState.loadedReviews && (
-                <CommentList
-                  data={teacherDataState.loadedReviews}
-                  userVotes={userVotes}
-                  type="teacher"
-                />
-              )}
+
+            <div className={classes["comments-section"]}>
+              <div className={classes["section-header"]}>
+                <h2>教師評價</h2>
+                <p>學生對這位教師的評價與意見</p>
+              </div>
+              <div className={classes["comments-container"]}>
+                <div className={classes["personal-comment"]}>
+                  {!isLoading && userComment ? (
+                    <UpdateComment
+                      userComment={userComment}
+                      difficultyData={DIFFICULTY_OPTIONS}
+                      courseNameData={teacherDataState.loadedCourseOptions}
+                    />
+                  ) : (
+                    <NewComment
+                      new
+                      difficultyData={DIFFICULTY_OPTIONS}
+                      courseNameData={teacherDataState.loadedCourseOptions}
+                    />
+                  )}
+                </div>
+                <div className={classes["comment-list"]}>
+                  {teacherDataState.loadedReviews.length === 0 ? (
+                    <div className={classes["empty-comments"]}>
+                      <div className={classes["empty-icon"]}>💬</div>
+                      <h3>還沒有評論</h3>
+                      <p>成為第一個評論這位教師的學生吧！</p>
+                    </div>
+                  ) : (
+                    <CommentList
+                      data={teacherDataState.loadedReviews}
+                      userVotes={userVotes}
+                      type="teacher"
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </>

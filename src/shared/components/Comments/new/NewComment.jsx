@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../../context/auth-context";
@@ -18,29 +18,29 @@ import CommentRating from "../CommentRating";
 import classes from "./NewComment.module.css";
 
 const difficultyStyles = {
-  control: (provided, state) => ({
+  control: (provided, _state) => ({
     ...provided,
     background: "#fff",
     borderColor: "#9e9e9e",
     minHeight: "3rem",
     height: "3rem",
-    boxShadow: state.isFocused ? null : null,
+    boxShadow: _state.isFocused ? null : null,
   }),
 
-  valueContainer: (provided, state) => ({
+  valueContainer: (provided, _state) => ({
     ...provided,
     height: "30px",
     padding: "0 6px",
   }),
 
-  input: (provided, state) => ({
+  input: (provided, _state) => ({
     ...provided,
     margin: "0px",
   }),
-  indicatorSeparator: state => ({
+  indicatorSeparator: _state => ({
     display: "none",
   }),
-  indicatorsContainer: (provided, state) => ({
+  indicatorsContainer: (provided, _state) => ({
     ...provided,
     height: "30px",
   }),
@@ -79,6 +79,7 @@ const NewComment = props => {
   const addCommentHandler = () => {
     if (!auth.token) {
       setNotLogedinModal(true);
+      return;
     }
     setAddComment(true);
   };
@@ -110,7 +111,9 @@ const NewComment = props => {
       if (res.status === "success") {
         setShowSuccessModal(true);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error submitting comment:", err);
+    }
   };
 
   const confirmSuccessHandler = () => {
@@ -141,17 +144,13 @@ const NewComment = props => {
         show={notLogedinModal}
         onCancel={confirmLoginHandler}
         header=""
-        footer={
-          <>
-            <Button onClick={confirmLoginHandler}>確定</Button>
-          </>
-        }
+        footer={<Button onClick={confirmLoginHandler}>確定</Button>}
       >
         請先登入
       </Modal>
       {!addComment && (
         <Card className={classes["new-comment"]} onClick={addCommentHandler}>
-          <div className={classes.paragraph}>留下你的評論</div>
+          <div className={classes.paragraph}>留下評論</div>
           <Add />
         </Card>
       )}

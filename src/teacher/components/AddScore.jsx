@@ -14,11 +14,11 @@ import classes from "./AddScore.module.css";
 
 const AddScore = props => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [notLogedinModal, setNotLogedinModal] = useState(false);
+  const [notLoggedInModal, setNotLoggedInModal] = useState(false);
   const history = useHistory();
 
   const { token, userId } = useContext(AuthContext);
-  const { isLoading, error, sendRequset, clearError } = useHttpClient();
+  const { error, sendRequset, clearError } = useHttpClient();
 
   const [formState, inputHandler] = useForm(
     {
@@ -67,11 +67,11 @@ const AddScore = props => {
   );
 
   useEffect(() => {
-    if (!token) setNotLogedinModal(true);
+    if (!token) setNotLoggedInModal(true);
   }, [token]);
 
   const confirmLoginHandler = () => {
-    setNotLogedinModal(false);
+    setNotLoggedInModal(false);
     history.push("/auth");
   };
 
@@ -105,7 +105,9 @@ const AddScore = props => {
       if (res.status === "success") {
         setShowSuccessModal(true);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
   const confirmSuccessHandler = () => {
     setShowSuccessModal(false);
@@ -129,7 +131,7 @@ const AddScore = props => {
       </Modal>
       <Modal
         style={{ width: "15rem" }}
-        show={notLogedinModal}
+        show={notLoggedInModal}
         onCancel={confirmLoginHandler}
         footer={
           <>
@@ -142,7 +144,7 @@ const AddScore = props => {
         <h3 className={classes.text}>請先登入</h3>
       </Modal>
 
-      {!notLogedinModal && !showSuccessModal && (
+      {!notLoggedInModal && !showSuccessModal && (
         <form className={classes.form} onSubmit={scoreSubmitHandler}>
           <div className={classes.courseInfo}>
             <h3>{`${props.course["syear"]}學年 第${props.course["smester"]}學期`}</h3>

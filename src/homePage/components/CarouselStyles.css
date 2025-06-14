@@ -1,11 +1,70 @@
 .swiper {
-  width: 61.5rem;
-  padding-bottom: 2.5rem;
+  width: 100%;
+  max-width: 1200px;
+  padding-bottom: 3rem;
+  margin: 0 auto;
 }
 
-@media screen and (max-width: 600px) {
+.swiper-slide {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Custom pagination bullets */
+.custom-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background: rgba(59, 130, 246, 0.3) !important;
+  border-radius: 50% !important;
+  transition: all 0.3s ease !important;
+  margin: 0 6px !important;
+  cursor: pointer !important;
+}
+
+.custom-bullet-active {
+  background: rgb(59, 130, 246) !important;
+  transform: scale(1.2) !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5) !important;
+}
+
+.custom-bullet:hover {
+  background: rgba(59, 130, 246, 0.6) !important;
+  transform: scale(1.1) !important;
+}
+
+/* Pagination container */
+.swiper-pagination {
+  bottom: 10px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 640px) {
   .swiper {
-    width: 100%;
-    padding-bottom: 2rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .custom-bullet {
+    width: 8px !important;
+    height: 8px !important;
+    margin: 0 4px !important;
+  }
+}
+
+/* Tablet responsive */
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+  .swiper {
+    padding-bottom: 3rem;
+  }
+}
+
+/* Desktop and larger */
+@media screen and (min-width: 1025px) {
+  .swiper {
+    padding-bottom: 3.5rem;
   }
 }
