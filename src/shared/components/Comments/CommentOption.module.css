@@ -1,7 +1,4 @@
 .optionLayout {
-  padding-top: 0.4rem;
-  border-top: 0.2rem #dae0e6 solid;
-  /* background-color: rgb(149, 149, 250); */
   width: 100%;
   display: flex;
   align-items: center;
@@ -10,45 +7,92 @@
 
 .votes {
   display: flex;
-  gap: 1.6rem;
+  gap: 2rem;
+  align-items: center;
 }
 
 .upVote {
   display: flex;
   align-items: center;
-  width: 3.6rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
   font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.upVote:hover {
+  background-color: #fef2f2;
+  transform: translateY(-1px);
 }
 
 .downVote {
   display: flex;
   align-items: center;
-  width: 3.6rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
   font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.downVote:hover {
+  background-color: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.upVote svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.downVote svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all 0.2s ease;
 }
 
 .upVote svg:hover {
-  fill: #ff4500;
+  fill: #ef4444;
+  transform: scale(1.1);
 }
 
 .downVote svg:hover {
-  fill: #7193ff;
+  fill: #3b82f6;
+  transform: scale(1.1);
+}
+
+.upVoteSvg-voted {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
 }
 
 .upVoteSvg-voted svg {
-  fill: #ff4500;
+  fill: #ef4444;
+}
+
+.downVoteSvg-voted {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
 }
 
 .downVoteSvg-voted svg {
-  fill: #7193ff;
+  fill: #3b82f6;
 }
 
 .upVoteSvg-voted svg:hover,
 .downVoteSvg-voted svg:hover {
-  fill: black;
+  fill: #374151;
+  transform: scale(1.1);
 }
 
 .createAt {
-  justify-self: end;
-  font-size: 2rem;
+  font-size: 1.4rem;
+  color: #6b7280;
+  font-weight: 500;
 }

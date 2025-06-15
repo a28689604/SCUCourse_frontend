@@ -150,8 +150,17 @@ const NewComment = props => {
       </Modal>
       {!addComment && (
         <Card className={classes["new-comment"]} onClick={addCommentHandler}>
-          <div className={classes.paragraph}>留下評論</div>
-          <Add />
+          <div className={classes["comment-prompt"]}>
+            <div className={classes["add-icon-container"]}>
+              <Add />
+            </div>
+            <div className={classes["prompt-content"]}>
+              <h3 className={classes["prompt-title"]}>分享您的課程體驗</h3>
+              <p className={classes["prompt-description"]}>
+                幫助其他同學了解這門課程
+              </p>
+            </div>
+          </div>
         </Card>
       )}
       {addComment && isLoading && <Loading />}
