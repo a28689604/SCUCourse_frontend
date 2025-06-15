@@ -1,16 +1,159 @@
 .new-comment {
-  max-width: 100%;
-  display: grid;
-  justify-items: center;
-  gap: 0.8rem;
+  position: relative;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.paragraph {
+.new-comment::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.1),
+    rgba(139, 92, 246, 0.1)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.new-comment:hover {
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.new-comment:hover::before {
+  opacity: 1;
+}
+
+.new-comment:hover .add-icon-container {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  transform: scale(1.1) rotate(90deg);
+}
+
+.comment-prompt {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.add-icon-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.add-icon-container svg {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.3s ease;
+}
+
+.prompt-content {
+  flex: 1;
+}
+
+.prompt-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  font-size: 2.4rem;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
 }
 
-.new-comment svg {
-  /* display: block; */
-  width: 3rem;
+.prompt-description {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.action-hint {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-weight: 500;
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.new-comment:hover .action-hint {
+  color: #3b82f6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .new-comment {
+    padding: 1.5rem;
+    min-height: 100px;
+  }
+
+  .comment-prompt {
+    gap: 1rem;
+  }
+
+  .add-icon-container {
+    width: 50px;
+    height: 50px;
+  }
+
+  .add-icon-container svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .prompt-title {
+    font-size: 1.25rem;
+  }
+
+  .prompt-description {
+    font-size: 0.875rem;
+  }
+
+  .action-hint {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .new-comment {
+    padding: 1.25rem;
+  }
+
+  .comment-prompt {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .add-icon-container {
+    margin: 0 auto;
+  }
 }

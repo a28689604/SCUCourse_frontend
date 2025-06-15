@@ -27,7 +27,7 @@ export const useHttpClient = () => {
             : await response.json();
 
         activeHttpRequests.current = activeHttpRequests.current.filter(
-          (reqCtrl) => reqCtrl !== httpAbortCtrl
+          reqCtrl => reqCtrl !== httpAbortCtrl
         );
 
         if (!response.ok) {
@@ -49,11 +49,13 @@ export const useHttpClient = () => {
     setError(null);
   };
 
-  useEffect(() => {
-    return () => {
-      activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     // Only abort requests when component is actually unmounting
+  //     // Add a small delay or condition to prevent premature cleanup
+  //     activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
+  //   };
+  // }, []);
 
   return { isLoading, error, sendRequset, clearError };
 };

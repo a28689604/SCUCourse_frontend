@@ -1,12 +1,235 @@
-.teacher {
-  display: grid;
-  grid-template-columns: 1fr auto auto auto;
+.teacherItem {
+  transition: transform 0.2s ease-in-out;
+}
+
+.teacherItem:hover {
+  transform: translateY(-2px);
+}
+
+.teacherCard {
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: white;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.teacherCard:hover {
+  border-color: #3b82f6;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.teacherHeader {
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 1rem;
+}
+
+.teacherName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.teacherMeta {
+  display: flex;
+  gap: 0.5rem;
   align-items: center;
-  gap: 0.8rem;
+}
+
+.department {
+  font-size: 0.875rem;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+.statisticsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  flex-grow: 1;
 }
 
 .statistic {
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
   align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  border: 1px solid #f3f4f6;
+}
+
+.statisticIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.statisticIcon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.recommendation .statisticIcon {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.difficulty .statisticIcon {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.ratings .statisticIcon {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.statisticContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex-grow: 1;
+}
+
+.statisticValue {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.statisticLabel {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Value color coding */
+.statisticValue.high {
+  color: #059669;
+}
+
+.statisticValue.medium {
+  color: #d97706;
+}
+
+.statisticValue.low {
+  color: #dc2626;
+}
+
+.statisticValue.unknown {
+  color: #6b7280;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+  margin-top: auto;
+}
+
+.clickHint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.clickHint::after {
+  content: "→";
+  font-size: 0.875rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.teacherCard:hover .clickHint::after {
+  transform: translateX(2px);
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  .statisticsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .statistic {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .statisticIcon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .statisticIcon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .statisticValue {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .teacherCard {
+    padding: 1rem;
+  }
+
+  .teacherName {
+    font-size: 1.125rem;
+  }
+
+  .statisticIcon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .statisticIcon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .statisticValue {
+    font-size: 0.875rem;
+  }
+
+  .statisticLabel {
+    font-size: 0.6875rem;
+  }
+}
+
+/* Focus states for accessibility */
+.teacherCard:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.teacherCard:focus:not(:focus-visible) {
+  outline: none;
 }
